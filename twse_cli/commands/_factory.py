@@ -90,6 +90,11 @@ def _run_fetch(
         console.print(f"[red]{exc}[/red]")
         raise SystemExit(EXIT_NETWORK_ERROR) from None
 
+    # Sanitize response strings (strip control chars)
+    from ..sanitize import sanitize_data
+
+    data = sanitize_data(data)
+
     if stock_code:
         data = filter_by_code(data, stock_code, ep.code_field)
     if normalize:

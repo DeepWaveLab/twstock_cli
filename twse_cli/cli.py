@@ -286,7 +286,10 @@ def schema(endpoint_ref: str, as_json: bool, no_cache: bool, dry_run: bool) -> N
         console.print(f"[red]{exc}[/red]")
         raise SystemExit(EXIT_NETWORK_ERROR) from None
 
+    from .sanitize import sanitize_data
     from .schema import analyze_schema
+
+    data = sanitize_data(data)
 
     schema_info = analyze_schema(
         data, endpoint_name=f"{ep.group}.{ep.cli_name}", description=ep.description, path=ep.path

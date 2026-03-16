@@ -21,6 +21,7 @@ import click
 from .client import TWSEApiError, TWSEClient, TWSENetworkError
 from .endpoints import list_endpoints, resolve_endpoint
 from .normalize import normalize_data
+from .sanitize import sanitize_data
 from .schema import analyze_schema
 from .validate import validate_input
 
@@ -73,6 +74,9 @@ def twse_fetch(
         return {"ok": False, "error": {"code": "api_error", "message": str(exc)}}
     except TWSENetworkError as exc:
         return {"ok": False, "error": {"code": "network_error", "message": str(exc)}}
+
+    # Sanitize response strings
+    data = sanitize_data(data)
 
     # Apply filters
     if code:
@@ -150,6 +154,8 @@ def twse_schema(endpoint: str) -> dict[str, Any]:
         return {"ok": False, "error": {"code": "api_error", "message": str(exc)}}
     except TWSENetworkError as exc:
         return {"ok": False, "error": {"code": "network_error", "message": str(exc)}}
+
+    data = sanitize_data(data)
 
     return analyze_schema(
         data,
