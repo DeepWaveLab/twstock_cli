@@ -8,6 +8,12 @@ Agent-friendly CLI for Taiwan Stock Exchange (TWSE) OpenAPI — 143 endpoints, o
 uv tool install twse-cli
 ```
 
+With MCP server support:
+
+```
+uv tool install 'twse-cli[mcp]'
+```
+
 ## Quick Start
 
 ```bash
@@ -26,8 +32,8 @@ twse fetch stock.bwibbu-all --json --code 2330
 # Discover endpoints
 twse endpoints --search "股利" --json
 
-# List all 143 endpoints
-twse endpoints --json
+# Inspect endpoint schema
+twse schema stock.stock-day-all --json
 ```
 
 ## Commands
@@ -44,10 +50,14 @@ twse fetch STOCK_DAY_ALL --json                     # by API code
 
 | Flag | Description |
 |------|-------------|
-| `--json` | JSON output (auto-detected when piped) |
+| `--json` | JSON envelope output (auto-detected when piped) |
 | `--fields "Code,Name"` | Select specific fields |
 | `--code 2330` | Filter by stock code |
 | `--limit 10` | Limit records returned |
+| `--normalize` | Convert strings to numbers, ROC dates to ISO 8601 |
+| `--ndjson` | Newline-delimited JSON (one record per line) |
+| `--raw` | Bare JSON array without envelope |
+| `--no-cache` | Bypass disk cache |
 
 ### `twse endpoints`
 
@@ -62,13 +72,65 @@ twse endpoints --search "bwibbu" --with-fields --json  # show fields
 
 Categories: `stock` (44), `company` (86), `broker` (9), `other` (4).
 
-## Output Format
+### `twse schema <endpoint>`
 
-```json
-{"ok": true, "data": [{"Code": "2330", "Name": "台積電", "ClosingPrice": "1865.00"}]}
+Inspect endpoint fields, inferred types, and example values.
+
+```bash
+twse schema stock.stock-day-all --json
 ```
 
-Exit codes: `0` success, `1` API error, `2` validation error, `3` network error.
+### `twse serve`
+
+Start as an MCP (Model Context Protocol) server on stdio.
+
+```bash
+twse serve
+```
+
+Exposes tools: `twse_fetch`, `twse_endpoints`, `twse_schema`. Requires `mcp` extra.
+
+## Output Formats
+
+### JSON envelope (default)
+
+```json
+{"ok": true, "data": [{"Code": "2330", "Name": "台積電", "ClosingPrice": "595.00"}]}
+```
+
+### NDJSON (`--ndjson`)
+
+```
+{"Code": "2330", "Name": "台積電", "ClosingPrice": "595.00"}
+{"Code": "2317", "Name": "鴻海", "ClosingPrice": "100.50"}
+```
+
+### Raw (`--raw`)
+
+```json
+[{"Code": "2330", "Name": "台積電"}, {"Code": "2317", "Name": "鴻海"}]
+```
+
+### Normalized (`--normalize`)
+
+```json
+{"ok": true, "data": [{"Code": "2330", "ClosingPrice": 595.0, "TradeVolume": 36317450}]}
+```
+
+## Environment Variables
+
+| Variable | Values | Description |
+|----------|--------|-------------|
+| `TWSE_OUTPUT` | `json`, `human` | Override auto-detection of output format |
+
+## Exit Codes
+
+| Code | Meaning |
+|------|---------|
+| `0` | Success |
+| `1` | API error (TWSE returned 4xx/5xx) |
+| `2` | Validation error (unknown endpoint, bad args) |
+| `3` | Network error (cannot reach TWSE API) |
 
 ## For AI Agents
 
