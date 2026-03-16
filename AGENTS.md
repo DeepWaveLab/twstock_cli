@@ -2,12 +2,14 @@
 name: twse-cli
 description: Agent-friendly CLI for Taiwan Stock Exchange (TWSE) OpenAPI — 143 endpoints
 install: uv tool install twse-cli
+security: read-only
 commands:
-  - twse fetch <endpoint> --json [--fields F] [--code C] [--limit N] [--normalize] [--ndjson] [--raw]
+  - twse fetch <endpoint> --json [--fields F] [--code C] [--limit N] [--normalize] [--ndjson] [--raw] [--dry-run] [--stdin]
   - twse endpoints --json [--search K] [--category C] [--with-fields]
-  - twse schema <endpoint> --json
+  - twse schema <endpoint> --json [--dry-run]
   - twse serve
   - twse version
+  - twse <command> --help-json
 ---
 
 # twse-cli — Agent Instructions
@@ -51,6 +53,9 @@ twse fetch STOCK_DAY_ALL --json
 - `--normalize` — Convert string→number, ROC dates→ISO 8601
 - `--ndjson` — Newline-delimited JSON (one record per line)
 - `--raw` — Bare JSON array (no envelope wrapper)
+- `--dry-run` — Preview request as JSON without making an HTTP call
+- `--stdin` — Read parameters from JSON on stdin
+- `--help-json` — Output command metadata as structured JSON
 
 ### 2. `twse endpoints` — Discover endpoints
 
@@ -170,6 +175,23 @@ twse fetch stock.stock-day-all --raw | jq '.[0:3]'
 twse schema stock.bwibbu-all --json
 ```
 
+### Preview before fetching
+```bash
+twse fetch stock.stock-day-all --dry-run --fields "Code,Name" --code 2330
+```
+
+### Structured input via stdin
+```bash
+echo '{"endpoint":"stock.stock-day-all","fields":["Code","Name"],"limit":5}' | twse fetch --stdin --json
+```
+
+### Discover command flags programmatically
+```bash
+twse fetch --help-json
+twse --help-json
+twse stock --help-json
+```
+
 ## Token-Saving Tips
 
 1. Always use `--fields` to select only needed columns
@@ -178,3 +200,17 @@ twse schema stock.bwibbu-all --json
 4. Search endpoints first: `twse endpoints --search <keyword> --json`
 5. Use `--normalize` to get clean numbers instead of string parsing
 6. Use `twse schema` to understand fields before querying
+7. Use `--dry-run` to preview the request before executing
+8. Use `--help-json` to discover flags without parsing help text
+
+## Security Model
+
+twse-cli is a **read-only** data fetcher. Its security posture:
+
+- **Network**: Only contacts `https://openapi.twse.com.tw/v1` (single host, HTTPS)
+- **SSL**: Certificate verification disabled (`verify=False`) due to known TWSE certificate issues. MITM risk acknowledged — data is public market data, not secrets.
+- **Authentication**: None. TWSE OpenAPI is public and auth-free.
+- **File system**: Writes only to `~/.cache/twse-cli/` (disk cache). No other file writes.
+- **Input validation**: All user-supplied strings validated against control characters, path traversal, and injection patterns. Unknown endpoints rejected against fixed registry. Max input length: 1000 chars.
+- **Output sanitization**: Control characters stripped from all API response values before output.
+- **Agent trust boundary**: The agent is an untrusted operator. The CLI validates all inputs and sanitizes all outputs. The agent does not need elevated permissions.

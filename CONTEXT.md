@@ -56,3 +56,7 @@ twse fetch STOCK_DAY_ALL              # API code
 - All TWSE values are strings by default (use `--normalize` to convert)
 - ROC dates: `1150313` = 2026-03-13 (ROC year + 1911 = Gregorian)
 - Categories: stock (44), company (86), broker (9), other (4)
+
+## Security
+
+Read-only tool. Inputs validated (control chars, path traversal, injection). Outputs sanitized (control chars stripped). See AGENTS.md for full security model.
