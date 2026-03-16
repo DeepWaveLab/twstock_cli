@@ -1039,6 +1039,11 @@ def resolve_endpoint(ref: str) -> EndpointDef | None:
     return None
 
 
+def _has_cjk(text: str) -> bool:
+    """Return True if *text* contains any CJK Unified Ideograph."""
+    return any("\u4e00" <= ch <= "\u9fff" for ch in text)
+
+
 def list_endpoints(*, category: str | None = None, search: str | None = None, with_fields: bool = False) -> list[dict]:
     """List endpoints for discovery.
 
@@ -1057,7 +1062,12 @@ def list_endpoints(*, category: str | None = None, search: str | None = None, wi
         if search_lower:
             searchable = f"{key} {ep.description} {ep.path}".lower()
             if search_lower not in searchable:
-                continue
+                # Fallback: CJK subsequence match (e.g. "營收" matches "營業收入")
+                if not _has_cjk(search_lower):
+                    continue
+                it = iter(searchable)
+                if not all(ch in it for ch in search_lower):
+                    continue
 
         entry: dict = {
             "name": key,
