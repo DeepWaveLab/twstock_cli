@@ -99,8 +99,9 @@ def cli(ctx: click.Context, verbose: bool) -> None:
 @click.option("--raw", is_flag=True, help="Output bare JSON array (no envelope)")
 @click.option("--dry-run", is_flag=True, help="Preview request as JSON without making an HTTP call")
 @click.option("--stdin", "use_stdin", is_flag=True, help="Read parameters from JSON on stdin")
+@click.option("--date", default=None, help="Date in YYYYMMDD format (for web API endpoints like T86)")
 @help_json_option
-def fetch(endpoint_ref: str | None, as_json: bool, field_list: str | None, stock_code: str | None, max_records: int | None, no_cache: bool, normalize: bool, ndjson: bool, raw: bool, dry_run: bool, use_stdin: bool) -> None:
+def fetch(endpoint_ref: str | None, as_json: bool, field_list: str | None, stock_code: str | None, max_records: int | None, no_cache: bool, normalize: bool, ndjson: bool, raw: bool, dry_run: bool, use_stdin: bool, date: str | None) -> None:
     """Fetch data from any TWSE endpoint.
 
     ENDPOINT_REF can be a dotted name (stock.stock-day-all), raw API path
@@ -150,6 +151,8 @@ def fetch(endpoint_ref: str | None, as_json: bool, field_list: str | None, stock
         no_cache = True
     if not dry_run and stdin_data.get("dry_run"):
         dry_run = True
+    if not date and stdin_data.get("date"):
+        date = stdin_data["date"]
 
     # Validate user-supplied inputs
     try:
@@ -174,7 +177,7 @@ def fetch(endpoint_ref: str | None, as_json: bool, field_list: str | None, stock
 
     from .commands._factory import _run_fetch
 
-    _run_fetch(ep, as_json, field_list, stock_code, max_records, no_cache=no_cache, normalize=normalize, ndjson=ndjson, raw=raw, dry_run=dry_run)
+    _run_fetch(ep, as_json, field_list, stock_code, max_records, no_cache=no_cache, normalize=normalize, ndjson=ndjson, raw=raw, dry_run=dry_run, date=date)
 
 
 @cli.command()

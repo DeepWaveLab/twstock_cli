@@ -143,3 +143,82 @@ class TWSEClient:
         if last_exc:
             raise TWSENetworkError(f"Cannot reach TWSE API after 3 attempts: {last_exc}") from last_exc
         raise TWSEApiError("TWSE API request failed after 3 attempts")
+
+    def fetch_web(self, base_url: str, path: str, params: dict[str, str] | None = None) -> list[dict[str, Any]]:
+        """Fetch data from a TWSE web API endpoint (fields+data format).
+
+        Unlike the OpenAPI, the web API returns {"stat":"OK","fields":[...],"data":[[...],...]}.
+        This method zips fields+data into list[dict].
+
+        Args:
+            base_url: Base URL (e.g. "https://www.twse.com.tw/rwd/zh").
+            path: API path (e.g. "/fund/T86").
+            params: Query parameters (date, selectType, etc.).
+
+        Returns:
+            List of record dicts.
+        """
+        if not self._http:
+            raise RuntimeError("Client not initialized. Use 'with TWSEClient() as client:'")
+
+        # Build cache key from base_url + path + sorted params
+        cache_key = f"{base_url}{path}"
+        if params:
+            sorted_params = "&".join(f"{k}={v}" for k, v in sorted(params.items()))
+            cache_key = f"{cache_key}?{sorted_params}"
+
+        if self._use_cache:
+            from .cache import get_cached
+
+            cached = get_cached(cache_key)
+            if cached is not None:
+                return cached
+
+        self._rate_limit()
+        url = f"{base_url}{path}"
+        last_exc: Exception | None = None
+
+        for attempt in range(3):
+            try:
+                t0 = time.monotonic()
+                resp = self._http.get(url, params=params)
+                elapsed = time.monotonic() - t0
+                self._last_request_time = time.monotonic()
+
+                logger.info("GET %s -> %d (%.2fs)", url, resp.status_code, elapsed)
+
+                if resp.status_code in (429, 500, 502, 503, 504):
+                    wait = 2**attempt + 0.5
+                    logger.warning("HTTP %d, retrying in %.1fs (attempt %d/3)", resp.status_code, wait, attempt + 1)
+                    time.sleep(wait)
+                    continue
+
+                if resp.status_code >= 400:
+                    raise TWSEApiError(f"TWSE web API returned {resp.status_code}")
+
+                body = resp.json()
+
+                if body.get("stat") != "OK":
+                    msg = body.get("stat", "unknown error")
+                    raise TWSEApiError(f"TWSE web API error: {msg}")
+
+                fields = body.get("fields", [])
+                raw_data = body.get("data", [])
+                result = [dict(zip(fields, row)) for row in raw_data]
+
+                if self._use_cache:
+                    from .cache import set_cached
+
+                    set_cached(cache_key, result)
+
+                return result
+
+            except (httpx.TimeoutException, httpx.NetworkError) as exc:
+                last_exc = exc
+                wait = 2**attempt + 0.5
+                logger.warning("Network error: %s, retrying in %.1fs (attempt %d/3)", exc, wait, attempt + 1)
+                time.sleep(wait)
+
+        if last_exc:
+            raise TWSENetworkError(f"Cannot reach TWSE web API after 3 attempts: {last_exc}") from last_exc
+        raise TWSEApiError("TWSE web API request failed after 3 attempts")

@@ -38,8 +38,9 @@ def twse_fetch(
     code: str = "",
     limit: int = 0,
     normalize: bool = False,
+    date: str = "",
 ) -> dict[str, Any]:
-    """Fetch data from any TWSE OpenAPI endpoint.
+    """Fetch data from any TWSE endpoint (OpenAPI or web API).
 
     Args:
         endpoint: Endpoint reference — dotted name (stock.stock-day-all),
@@ -49,6 +50,7 @@ def twse_fetch(
         code: Filter by stock code (e.g. "2330"). Empty string means no filter.
         limit: Maximum number of records to return. 0 means no limit.
         normalize: If true, convert string→number and ROC→ISO dates.
+        date: Date in YYYYMMDD format (for web API endpoints like T86). Empty = today.
 
     Returns:
         Standard envelope: {"ok": true, "data": [...]} or {"ok": false, "error": {...}}
@@ -69,7 +71,13 @@ def twse_fetch(
 
     try:
         with TWSEClient() as client:
-            data = client.fetch(ep.path)
+            if ep.base_url:
+                params = dict(ep.default_params)
+                if date:
+                    params["date"] = date
+                data = client.fetch_web(ep.base_url, ep.path, params)
+            else:
+                data = client.fetch(ep.path)
     except TWSEApiError as exc:
         return {"ok": False, "error": {"code": "api_error", "message": str(exc)}}
     except TWSENetworkError as exc:
@@ -77,6 +85,12 @@ def twse_fetch(
 
     # Sanitize response strings
     data = sanitize_data(data)
+
+    # Apply field aliases (web API endpoints have verbose Chinese field names)
+    if ep.field_aliases:
+        from .commands._factory import _apply_field_aliases
+
+        data = _apply_field_aliases(data, ep.field_aliases)
 
     # Apply filters
     if code:

@@ -22,6 +22,11 @@ GROUPS: dict[str, str] = {
 }
 
 
+def _apply_field_aliases(data: list[dict], aliases: dict[str, str]) -> list[dict]:
+    """Rename keys in each record using the alias mapping."""
+    return [{aliases.get(k, k): v for k, v in row.items()} for row in data]
+
+
 def _run_fetch(
     ep: EndpointDef,
     as_json: bool,
@@ -34,12 +39,15 @@ def _run_fetch(
     ndjson: bool = False,
     raw: bool = False,
     dry_run: bool = False,
+    date: str | None = None,
 ) -> None:
     """Shared fetch-filter-output pipeline used by both `twse fetch` and domain shortcuts."""
     from ..cli import EXIT_API_ERROR, EXIT_NETWORK_ERROR, EXIT_VALIDATION_ERROR
     from ..client import TWSEApiError, TWSEClient, TWSENetworkError
     from ..output import console, emit_error, emit_json, emit_ndjson, emit_raw, filter_by_code, filter_fields, is_agent_mode, render_table
     from ..validate import validate_input
+
+    is_web = ep.base_url is not None
 
     # Validate user-supplied inputs (for domain shortcuts that bypass cli.py validation)
     try:
@@ -57,28 +65,47 @@ def _run_fetch(
     if dry_run:
         from ..client import BASE_URL
 
-        preview = {
-            "dry_run": True,
-            "method": "GET",
-            "url": f"{BASE_URL}{ep.path}",
-            "endpoint": f"{ep.group}.{ep.cli_name}",
-            "filters": {
-                "fields": [f.strip() for f in field_list.split(",")] if field_list else None,
-                "code": stock_code,
-                "limit": max_records,
-                "normalize": normalize,
-            },
+        if is_web:
+            url = f"{ep.base_url}{ep.path}"
+            params = dict(ep.default_params)
+            if date:
+                params["date"] = date
+            preview = {
+                "dry_run": True,
+                "method": "GET",
+                "url": url,
+                "params": params,
+                "endpoint": f"{ep.group}.{ep.cli_name}",
+            }
+        else:
+            preview = {
+                "dry_run": True,
+                "method": "GET",
+                "url": f"{BASE_URL}{ep.path}",
+                "endpoint": f"{ep.group}.{ep.cli_name}",
+            }
+
+        filters = {
+            "fields": [f.strip() for f in field_list.split(",")] if field_list else None,
+            "code": stock_code,
+            "limit": max_records,
+            "normalize": normalize,
         }
-        # Remove None values from filters
-        preview["filters"] = {k: v for k, v in preview["filters"].items() if v is not None}
-        if not preview["filters"]:
-            del preview["filters"]
+        filters = {k: v for k, v in filters.items() if v is not None}
+        if filters:
+            preview["filters"] = filters
         click.echo(json.dumps(preview, ensure_ascii=False, indent=2))
         return
 
     try:
         with TWSEClient(use_cache=not no_cache) as client:
-            data = client.fetch(ep.path)
+            if is_web:
+                params = dict(ep.default_params)
+                if date:
+                    params["date"] = date
+                data = client.fetch_web(ep.base_url, ep.path, params)
+            else:
+                data = client.fetch(ep.path)
     except TWSEApiError as exc:
         if as_json or ndjson or raw or is_agent_mode():
             emit_error("api_error", str(exc), EXIT_API_ERROR)
@@ -94,6 +121,10 @@ def _run_fetch(
     from ..sanitize import sanitize_data
 
     data = sanitize_data(data)
+
+    # Apply field aliases (web API endpoints have verbose Chinese field names)
+    if ep.field_aliases:
+        data = _apply_field_aliases(data, ep.field_aliases)
 
     if stock_code:
         data = filter_by_code(data, stock_code, ep.code_field)
@@ -119,6 +150,8 @@ def _run_fetch(
 
 def make_endpoint_command(ep: EndpointDef) -> click.Command:
     """Create a Click command from an EndpointDef."""
+    if ep.base_url:
+        return _make_web_endpoint_command(ep)
 
     @click.command(name=ep.cli_name, help=ep.description)
     @click.option("--json", "as_json", is_flag=True, help="Output JSON envelope to stdout")
@@ -133,6 +166,27 @@ def make_endpoint_command(ep: EndpointDef) -> click.Command:
     @help_json_option
     def cmd(as_json: bool, field_list: str | None, stock_code: str | None, max_records: int | None, no_cache: bool, normalize: bool, ndjson: bool, raw: bool, dry_run: bool) -> None:
         _run_fetch(ep, as_json, field_list, stock_code, max_records, no_cache=no_cache, normalize=normalize, ndjson=ndjson, raw=raw, dry_run=dry_run)
+
+    return cmd
+
+
+def _make_web_endpoint_command(ep: EndpointDef) -> click.Command:
+    """Create a Click command for a web API endpoint (with --date option)."""
+
+    @click.command(name=ep.cli_name, help=ep.description)
+    @click.option("--json", "as_json", is_flag=True, help="Output JSON envelope to stdout")
+    @click.option("--fields", "field_list", default=None, help="Comma-separated fields to include")
+    @click.option("--code", "stock_code", default=None, help="Filter by stock code")
+    @click.option("--limit", "max_records", type=int, default=None, help="Limit number of records")
+    @click.option("--no-cache", is_flag=True, help="Bypass disk cache")
+    @click.option("--normalize", is_flag=True, help="Normalize data: string→number, ROC→ISO dates")
+    @click.option("--ndjson", is_flag=True, help="Output as newline-delimited JSON")
+    @click.option("--raw", is_flag=True, help="Output bare JSON array (no envelope)")
+    @click.option("--dry-run", is_flag=True, help="Preview request as JSON without making an HTTP call")
+    @click.option("--date", default=None, help="Date in YYYYMMDD format (default: today)")
+    @help_json_option
+    def cmd(as_json: bool, field_list: str | None, stock_code: str | None, max_records: int | None, no_cache: bool, normalize: bool, ndjson: bool, raw: bool, dry_run: bool, date: str | None) -> None:
+        _run_fetch(ep, as_json, field_list, stock_code, max_records, no_cache=no_cache, normalize=normalize, ndjson=ndjson, raw=raw, dry_run=dry_run, date=date)
 
     return cmd
 

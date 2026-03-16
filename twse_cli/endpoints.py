@@ -1,4 +1,4 @@
-"""Endpoint registry — 143 TWSE OpenAPI endpoints."""
+"""Endpoint registry — 144 TWSE endpoints (143 OpenAPI + 1 web API)."""
 
 from __future__ import annotations
 
@@ -7,7 +7,13 @@ from dataclasses import dataclass, field
 
 @dataclass(frozen=True, slots=True)
 class EndpointDef:
-    """Definition of a single TWSE OpenAPI endpoint."""
+    """Definition of a single TWSE endpoint.
+
+    For standard OpenAPI endpoints, only path/cli_name/group/description are needed.
+    For web API endpoints (e.g. T86), set base_url to override the default base,
+    default_params for required query parameters, and field_aliases to map
+    verbose Chinese field names to short English names.
+    """
 
     path: str
     cli_name: str
@@ -15,6 +21,9 @@ class EndpointDef:
     description: str
     code_field: str | None = None
     fields: list[str] = field(default_factory=list)
+    base_url: str | None = None
+    default_params: dict[str, str] = field(default_factory=dict)
+    field_aliases: dict[str, str] = field(default_factory=dict)
 
 
 ENDPOINTS: dict[str, EndpointDef] = {
@@ -1004,6 +1013,37 @@ ENDPOINTS: dict[str, EndpointDef] = {
         group="company",
         description="上市公司財務報告經監察人承認情形",
         code_field="公司代號",
+    ),
+    "stock.t86": EndpointDef(
+        path="/fund/T86",
+        cli_name="t86",
+        group="stock",
+        description="三大法人買賣超日報",
+        code_field="Code",
+        fields=["Code", "Name", "ForeignNet", "TrustNet", "DealerNet", "InstitutionalNet"],
+        base_url="https://www.twse.com.tw/rwd/zh",
+        default_params={"selectType": "ALLBUT0999", "response": "json"},
+        field_aliases={
+            "證券代號": "Code",
+            "證券名稱": "Name",
+            "外陸資買進股數(不含外資自營商)": "ForeignBuy",
+            "外陸資賣出股數(不含外資自營商)": "ForeignSell",
+            "外陸資買賣超股數(不含外資自營商)": "ForeignNet",
+            "外資自營商買進股數": "ForeignDealerBuy",
+            "外資自營商賣出股數": "ForeignDealerSell",
+            "外資自營商買賣超股數": "ForeignDealerNet",
+            "投信買進股數": "TrustBuy",
+            "投信賣出股數": "TrustSell",
+            "投信買賣超股數": "TrustNet",
+            "自營商買賣超股數": "DealerNet",
+            "自營商買進股數(自行買賣)": "DealerPropBuy",
+            "自營商賣出股數(自行買賣)": "DealerPropSell",
+            "自營商買賣超股數(自行買賣)": "DealerPropNet",
+            "自營商買進股數(避險)": "DealerHedgeBuy",
+            "自營商賣出股數(避險)": "DealerHedgeSell",
+            "自營商買賣超股數(避險)": "DealerHedgeNet",
+            "三大法人買賣超股數": "InstitutionalNet",
+        },
     ),
 }
 

@@ -23,6 +23,15 @@ def _mock_fetch(data):
     return patch("twse_cli.client.TWSEClient", return_value=mock_client)
 
 
+def _mock_fetch_web(data):
+    """Create a mock that patches TWSEClient.fetch_web to return given data."""
+    mock_client = MagicMock()
+    mock_client.__enter__ = MagicMock(return_value=mock_client)
+    mock_client.__exit__ = MagicMock(return_value=False)
+    mock_client.fetch_web.return_value = data
+    return patch("twse_cli.client.TWSEClient", return_value=mock_client)
+
+
 class TestFetchCommand:
     def test_fetch_json_output(self, runner):
         data = [{"Code": "2330", "Name": "台積電", "ClosingPrice": "595.00"}]
@@ -115,7 +124,7 @@ class TestEndpointsCommand:
         result = runner.invoke(cli, ["endpoints", "--json"])
         assert result.exit_code == 0
         data = json.loads(result.output)
-        assert len(data) == 143
+        assert len(data) == 144
 
     def test_endpoints_search(self, runner):
         result = runner.invoke(cli, ["endpoints", "--search", "股利", "--json"])
@@ -212,7 +221,7 @@ class TestDomainShortcuts:
                 continue
             if in_commands and line.strip():
                 command_count += 1
-        assert command_count == 44
+        assert command_count == 45
 
 
 class TestDryRun:
@@ -357,6 +366,94 @@ class TestLazyGroup:
         assert "fetch" in result.output
         assert "endpoints" in result.output
         assert "version" in result.output
+
+
+class TestT86WebEndpoint:
+    """Test T86 三大法人買賣超日報 web API endpoint."""
+
+    _T86_RAW = [
+        {"證券代號": "2330", "證券名稱": "台積電", "外陸資買賣超股數(不含外資自營商)": "5,000", "投信買賣超股數": "1,000", "自營商買賣超股數": "500", "三大法人買賣超股數": "6,500"},
+        {"證券代號": "2317", "證券名稱": "鴻海", "外陸資買賣超股數(不含外資自營商)": "-3,000", "投信買賣超股數": "200", "自營商買賣超股數": "-100", "三大法人買賣超股數": "-2,900"},
+    ]
+
+    def test_fetch_t86_json_with_aliases(self, runner):
+        with _mock_fetch_web(self._T86_RAW):
+            result = runner.invoke(cli, ["fetch", "stock.t86", "--json"])
+        assert result.exit_code == 0
+        envelope = json.loads(result.output)
+        assert envelope["ok"] is True
+        # Field aliases should have been applied
+        assert envelope["data"][0]["Code"] == "2330"
+        assert envelope["data"][0]["Name"] == "台積電"
+        assert envelope["data"][0]["ForeignNet"] == "5,000"
+        assert envelope["data"][0]["InstitutionalNet"] == "6,500"
+
+    def test_fetch_t86_with_code_filter(self, runner):
+        with _mock_fetch_web(self._T86_RAW):
+            result = runner.invoke(cli, ["fetch", "stock.t86", "--json", "--code", "2330"])
+        assert result.exit_code == 0
+        envelope = json.loads(result.output)
+        assert len(envelope["data"]) == 1
+        assert envelope["data"][0]["Code"] == "2330"
+
+    def test_fetch_t86_with_limit(self, runner):
+        with _mock_fetch_web(self._T86_RAW):
+            result = runner.invoke(cli, ["fetch", "stock.t86", "--json", "--limit", "1"])
+        envelope = json.loads(result.output)
+        assert len(envelope["data"]) == 1
+
+    def test_fetch_t86_with_fields(self, runner):
+        with _mock_fetch_web(self._T86_RAW):
+            result = runner.invoke(cli, ["fetch", "stock.t86", "--json", "--fields", "Code,Name,InstitutionalNet"])
+        envelope = json.loads(result.output)
+        assert list(envelope["data"][0].keys()) == ["Code", "Name", "InstitutionalNet"]
+
+    def test_fetch_t86_dry_run(self, runner):
+        result = runner.invoke(cli, ["fetch", "stock.t86", "--dry-run"])
+        assert result.exit_code == 0
+        preview = json.loads(result.output)
+        assert preview["dry_run"] is True
+        assert "twse.com.tw" in preview["url"]
+        assert preview["params"]["selectType"] == "ALLBUT0999"
+
+    def test_fetch_t86_dry_run_with_date(self, runner):
+        result = runner.invoke(cli, ["fetch", "stock.t86", "--dry-run", "--date", "20260316"])
+        assert result.exit_code == 0
+        preview = json.loads(result.output)
+        assert preview["params"]["date"] == "20260316"
+
+    def test_stock_t86_domain_shortcut(self, runner):
+        with _mock_fetch_web(self._T86_RAW):
+            result = runner.invoke(cli, ["stock", "t86", "--json"])
+        assert result.exit_code == 0
+        envelope = json.loads(result.output)
+        assert envelope["ok"] is True
+        assert envelope["data"][0]["Code"] == "2330"
+
+    def test_stock_t86_domain_shortcut_with_date(self, runner):
+        with _mock_fetch_web(self._T86_RAW):
+            result = runner.invoke(cli, ["stock", "t86", "--json", "--date", "20260316"])
+        assert result.exit_code == 0
+        envelope = json.loads(result.output)
+        assert envelope["ok"] is True
+
+    def test_resolve_t86_by_dotted_name(self):
+        from twse_cli.endpoints import resolve_endpoint
+        ep = resolve_endpoint("stock.t86")
+        assert ep is not None
+        assert ep.base_url == "https://www.twse.com.tw/rwd/zh"
+        assert ep.field_aliases["證券代號"] == "Code"
+
+    def test_search_t86(self):
+        from twse_cli.endpoints import list_endpoints
+        results = list_endpoints(search="t86")
+        assert len(results) >= 1
+        assert any(r["name"] == "stock.t86" for r in results)
+
+    def test_search_institutional(self):
+        from twse_cli.endpoints import list_endpoints
+        results = list_endpoints(search="法人")
+        assert any(r["name"] == "stock.t86" for r in results)
 
 
 class TestVersionCommand:
