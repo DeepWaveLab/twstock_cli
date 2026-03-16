@@ -262,6 +262,89 @@ class TestDryRun:
         assert "openapi.twse.com.tw" in preview["url"]
 
 
+class TestStdinInput:
+    """Test --stdin JSON input on fetch command."""
+
+    def test_stdin_with_endpoint(self, runner):
+        data = [{"Code": "2330", "Name": "台積電"}]
+        stdin_json = '{"endpoint": "stock.stock-day-all"}'
+        with _mock_fetch(data):
+            result = runner.invoke(cli, ["fetch", "--stdin", "--json"], input=stdin_json)
+        assert result.exit_code == 0
+        envelope = json.loads(result.output)
+        assert envelope["ok"] is True
+
+    def test_stdin_fields_as_array(self, runner):
+        data = [{"Code": "2330", "Name": "台積電", "Volume": "100"}]
+        stdin_json = '{"endpoint": "stock.stock-day-all", "fields": ["Code", "Name"]}'
+        with _mock_fetch(data):
+            result = runner.invoke(cli, ["fetch", "--stdin", "--json"], input=stdin_json)
+        assert result.exit_code == 0
+        envelope = json.loads(result.output)
+        assert envelope["data"] == [{"Code": "2330", "Name": "台積電"}]
+
+    def test_stdin_fields_as_string(self, runner):
+        data = [{"Code": "2330", "Name": "台積電", "Volume": "100"}]
+        stdin_json = '{"endpoint": "stock.stock-day-all", "fields": "Code,Name"}'
+        with _mock_fetch(data):
+            result = runner.invoke(cli, ["fetch", "--stdin", "--json"], input=stdin_json)
+        assert result.exit_code == 0
+        envelope = json.loads(result.output)
+        assert envelope["data"] == [{"Code": "2330", "Name": "台積電"}]
+
+    def test_stdin_cli_flag_overrides(self, runner):
+        data = [{"Code": "2330", "Name": "台積電", "Volume": "100"}]
+        stdin_json = '{"endpoint": "stock.stock-day-all", "fields": "Volume"}'
+        with _mock_fetch(data):
+            result = runner.invoke(cli, ["fetch", "--stdin", "--json", "--fields", "Code,Name"], input=stdin_json)
+        assert result.exit_code == 0
+        envelope = json.loads(result.output)
+        # CLI --fields "Code,Name" should override stdin "Volume"
+        assert envelope["data"] == [{"Code": "2330", "Name": "台積電"}]
+
+    def test_stdin_positional_overrides(self, runner):
+        data = [{"Code": "2330"}]
+        stdin_json = '{"endpoint": "stock.bwibbu-all"}'
+        with _mock_fetch(data):
+            result = runner.invoke(cli, ["fetch", "stock.stock-day-all", "--stdin", "--json"], input=stdin_json)
+        assert result.exit_code == 0
+        # Positional endpoint_ref should override stdin
+
+    def test_stdin_missing_endpoint(self, runner):
+        stdin_json = '{"fields": "Code"}'
+        result = runner.invoke(cli, ["fetch", "--stdin", "--json"], input=stdin_json)
+        assert result.exit_code == 2
+        envelope = json.loads(result.output)
+        assert envelope["ok"] is False
+        assert "Missing endpoint" in envelope["error"]["message"]
+
+    def test_stdin_invalid_json(self, runner):
+        result = runner.invoke(cli, ["fetch", "--stdin", "--json"], input="not valid json")
+        assert result.exit_code == 2
+        envelope = json.loads(result.output)
+        assert envelope["ok"] is False
+        assert "Invalid JSON" in envelope["error"]["message"]
+
+    def test_stdin_empty(self, runner):
+        result = runner.invoke(cli, ["fetch", "--stdin", "--json"], input="")
+        assert result.exit_code == 2
+        envelope = json.loads(result.output)
+        assert envelope["ok"] is False
+        assert "No input" in envelope["error"]["message"]
+
+    def test_stdin_unknown_keys_ignored(self, runner):
+        data = [{"Code": "2330"}]
+        stdin_json = '{"endpoint": "stock.stock-day-all", "unknown_key": "value"}'
+        with _mock_fetch(data):
+            result = runner.invoke(cli, ["fetch", "--stdin", "--json"], input=stdin_json)
+        assert result.exit_code == 0
+
+    def test_stdin_with_control_chars_rejected(self, runner):
+        stdin_json = '{"endpoint": "stock.stock-day-all", "code": "23\\u000030"}'
+        result = runner.invoke(cli, ["fetch", "--stdin", "--json"], input=stdin_json)
+        assert result.exit_code == 2
+
+
 class TestLazyGroup:
     def test_help_lists_all_groups(self, runner):
         result = runner.invoke(cli, ["--help"])

@@ -86,7 +86,7 @@ def cli(ctx: click.Context, verbose: bool) -> None:
 
 
 @cli.command()
-@click.argument("endpoint_ref")
+@click.argument("endpoint_ref", required=False, default=None)
 @click.option("--json", "as_json", is_flag=True, help="Output JSON envelope to stdout")
 @click.option("--fields", "field_list", default=None, help="Comma-separated fields to include")
 @click.option("--code", "stock_code", default=None, help="Filter by stock code")
@@ -96,7 +96,8 @@ def cli(ctx: click.Context, verbose: bool) -> None:
 @click.option("--ndjson", is_flag=True, help="Output as newline-delimited JSON")
 @click.option("--raw", is_flag=True, help="Output bare JSON array (no envelope)")
 @click.option("--dry-run", is_flag=True, help="Preview request as JSON without making an HTTP call")
-def fetch(endpoint_ref: str, as_json: bool, field_list: str | None, stock_code: str | None, max_records: int | None, no_cache: bool, normalize: bool, ndjson: bool, raw: bool, dry_run: bool) -> None:
+@click.option("--stdin", "use_stdin", is_flag=True, help="Read parameters from JSON on stdin")
+def fetch(endpoint_ref: str | None, as_json: bool, field_list: str | None, stock_code: str | None, max_records: int | None, no_cache: bool, normalize: bool, ndjson: bool, raw: bool, dry_run: bool, use_stdin: bool) -> None:
     """Fetch data from any TWSE endpoint.
 
     ENDPOINT_REF can be a dotted name (stock.stock-day-all), raw API path
@@ -110,7 +111,43 @@ def fetch(endpoint_ref: str, as_json: bool, field_list: str | None, stock_code: 
         twse fetch stock.stock-day-all --json --normalize
         twse fetch stock.stock-day-all --ndjson
         twse fetch stock.stock-day-all --raw
+        echo '{"endpoint":"stock.stock-day-all"}' | twse fetch --stdin --json
     """
+    # Parse stdin JSON if --stdin is set
+    stdin_data: dict = {}
+    if use_stdin:
+        raw_input = sys.stdin.read().strip()
+        if not raw_input:
+            emit_error("validation_error", "No input received on stdin", EXIT_VALIDATION_ERROR)
+        try:
+            stdin_data = json.loads(raw_input)
+        except json.JSONDecodeError as e:
+            emit_error("validation_error", f"Invalid JSON on stdin: {e}", EXIT_VALIDATION_ERROR)
+        if not isinstance(stdin_data, dict):
+            emit_error("validation_error", "Stdin JSON must be an object", EXIT_VALIDATION_ERROR)
+
+    # Merge: CLI flags override stdin values
+    endpoint_ref = endpoint_ref or stdin_data.get("endpoint")
+    if not endpoint_ref:
+        emit_error("validation_error", "Missing endpoint: provide ENDPOINT_REF argument or 'endpoint' in stdin JSON", EXIT_VALIDATION_ERROR)
+
+    fields_from_stdin = stdin_data.get("fields")
+    if fields_from_stdin and not field_list:
+        field_list = ",".join(fields_from_stdin) if isinstance(fields_from_stdin, list) else fields_from_stdin
+    stock_code = stock_code or stdin_data.get("code")
+    if max_records is None and stdin_data.get("limit") is not None:
+        max_records = int(stdin_data["limit"])
+    if not normalize and stdin_data.get("normalize"):
+        normalize = True
+    if not ndjson and stdin_data.get("ndjson"):
+        ndjson = True
+    if not raw and stdin_data.get("raw"):
+        raw = True
+    if not no_cache and stdin_data.get("no_cache"):
+        no_cache = True
+    if not dry_run and stdin_data.get("dry_run"):
+        dry_run = True
+
     # Validate user-supplied inputs
     try:
         endpoint_ref = validate_input(endpoint_ref, "ENDPOINT_REF")
