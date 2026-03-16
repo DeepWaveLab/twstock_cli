@@ -24,6 +24,7 @@ from .output import (
     emit_error,
     is_agent_mode,
 )
+from .help_json import help_json_option
 from .validate import validate_input
 
 # Exit codes
@@ -76,6 +77,7 @@ class LazyGroup(click.Group):
     "broker": "twse_cli.commands._factory",
 })
 @click.version_option(version=__version__, prog_name="twse")
+@help_json_option
 @click.option("-v", "--verbose", is_flag=True, help="Enable verbose logging")
 @click.pass_context
 def cli(ctx: click.Context, verbose: bool) -> None:
@@ -97,6 +99,7 @@ def cli(ctx: click.Context, verbose: bool) -> None:
 @click.option("--raw", is_flag=True, help="Output bare JSON array (no envelope)")
 @click.option("--dry-run", is_flag=True, help="Preview request as JSON without making an HTTP call")
 @click.option("--stdin", "use_stdin", is_flag=True, help="Read parameters from JSON on stdin")
+@help_json_option
 def fetch(endpoint_ref: str | None, as_json: bool, field_list: str | None, stock_code: str | None, max_records: int | None, no_cache: bool, normalize: bool, ndjson: bool, raw: bool, dry_run: bool, use_stdin: bool) -> None:
     """Fetch data from any TWSE endpoint.
 
@@ -179,6 +182,7 @@ def fetch(endpoint_ref: str | None, as_json: bool, field_list: str | None, stock
 @click.option("--search", "keyword", default=None, help="Search by keyword (en/zh)")
 @click.option("--category", default=None, type=click.Choice(["stock", "company", "broker", "other"]), help="Filter by category")
 @click.option("--with-fields", is_flag=True, help="Include field definitions")
+@help_json_option
 def endpoints(as_json: bool, keyword: str | None, category: str | None, with_fields: bool) -> None:
     """Discover TWSE OpenAPI endpoints.
 
@@ -225,6 +229,7 @@ def endpoints(as_json: bool, keyword: str | None, category: str | None, with_fie
 @click.option("--json", "as_json", is_flag=True, help="Output JSON to stdout")
 @click.option("--no-cache", is_flag=True, help="Bypass disk cache")
 @click.option("--dry-run", is_flag=True, help="Preview request as JSON without making an HTTP call")
+@help_json_option
 def schema(endpoint_ref: str, as_json: bool, no_cache: bool, dry_run: bool) -> None:
     """Inspect schema of a TWSE endpoint (fields, types, examples).
 
@@ -306,6 +311,7 @@ def schema(endpoint_ref: str, as_json: bool, no_cache: bool, dry_run: bool) -> N
 
 
 @cli.command()
+@help_json_option
 def version() -> None:
     """Show version information."""
     info = {"name": "twse-cli", "version": __version__, "python": sys.version.split()[0]}
@@ -316,6 +322,7 @@ def version() -> None:
 
 
 @cli.command()
+@help_json_option
 def serve() -> None:
     """Start MCP (Model Context Protocol) server on stdio.
 

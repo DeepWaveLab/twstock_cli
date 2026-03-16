@@ -12,6 +12,7 @@ import json
 import click
 
 from ..endpoints import ENDPOINTS, EndpointDef
+from ..help_json import help_json_option
 
 # Group metadata: name → (description, help text)
 GROUPS: dict[str, str] = {
@@ -124,6 +125,7 @@ def make_endpoint_command(ep: EndpointDef) -> click.Command:
     @click.option("--ndjson", is_flag=True, help="Output as newline-delimited JSON")
     @click.option("--raw", is_flag=True, help="Output bare JSON array (no envelope)")
     @click.option("--dry-run", is_flag=True, help="Preview request as JSON without making an HTTP call")
+    @help_json_option
     def cmd(as_json: bool, field_list: str | None, stock_code: str | None, max_records: int | None, no_cache: bool, normalize: bool, ndjson: bool, raw: bool, dry_run: bool) -> None:
         _run_fetch(ep, as_json, field_list, stock_code, max_records, no_cache=no_cache, normalize=normalize, ndjson=ndjson, raw=raw, dry_run=dry_run)
 
@@ -135,6 +137,7 @@ def make_group(group_name: str) -> click.Group:
     description = GROUPS.get(group_name, group_name)
 
     @click.group(name=group_name, help=description)
+    @help_json_option
     def grp() -> None:
         pass
 
