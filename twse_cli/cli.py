@@ -22,11 +22,7 @@ from .endpoints import list_endpoints, resolve_endpoint
 from .output import (
     console,
     emit_error,
-    emit_json,
-    filter_by_code,
-    filter_fields,
     is_agent_mode,
-    render_table,
 )
 
 # Exit codes

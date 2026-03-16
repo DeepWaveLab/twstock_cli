@@ -139,6 +139,96 @@ class TestEndpointsCommand:
         assert "Code" in ep["fields"]
 
 
+class TestDomainShortcuts:
+    """Test domain shortcut commands (twse stock <cmd>, twse company <cmd>, etc.)."""
+
+    def test_stock_subgroup_exists(self, runner):
+        result = runner.invoke(cli, ["stock", "--help"])
+        assert result.exit_code == 0
+        assert "stock-day-all" in result.output
+
+    def test_company_subgroup_exists(self, runner):
+        result = runner.invoke(cli, ["company", "--help"])
+        assert result.exit_code == 0
+        assert "t187ap03-l" in result.output
+
+    def test_broker_subgroup_exists(self, runner):
+        result = runner.invoke(cli, ["broker", "--help"])
+        assert result.exit_code == 0
+        assert "brokerlist" in result.output
+
+    def test_stock_command_json_output(self, runner):
+        data = [{"Code": "2330", "Name": "台積電"}]
+        with _mock_fetch(data):
+            result = runner.invoke(cli, ["stock", "stock-day-all", "--json"])
+        assert result.exit_code == 0
+        envelope = json.loads(result.output)
+        assert envelope["ok"] is True
+        assert envelope["data"] == data
+
+    def test_stock_command_with_fields(self, runner):
+        data = [{"Code": "2330", "Name": "台積電", "ClosingPrice": "595.00"}]
+        with _mock_fetch(data):
+            result = runner.invoke(cli, ["stock", "stock-day-all", "--json", "--fields", "Code,Name"])
+        envelope = json.loads(result.output)
+        assert envelope["data"] == [{"Code": "2330", "Name": "台積電"}]
+
+    def test_stock_command_with_code_filter(self, runner):
+        data = [
+            {"Code": "2330", "Name": "台積電"},
+            {"Code": "2317", "Name": "鴻海"},
+        ]
+        with _mock_fetch(data):
+            result = runner.invoke(cli, ["stock", "stock-day-all", "--json", "--code", "2330"])
+        envelope = json.loads(result.output)
+        assert len(envelope["data"]) == 1
+        assert envelope["data"][0]["Code"] == "2330"
+
+    def test_company_command_json_output(self, runner):
+        data = [{"公司代號": "2330", "公司名稱": "台積電"}]
+        with _mock_fetch(data):
+            result = runner.invoke(cli, ["company", "t187ap03-l", "--json"])
+        assert result.exit_code == 0
+        envelope = json.loads(result.output)
+        assert envelope["ok"] is True
+
+    def test_broker_command_json_output(self, runner):
+        data = [{"Code": "1234", "Name": "Test Broker"}]
+        with _mock_fetch(data):
+            result = runner.invoke(cli, ["broker", "brokerlist", "--json"])
+        assert result.exit_code == 0
+        envelope = json.loads(result.output)
+        assert envelope["ok"] is True
+
+    def test_stock_group_has_44_commands(self, runner):
+        """Stock group should have 44 commands (matching endpoint count)."""
+        result = runner.invoke(cli, ["stock", "--help"])
+        # Filter to just command lines (those under Commands:)
+        in_commands = False
+        command_count = 0
+        for line in result.output.split("\n"):
+            if "Commands:" in line:
+                in_commands = True
+                continue
+            if in_commands and line.strip():
+                command_count += 1
+        assert command_count == 44
+
+
+class TestLazyGroup:
+    def test_help_lists_all_groups(self, runner):
+        result = runner.invoke(cli, ["--help"])
+        assert "stock" in result.output
+        assert "company" in result.output
+        assert "broker" in result.output
+
+    def test_help_lists_core_commands(self, runner):
+        result = runner.invoke(cli, ["--help"])
+        assert "fetch" in result.output
+        assert "endpoints" in result.output
+        assert "version" in result.output
+
+
 class TestVersionCommand:
     def test_version_flag(self, runner):
         result = runner.invoke(cli, ["--version"])
