@@ -15,13 +15,16 @@ uv tool install twse-cli
 
 ```bash
 # Fetch any endpoint (143 available)
-twse fetch <endpoint> --json [--fields F] [--code C] [--limit N] [--normalize] [--ndjson] [--raw]
+twse fetch <endpoint> --json [--fields F] [--code C] [--limit N] [--normalize] [--ndjson] [--raw] [--dry-run] [--stdin]
 
 # Discover endpoints
 twse endpoints --json [--search K] [--category C] [--with-fields]
 
 # Inspect endpoint schema
-twse schema <endpoint> --json
+twse schema <endpoint> --json [--dry-run]
+
+# Structured command metadata
+twse <command> --help-json
 
 # Version info
 twse version

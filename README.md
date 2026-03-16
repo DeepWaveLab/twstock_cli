@@ -57,6 +57,8 @@ twse fetch STOCK_DAY_ALL --json                     # by API code
 | `--normalize` | Convert strings to numbers, ROC dates to ISO 8601 |
 | `--ndjson` | Newline-delimited JSON (one record per line) |
 | `--raw` | Bare JSON array without envelope |
+| `--dry-run` | Preview request as JSON without making an HTTP call |
+| `--stdin` | Read parameters from JSON on stdin |
 | `--no-cache` | Bypass disk cache |
 
 ### `twse endpoints`
@@ -89,6 +91,32 @@ twse serve
 ```
 
 Exposes tools: `twse_fetch`, `twse_endpoints`, `twse_schema`. Requires `mcp` extra.
+
+### `twse <command> --help-json`
+
+Output structured command metadata as JSON (flags, types, defaults).
+
+```bash
+twse --help-json                  # list all commands
+twse fetch --help-json            # list fetch params with types
+twse stock --help-json            # list stock subcommands
+```
+
+### `--dry-run`
+
+Preview the planned request without making an HTTP call.
+
+```bash
+twse fetch stock.stock-day-all --dry-run --fields "Code,Name" --code 2330
+```
+
+### `--stdin`
+
+Accept structured JSON input from stdin (CLI flags override stdin values).
+
+```bash
+echo '{"endpoint":"stock.stock-day-all","fields":["Code","Name"],"limit":5}' | twse fetch --stdin --json
+```
 
 ## Output Formats
 
