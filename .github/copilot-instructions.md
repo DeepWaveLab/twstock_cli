@@ -35,3 +35,13 @@ twse schema <endpoint> --json       # Inspect endpoint fields/types
 - Exit codes: 0=success, 1=API error, 2=validation, 3=network
 - TTY-aware: Rich tables for humans (stderr), JSON for agents (stdout)
 - Domain shortcuts delegate to `twse fetch` pipeline
+- Input validation: control chars, path traversal, injection patterns rejected
+- Output sanitization: control chars stripped from API response strings
+
+## Guardrails
+
+- Always use `--fields` to select only needed columns (saves tokens)
+- Use `--limit 5` for data exploration before fetching full datasets
+- Use `--dry-run` to preview requests before executing
+- Search endpoints first with `--search` before guessing names
+- Use `--help-json` to discover flags programmatically

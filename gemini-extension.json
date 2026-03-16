@@ -6,11 +6,19 @@
     {
       "name": "twse fetch",
       "description": "Fetch data from any TWSE endpoint by dotted name, raw path, or API code",
-      "usage": "twse fetch <endpoint> --json [--fields F] [--code C] [--limit N] [--normalize] [--ndjson] [--raw]",
+      "usage": "twse fetch <endpoint> --json [--fields F] [--code C] [--limit N] [--normalize] [--ndjson] [--raw] [--dry-run] [--stdin]",
       "examples": [
         "twse fetch stock.stock-day-all --json",
         "twse fetch stock.stock-day-all --json --code 2330 --fields Code,Name,ClosingPrice",
-        "twse fetch stock.bwibbu-all --json --normalize"
+        "twse fetch stock.bwibbu-all --json --normalize",
+        "twse fetch stock.stock-day-all --dry-run",
+        "echo '{\"endpoint\":\"stock.stock-day-all\",\"fields\":[\"Code\",\"Name\"]}' | twse fetch --stdin --json"
+      ],
+      "guardrails": [
+        "Always use --fields to select only needed columns (saves tokens)",
+        "Use --limit 5 for data exploration before fetching full datasets",
+        "Use --dry-run to preview the request before executing",
+        "Use --normalize for clean numbers instead of parsing strings"
       ]
     },
     {
@@ -25,9 +33,12 @@
     {
       "name": "twse schema",
       "description": "Inspect endpoint schema: field names, types, examples",
-      "usage": "twse schema <endpoint> --json",
+      "usage": "twse schema <endpoint> --json [--dry-run]",
       "examples": [
         "twse schema stock.stock-day-all --json"
+      ],
+      "guardrails": [
+        "Use schema to understand fields before querying with fetch"
       ]
     }
   ],
@@ -44,6 +55,8 @@
   "notes": [
     "All TWSE values are strings by default; use --normalize to convert",
     "ROC dates: 1150313 = 2026-03-13 (ROC year + 1911 = Gregorian)",
-    "143 endpoints in 4 categories: stock (44), company (86), broker (9), other (4)"
+    "143 endpoints in 4 categories: stock (44), company (86), broker (9), other (4)",
+    "Use --help-json on any command for structured metadata (flags, types, defaults)",
+    "Read-only tool: inputs validated, outputs sanitized, single HTTPS host"
   ]
 }

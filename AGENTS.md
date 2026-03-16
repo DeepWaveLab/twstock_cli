@@ -214,3 +214,44 @@ twse-cli is a **read-only** data fetcher. Its security posture:
 - **Input validation**: All user-supplied strings validated against control characters, path traversal, and injection patterns. Unknown endpoints rejected against fixed registry. Max input length: 1000 chars.
 - **Output sanitization**: Control characters stripped from all API response values before output.
 - **Agent trust boundary**: The agent is an untrusted operator. The CLI validates all inputs and sanitizes all outputs. The agent does not need elevated permissions.
+
+## Command Guardrails
+
+### fetch
+
+```yaml
+guardrails:
+  - rule: always-use-fields
+    severity: recommend
+    message: "Always use --fields to select only needed columns. Reduces tokens by 5-10x."
+  - rule: prefer-limit-for-sampling
+    severity: recommend
+    message: "Use --limit 5 for data exploration before fetching full datasets."
+  - rule: use-dry-run-first
+    severity: recommend
+    message: "Use --dry-run to preview the request before executing."
+  - rule: prefer-normalize
+    severity: recommend
+    message: "Use --normalize for clean numbers instead of parsing strings."
+```
+
+### endpoints
+
+```yaml
+guardrails:
+  - rule: search-before-fetch
+    severity: recommend
+    message: "Search endpoints first with --search before guessing endpoint names."
+  - rule: use-json-flag
+    severity: recommend
+    message: "Always use --json for machine-readable output."
+```
+
+### schema
+
+```yaml
+guardrails:
+  - rule: inspect-before-fetch
+    severity: recommend
+    message: "Use 'twse schema <endpoint> --json' to understand fields before querying."
+```
