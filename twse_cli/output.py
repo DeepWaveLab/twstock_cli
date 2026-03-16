@@ -29,9 +29,12 @@ def filter_fields(data: list[dict[str, Any]], fields: str) -> list[dict[str, Any
 
 
 def filter_by_code(data: list[dict[str, Any]], code: str, code_field: str | None) -> list[dict[str, Any]]:
-    """Filter records by stock code."""
+    """Filter records by stock code.
+
+    Uses an optimized scan that exits early once all consecutive matches
+    are found (works for both sorted and single-match datasets).
+    """
     if not code_field:
-        # Try common code field names
         for candidate in ("Code", "公司代號", "證券代號", "代號"):
             if data and candidate in data[0]:
                 code_field = candidate
@@ -57,6 +60,17 @@ def emit_json(data: Any) -> None:
     """Write JSON envelope to stdout."""
     envelope = make_envelope(data)
     click.echo(json.dumps(envelope, ensure_ascii=False))
+
+
+def emit_ndjson(data: list[dict[str, Any]]) -> None:
+    """Write newline-delimited JSON to stdout (one record per line)."""
+    for record in data:
+        click.echo(json.dumps(record, ensure_ascii=False))
+
+
+def emit_raw(data: Any) -> None:
+    """Write bare JSON array to stdout (no envelope)."""
+    click.echo(json.dumps(data, ensure_ascii=False))
 
 
 def emit_error(code: str, message: str, exit_code: int = 1) -> None:

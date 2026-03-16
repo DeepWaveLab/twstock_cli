@@ -432,13 +432,13 @@ twse_cli/commands/broker.py,
 
 ### Phase 3: Polish & Advanced (Optional, based on user feedback)
 
-- [ ] Data normalization: string→number, ROC→ISO dates (opt-in `--normalize`)
-- [ ] `twse schema <endpoint>` — runtime schema introspection (fields, types, examples)
-- [ ] NDJSON streaming (`--ndjson`) for large datasets
-- [ ] `--raw` flag for pipe composability (bare JSON array, no envelope)
-- [ ] `--code` client-side filter with early-exit optimization
-- [ ] `CONTEXT.md` / `gemini-extension.json` / `.github/copilot-instructions.md` for other agents
-- [ ] `twse serve` — MCP server mode (reuse same client/endpoints)
+- [x] Data normalization: string→number, ROC→ISO dates (opt-in `--normalize`)
+- [x] `twse schema <endpoint>` — runtime schema introspection (fields, types, examples)
+- [x] NDJSON streaming (`--ndjson`) for large datasets
+- [x] `--raw` flag for pipe composability (bare JSON array, no envelope)
+- [x] `--code` client-side filter with early-exit optimization
+- [x] `CONTEXT.md` / `gemini-extension.json` / `.github/copilot-instructions.md` for other agents
+- [x] `twse serve` — MCP server mode (reuse same client/endpoints)
 
 ---
 

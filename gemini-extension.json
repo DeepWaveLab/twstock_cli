@@ -1,0 +1,49 @@
+{
+  "name": "twse-cli",
+  "description": "Agent-friendly CLI for Taiwan Stock Exchange (TWSE) OpenAPI — 143 endpoints, one tool",
+  "version": "0.1.0",
+  "commands": [
+    {
+      "name": "twse fetch",
+      "description": "Fetch data from any TWSE endpoint by dotted name, raw path, or API code",
+      "usage": "twse fetch <endpoint> --json [--fields F] [--code C] [--limit N] [--normalize] [--ndjson] [--raw]",
+      "examples": [
+        "twse fetch stock.stock-day-all --json",
+        "twse fetch stock.stock-day-all --json --code 2330 --fields Code,Name,ClosingPrice",
+        "twse fetch stock.bwibbu-all --json --normalize"
+      ]
+    },
+    {
+      "name": "twse endpoints",
+      "description": "Discover and search TWSE OpenAPI endpoints",
+      "usage": "twse endpoints --json [--search K] [--category C] [--with-fields]",
+      "examples": [
+        "twse endpoints --search dividend --json",
+        "twse endpoints --category stock --json"
+      ]
+    },
+    {
+      "name": "twse schema",
+      "description": "Inspect endpoint schema: field names, types, examples",
+      "usage": "twse schema <endpoint> --json",
+      "examples": [
+        "twse schema stock.stock-day-all --json"
+      ]
+    }
+  ],
+  "output_format": {
+    "success": "{\"ok\": true, \"data\": [...]}",
+    "error": "{\"ok\": false, \"error\": {\"code\": \"...\", \"message\": \"...\"}}"
+  },
+  "exit_codes": {
+    "0": "Success",
+    "1": "API error",
+    "2": "Validation error",
+    "3": "Network error"
+  },
+  "notes": [
+    "All TWSE values are strings by default; use --normalize to convert",
+    "ROC dates: 1150313 = 2026-03-13 (ROC year + 1911 = Gregorian)",
+    "143 endpoints in 4 categories: stock (44), company (86), broker (9), other (4)"
+  ]
+}

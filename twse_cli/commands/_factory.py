@@ -27,34 +27,45 @@ def _run_fetch(
     max_records: int | None,
     *,
     no_cache: bool = False,
+    normalize: bool = False,
+    ndjson: bool = False,
+    raw: bool = False,
 ) -> None:
     """Shared fetch-filter-output pipeline used by both `twse fetch` and domain shortcuts."""
     from ..cli import EXIT_API_ERROR, EXIT_NETWORK_ERROR
     from ..client import TWSEApiError, TWSEClient, TWSENetworkError
-    from ..output import console, emit_error, emit_json, filter_by_code, filter_fields, is_agent_mode, render_table
+    from ..output import console, emit_error, emit_json, emit_ndjson, emit_raw, filter_by_code, filter_fields, is_agent_mode, render_table
 
     try:
         with TWSEClient(use_cache=not no_cache) as client:
             data = client.fetch(ep.path)
     except TWSEApiError as exc:
-        if as_json or is_agent_mode():
+        if as_json or ndjson or raw or is_agent_mode():
             emit_error("api_error", str(exc), EXIT_API_ERROR)
         console.print(f"[red]{exc}[/red]")
         raise SystemExit(EXIT_API_ERROR) from None
     except TWSENetworkError as exc:
-        if as_json or is_agent_mode():
+        if as_json or ndjson or raw or is_agent_mode():
             emit_error("network_error", str(exc), EXIT_NETWORK_ERROR)
         console.print(f"[red]{exc}[/red]")
         raise SystemExit(EXIT_NETWORK_ERROR) from None
 
     if stock_code:
         data = filter_by_code(data, stock_code, ep.code_field)
+    if normalize:
+        from ..normalize import normalize_data
+
+        data = normalize_data(data)
     if field_list:
         data = filter_fields(data, field_list)
     if max_records:
         data = data[:max_records]
 
-    if as_json or is_agent_mode():
+    if ndjson:
+        emit_ndjson(data)
+    elif raw:
+        emit_raw(data)
+    elif as_json or is_agent_mode():
         emit_json(data)
     else:
         dotted = f"{ep.group}.{ep.cli_name}"
@@ -70,8 +81,11 @@ def make_endpoint_command(ep: EndpointDef) -> click.Command:
     @click.option("--code", "stock_code", default=None, help="Filter by stock code")
     @click.option("--limit", "max_records", type=int, default=None, help="Limit number of records")
     @click.option("--no-cache", is_flag=True, help="Bypass disk cache")
-    def cmd(as_json: bool, field_list: str | None, stock_code: str | None, max_records: int | None, no_cache: bool) -> None:
-        _run_fetch(ep, as_json, field_list, stock_code, max_records, no_cache=no_cache)
+    @click.option("--normalize", is_flag=True, help="Normalize data: string→number, ROC→ISO dates")
+    @click.option("--ndjson", is_flag=True, help="Output as newline-delimited JSON")
+    @click.option("--raw", is_flag=True, help="Output bare JSON array (no envelope)")
+    def cmd(as_json: bool, field_list: str | None, stock_code: str | None, max_records: int | None, no_cache: bool, normalize: bool, ndjson: bool, raw: bool) -> None:
+        _run_fetch(ep, as_json, field_list, stock_code, max_records, no_cache=no_cache, normalize=normalize, ndjson=ndjson, raw=raw)
 
     return cmd
 

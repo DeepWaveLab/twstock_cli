@@ -91,7 +91,10 @@ def cli(ctx: click.Context, verbose: bool) -> None:
 @click.option("--code", "stock_code", default=None, help="Filter by stock code")
 @click.option("--limit", "max_records", type=int, default=None, help="Limit number of records")
 @click.option("--no-cache", is_flag=True, help="Bypass disk cache")
-def fetch(endpoint_ref: str, as_json: bool, field_list: str | None, stock_code: str | None, max_records: int | None, no_cache: bool) -> None:
+@click.option("--normalize", is_flag=True, help="Normalize data: string→number, ROC→ISO dates")
+@click.option("--ndjson", is_flag=True, help="Output as newline-delimited JSON")
+@click.option("--raw", is_flag=True, help="Output bare JSON array (no envelope)")
+def fetch(endpoint_ref: str, as_json: bool, field_list: str | None, stock_code: str | None, max_records: int | None, no_cache: bool, normalize: bool, ndjson: bool, raw: bool) -> None:
     """Fetch data from any TWSE endpoint.
 
     ENDPOINT_REF can be a dotted name (stock.stock-day-all), raw API path
@@ -102,10 +105,13 @@ def fetch(endpoint_ref: str, as_json: bool, field_list: str | None, stock_code: 
         twse fetch stock.stock-day-all --json
         twse fetch /exchangeReport/STOCK_DAY_ALL --json --fields "Code,Name,ClosingPrice"
         twse fetch stock.bwibbu-all --json --code 2330
+        twse fetch stock.stock-day-all --json --normalize
+        twse fetch stock.stock-day-all --ndjson
+        twse fetch stock.stock-day-all --raw
     """
     ep = resolve_endpoint(endpoint_ref)
     if not ep:
-        if as_json or is_agent_mode():
+        if as_json or ndjson or raw or is_agent_mode():
             emit_error("unknown_endpoint", f"Unknown endpoint: {endpoint_ref}", EXIT_VALIDATION_ERROR)
         console.print(f"[red]Unknown endpoint: {endpoint_ref}[/red]")
         console.print("Use [bold]twse endpoints --search <keyword>[/bold] to discover endpoints.")
@@ -113,7 +119,7 @@ def fetch(endpoint_ref: str, as_json: bool, field_list: str | None, stock_code: 
 
     from .commands._factory import _run_fetch
 
-    _run_fetch(ep, as_json, field_list, stock_code, max_records, no_cache=no_cache)
+    _run_fetch(ep, as_json, field_list, stock_code, max_records, no_cache=no_cache, normalize=normalize, ndjson=ndjson, raw=raw)
 
 
 @cli.command()
@@ -153,6 +159,67 @@ def endpoints(as_json: bool, keyword: str | None, category: str | None, with_fie
 
 
 @cli.command()
+@click.argument("endpoint_ref")
+@click.option("--json", "as_json", is_flag=True, help="Output JSON to stdout")
+@click.option("--no-cache", is_flag=True, help="Bypass disk cache")
+def schema(endpoint_ref: str, as_json: bool, no_cache: bool) -> None:
+    """Inspect schema of a TWSE endpoint (fields, types, examples).
+
+    Fetches a sample from the endpoint and analyzes field characteristics.
+
+    \b
+    Examples:
+        twse schema stock.stock-day-all --json
+        twse schema company.t187ap03-l
+    """
+    ep = resolve_endpoint(endpoint_ref)
+    if not ep:
+        if as_json or is_agent_mode():
+            emit_error("unknown_endpoint", f"Unknown endpoint: {endpoint_ref}", EXIT_VALIDATION_ERROR)
+        console.print(f"[red]Unknown endpoint: {endpoint_ref}[/red]")
+        raise SystemExit(EXIT_VALIDATION_ERROR)
+
+    from .client import TWSEApiError, TWSEClient, TWSENetworkError
+
+    try:
+        with TWSEClient(use_cache=not no_cache) as client:
+            data = client.fetch(ep.path)
+    except TWSEApiError as exc:
+        if as_json or is_agent_mode():
+            emit_error("api_error", str(exc), EXIT_API_ERROR)
+        console.print(f"[red]{exc}[/red]")
+        raise SystemExit(EXIT_API_ERROR) from None
+    except TWSENetworkError as exc:
+        if as_json or is_agent_mode():
+            emit_error("network_error", str(exc), EXIT_NETWORK_ERROR)
+        console.print(f"[red]{exc}[/red]")
+        raise SystemExit(EXIT_NETWORK_ERROR) from None
+
+    from .schema import analyze_schema
+
+    schema_info = analyze_schema(
+        data, endpoint_name=f"{ep.group}.{ep.cli_name}", description=ep.description, path=ep.path
+    )
+
+    if as_json or is_agent_mode():
+        click.echo(json.dumps(schema_info, ensure_ascii=False))
+    else:
+        from rich.table import Table
+
+        console.print(f"\n[bold]{ep.group}.{ep.cli_name}[/bold] — {ep.description}")
+        console.print(f"[dim]Path: {ep.path} | Records: {schema_info['record_count']}[/dim]\n")
+
+        table = Table(title="Fields")
+        table.add_column("Field", style="bold")
+        table.add_column("Type")
+        table.add_column("Example", style="dim")
+        table.add_column("Non-empty %")
+        for f in schema_info["fields"]:
+            table.add_row(f["name"], f["type"], str(f["example"]), f"{f['non_empty_pct']}%")
+        console.print(table)
+
+
+@cli.command()
 def version() -> None:
     """Show version information."""
     info = {"name": "twse-cli", "version": __version__, "python": sys.version.split()[0]}
@@ -160,6 +227,27 @@ def version() -> None:
         click.echo(json.dumps(info))
     else:
         console.print(f"twse-cli {__version__} (Python {info['python']})")
+
+
+@cli.command()
+def serve() -> None:
+    """Start MCP (Model Context Protocol) server on stdio.
+
+    Exposes twse-cli as an MCP server for AI agents.
+    Tools: twse_fetch, twse_endpoints, twse_schema.
+
+    \b
+    Usage:
+        twse serve
+    """
+    try:
+        from .serve import run_server
+    except ImportError:
+        console.print("[red]MCP server requires 'mcp' package.[/red]")
+        console.print("Install with: [bold]uv pip install 'twse-cli[mcp]'[/bold]")
+        raise SystemExit(EXIT_VALIDATION_ERROR) from None
+
+    run_server()
 
 
 if __name__ == "__main__":
