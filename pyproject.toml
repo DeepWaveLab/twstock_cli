@@ -45,6 +45,11 @@ packages = ["twse_cli"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+markers = [
+    "integration: hits real TWSE API (deselect with '-m not integration')",
+    "smoke: minimal smoke test subset",
+]
+addopts = "-m 'not integration'"
 
 [tool.ruff]
 target-version = "py312"

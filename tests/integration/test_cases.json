@@ -1,0 +1,1158 @@
+[
+  {"_comment": "=== TIER 1: DETERMINISTIC — no API needed ==="},
+
+  {"_comment": "--- version ---"},
+  {
+    "id": "version-command",
+    "description": "Version command outputs JSON with name, version, python",
+    "tags": ["smoke", "version"],
+    "requires_api": false,
+    "command": ["version"],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": ["name", "version", "python"]
+    }
+  },
+  {
+    "id": "version-flag",
+    "description": "--version flag outputs version string",
+    "tags": ["version"],
+    "requires_api": false,
+    "command": ["--version"],
+    "expected": {
+      "exit_code": 0
+    }
+  },
+
+  {"_comment": "--- help-json ---"},
+  {
+    "id": "help-json-top-level",
+    "description": "Top-level --help-json lists all commands",
+    "tags": ["help-json"],
+    "requires_api": false,
+    "command": ["--help-json"],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": ["name", "commands"]
+    }
+  },
+  {
+    "id": "help-json-fetch",
+    "description": "Fetch --help-json lists params with types",
+    "tags": ["help-json"],
+    "requires_api": false,
+    "command": ["fetch", "--help-json"],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": ["name", "params"]
+    }
+  },
+  {
+    "id": "help-json-stock-group",
+    "description": "Stock group --help-json lists subcommands",
+    "tags": ["help-json"],
+    "requires_api": false,
+    "command": ["stock", "--help-json"],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": ["name", "commands"]
+    }
+  },
+  {
+    "id": "help-json-endpoints",
+    "description": "Endpoints --help-json lists params",
+    "tags": ["help-json"],
+    "requires_api": false,
+    "command": ["endpoints", "--help-json"],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": ["name", "params"]
+    }
+  },
+
+  {"_comment": "--- endpoints discovery ---"},
+  {
+    "id": "endpoints-json-all",
+    "description": "List all 143 endpoints as JSON array",
+    "tags": ["smoke", "endpoints"],
+    "requires_api": false,
+    "command": ["endpoints", "--json"],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "array",
+      "min_records": 143
+    }
+  },
+  {
+    "id": "endpoints-category-stock",
+    "description": "Filter endpoints by stock category",
+    "tags": ["endpoints"],
+    "requires_api": false,
+    "command": ["endpoints", "--category", "stock", "--json"],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "array",
+      "min_records": 44,
+      "required_fields": ["name", "path", "group", "description"]
+    }
+  },
+  {
+    "id": "endpoints-category-company",
+    "description": "Filter endpoints by company category",
+    "tags": ["endpoints"],
+    "requires_api": false,
+    "command": ["endpoints", "--category", "company", "--json"],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "array",
+      "min_records": 86
+    }
+  },
+  {
+    "id": "endpoints-category-broker",
+    "description": "Filter endpoints by broker category",
+    "tags": ["endpoints"],
+    "requires_api": false,
+    "command": ["endpoints", "--category", "broker", "--json"],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "array",
+      "min_records": 9
+    }
+  },
+  {
+    "id": "endpoints-search-chinese-exact",
+    "description": "Search endpoints with exact Chinese substring",
+    "tags": ["endpoints", "search"],
+    "requires_api": false,
+    "command": ["endpoints", "--search", "營業收入", "--json"],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "array",
+      "min_records": 2
+    }
+  },
+  {
+    "id": "endpoints-search-cjk-subsequence",
+    "description": "CJK subsequence search: 營收 matches 營業收入",
+    "tags": ["endpoints", "search"],
+    "requires_api": false,
+    "command": ["endpoints", "--search", "營收", "--json"],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "array",
+      "min_records": 1
+    }
+  },
+  {
+    "id": "endpoints-search-english",
+    "description": "Search endpoints with English path fragment",
+    "tags": ["endpoints", "search"],
+    "requires_api": false,
+    "command": ["endpoints", "--search", "STOCK_DAY", "--json"],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "array",
+      "min_records": 1
+    }
+  },
+  {
+    "id": "endpoints-with-fields",
+    "description": "Endpoints with --with-fields includes field definitions",
+    "tags": ["endpoints"],
+    "requires_api": false,
+    "command": ["endpoints", "--with-fields", "--json", "--search", "stock.stock-day-all"],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "array",
+      "min_records": 1,
+      "required_fields": ["name", "fields"]
+    }
+  },
+  {
+    "id": "endpoints-search-no-results",
+    "description": "Search with no matches returns empty array",
+    "tags": ["endpoints"],
+    "requires_api": false,
+    "command": ["endpoints", "--search", "xyznonexistent", "--json"],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "array",
+      "allow_empty": true
+    }
+  },
+
+  {"_comment": "--- dry-run ---"},
+  {
+    "id": "dry-run-fetch-basic",
+    "description": "Dry run prints URL preview without hitting API",
+    "tags": ["dry-run"],
+    "requires_api": false,
+    "command": ["fetch", "stock.stock-day-all", "--dry-run"],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": ["dry_run", "method", "url", "endpoint"]
+    }
+  },
+  {
+    "id": "dry-run-fetch-with-filters",
+    "description": "Dry run includes filter parameters in preview",
+    "tags": ["dry-run"],
+    "requires_api": false,
+    "command": ["fetch", "stock.stock-day-all", "--dry-run", "--code", "2330", "--fields", "Code,Name", "--limit", "5"],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": ["dry_run", "method", "url", "endpoint", "filters"]
+    }
+  },
+  {
+    "id": "dry-run-stock-shortcut",
+    "description": "Dry run on stock domain shortcut",
+    "tags": ["dry-run", "shortcut"],
+    "requires_api": false,
+    "command": ["stock", "stock-day-all", "--dry-run"],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": ["dry_run", "method", "url"]
+    }
+  },
+  {
+    "id": "dry-run-company-shortcut",
+    "description": "Dry run on company domain shortcut",
+    "tags": ["dry-run", "shortcut"],
+    "requires_api": false,
+    "command": ["company", "t187ap03-l", "--dry-run"],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": ["dry_run", "url"]
+    }
+  },
+  {
+    "id": "dry-run-broker-shortcut",
+    "description": "Dry run on broker domain shortcut",
+    "tags": ["dry-run", "shortcut"],
+    "requires_api": false,
+    "command": ["broker", "brokerlist", "--dry-run"],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": ["dry_run", "url"]
+    }
+  },
+  {
+    "id": "dry-run-schema",
+    "description": "Schema dry run prints URL without fetching",
+    "tags": ["dry-run", "schema"],
+    "requires_api": false,
+    "command": ["schema", "stock.stock-day-all", "--dry-run"],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": ["dry_run", "url"]
+    }
+  },
+
+  {"_comment": "--- error handling ---"},
+  {
+    "id": "fetch-unknown-endpoint",
+    "description": "Unknown endpoint returns error JSON with exit 2",
+    "tags": ["error"],
+    "requires_api": false,
+    "command": ["fetch", "nonexistent.endpoint", "--json"],
+    "expected": {
+      "exit_code": 2,
+      "output_format": "envelope",
+      "ok": false,
+      "error_code": "unknown_endpoint"
+    }
+  },
+  {
+    "id": "schema-unknown-endpoint",
+    "description": "Schema with unknown endpoint returns error",
+    "tags": ["error", "schema"],
+    "requires_api": false,
+    "command": ["schema", "nonexistent", "--json"],
+    "expected": {
+      "exit_code": 2,
+      "output_format": "envelope",
+      "ok": false,
+      "error_code": "unknown_endpoint"
+    }
+  },
+
+  {"_comment": "--- input validation / security ---"},
+  {
+    "id": "validation-path-traversal",
+    "description": "Path traversal in --code is rejected",
+    "tags": ["security", "validation"],
+    "requires_api": false,
+    "command": ["fetch", "stock.stock-day-all", "--json", "--code", "../../etc/passwd"],
+    "expected": {
+      "exit_code": 2,
+      "output_format": "envelope",
+      "ok": false,
+      "error_code": "validation_error"
+    }
+  },
+  {
+    "id": "validation-query-injection",
+    "description": "Query string injection in --fields is rejected",
+    "tags": ["security", "validation"],
+    "requires_api": false,
+    "command": ["fetch", "stock.stock-day-all", "--json", "--fields", "Code?drop=true"],
+    "expected": {
+      "exit_code": 2,
+      "output_format": "envelope",
+      "ok": false,
+      "error_code": "validation_error"
+    }
+  },
+  {
+    "id": "validation-fragment-injection",
+    "description": "Fragment injection in --code is rejected",
+    "tags": ["security", "validation"],
+    "requires_api": false,
+    "command": ["fetch", "stock.stock-day-all", "--json", "--code", "2330#fragment"],
+    "expected": {
+      "exit_code": 2,
+      "output_format": "envelope",
+      "ok": false,
+      "error_code": "validation_error"
+    }
+  },
+  {
+    "id": "validation-path-traversal-shortcut",
+    "description": "Path traversal rejected on domain shortcut too",
+    "tags": ["security", "validation", "shortcut"],
+    "requires_api": false,
+    "command": ["stock", "stock-day-all", "--json", "--code", "../../../etc"],
+    "expected": {
+      "exit_code": 2,
+      "output_format": "envelope",
+      "ok": false,
+      "error_code": "validation_error"
+    }
+  },
+
+  {"_comment": "--- stdin edge cases ---"},
+  {
+    "id": "stdin-missing-endpoint",
+    "description": "Stdin without endpoint returns error",
+    "tags": ["stdin", "error"],
+    "requires_api": false,
+    "command": ["fetch", "--stdin", "--json"],
+    "stdin": {"code": "2330"},
+    "expected": {
+      "exit_code": 2,
+      "output_format": "envelope",
+      "ok": false,
+      "error_code": "validation_error"
+    }
+  },
+  {
+    "id": "stdin-invalid-json",
+    "description": "Invalid JSON on stdin returns error",
+    "tags": ["stdin", "error"],
+    "requires_api": false,
+    "command": ["fetch", "--stdin", "--json"],
+    "stdin": "not valid json {{{",
+    "expected": {
+      "exit_code": 2,
+      "output_format": "envelope",
+      "ok": false,
+      "error_code": "validation_error"
+    }
+  },
+  {
+    "id": "stdin-empty",
+    "description": "Empty stdin returns error",
+    "tags": ["stdin", "error"],
+    "requires_api": false,
+    "command": ["fetch", "--stdin", "--json"],
+    "stdin": "",
+    "expected": {
+      "exit_code": 2,
+      "output_format": "envelope",
+      "ok": false,
+      "error_code": "validation_error"
+    }
+  },
+
+  {"_comment": "=== TIER 2: LIVE API ==="},
+
+  {"_comment": "--- smoke tests (1 per group) ---"},
+  {
+    "id": "smoke-stock",
+    "description": "Smoke: fetch stock data (stock-day-all)",
+    "tags": ["smoke", "stock"],
+    "requires_api": true,
+    "command": ["fetch", "stock.stock-day-all", "--json", "--limit", "3"],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "min_records": 1,
+      "max_records": 3,
+      "required_fields": ["Code", "Name", "ClosingPrice", "TradeVolume"]
+    }
+  },
+  {
+    "id": "smoke-company",
+    "description": "Smoke: fetch company data (basic info)",
+    "tags": ["smoke", "company"],
+    "requires_api": true,
+    "command": ["fetch", "company.t187ap03-l", "--json", "--code", "2330"],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "min_records": 1,
+      "required_fields": ["公司代號", "公司名稱", "公司簡稱"]
+    }
+  },
+  {
+    "id": "smoke-broker",
+    "description": "Smoke: fetch broker data (broker list)",
+    "tags": ["smoke", "broker"],
+    "requires_api": true,
+    "command": ["fetch", "broker.brokerlist", "--json", "--limit", "3"],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "min_records": 1,
+      "max_records": 3,
+      "required_fields": ["Code", "Name"]
+    }
+  },
+  {
+    "id": "smoke-other",
+    "description": "Smoke: fetch other data (news list)",
+    "tags": ["smoke"],
+    "requires_api": true,
+    "command": ["fetch", "other.newslist", "--json", "--limit", "3"],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "min_records": 1,
+      "max_records": 3
+    }
+  },
+
+  {"_comment": "--- output formats ---"},
+  {
+    "id": "format-json-envelope",
+    "description": "JSON envelope: {ok, data} structure",
+    "tags": ["format", "stock"],
+    "requires_api": true,
+    "command": ["fetch", "stock.bwibbu-all", "--json", "--code", "2330"],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "min_records": 1,
+      "required_fields": ["Code", "Name", "PEratio", "DividendYield", "PBratio"]
+    }
+  },
+  {
+    "id": "format-ndjson",
+    "description": "NDJSON: one JSON object per line",
+    "tags": ["format", "ndjson", "stock"],
+    "requires_api": true,
+    "command": ["fetch", "stock.stock-day-all", "--ndjson", "--code", "2330"],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "ndjson",
+      "min_records": 1,
+      "required_fields": ["Code", "Name", "ClosingPrice"]
+    }
+  },
+  {
+    "id": "format-raw",
+    "description": "Raw: bare JSON array without envelope",
+    "tags": ["format", "raw", "stock"],
+    "requires_api": true,
+    "command": ["fetch", "stock.stock-day-all", "--raw", "--code", "2330", "--limit", "2"],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "array",
+      "min_records": 1,
+      "max_records": 2,
+      "required_fields": ["Code", "Name"]
+    }
+  },
+  {
+    "id": "format-normalize",
+    "description": "Normalize: strings become numbers, ROC dates become ISO",
+    "tags": ["format", "normalize", "stock"],
+    "requires_api": true,
+    "command": ["fetch", "stock.stock-day-all", "--json", "--code", "2330", "--normalize"],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "min_records": 1,
+      "required_fields": ["Code", "Name", "ClosingPrice", "TradeVolume", "Date"],
+      "field_types": {"ClosingPrice": "float", "TradeVolume": "int", "Transaction": "int"}
+    }
+  },
+  {
+    "id": "format-ndjson-normalize",
+    "description": "NDJSON + normalize combined",
+    "tags": ["format", "ndjson", "normalize"],
+    "requires_api": true,
+    "command": ["fetch", "stock.stock-day-all", "--ndjson", "--code", "2330", "--normalize"],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "ndjson",
+      "min_records": 1,
+      "field_types": {"ClosingPrice": "float", "TradeVolume": "int"}
+    }
+  },
+  {
+    "id": "format-raw-with-fields",
+    "description": "Raw + fields combined",
+    "tags": ["format", "raw", "fields"],
+    "requires_api": true,
+    "command": ["fetch", "stock.stock-day-all", "--raw", "--code", "2330", "--fields", "Code,Name"],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "array",
+      "min_records": 1,
+      "required_fields": ["Code", "Name"],
+      "absent_fields": ["ClosingPrice", "TradeVolume"]
+    }
+  },
+
+  {"_comment": "--- flag precedence ---"},
+  {
+    "id": "precedence-ndjson-over-json",
+    "description": "NDJSON takes precedence over --json",
+    "tags": ["format", "precedence"],
+    "requires_api": true,
+    "command": ["fetch", "stock.stock-day-all", "--json", "--ndjson", "--code", "2330", "--limit", "2"],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "ndjson",
+      "min_records": 1,
+      "max_records": 2
+    }
+  },
+  {
+    "id": "precedence-raw-over-json",
+    "description": "Raw takes precedence over --json",
+    "tags": ["format", "precedence"],
+    "requires_api": true,
+    "command": ["fetch", "stock.stock-day-all", "--json", "--raw", "--code", "2330", "--limit", "2"],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "array",
+      "min_records": 1,
+      "max_records": 2
+    }
+  },
+
+  {"_comment": "--- code filter ---"},
+  {
+    "id": "code-filter-english",
+    "description": "Code filter with English Code field (stock endpoints)",
+    "tags": ["code", "stock"],
+    "requires_api": true,
+    "command": ["fetch", "stock.stock-day-all", "--json", "--code", "2330"],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "min_records": 1,
+      "required_fields": ["Code", "Name"]
+    }
+  },
+  {
+    "id": "code-filter-chinese",
+    "description": "Code filter with Chinese 公司代號 field (company endpoints)",
+    "tags": ["code", "company"],
+    "requires_api": true,
+    "command": ["fetch", "company.t187ap03-l", "--json", "--code", "2330"],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "min_records": 1,
+      "required_fields": ["公司代號", "公司名稱"]
+    }
+  },
+  {
+    "id": "code-filter-no-code-field",
+    "description": "Code filter on endpoint without code_field returns full data",
+    "tags": ["code", "stock"],
+    "requires_api": true,
+    "command": ["fetch", "stock.frmsa", "--json", "--code", "2330", "--limit", "3"],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "min_records": 1,
+      "max_records": 3
+    }
+  },
+
+  {"_comment": "--- fields filter ---"},
+  {
+    "id": "fields-filter-basic",
+    "description": "Fields filter returns only specified fields",
+    "tags": ["fields", "stock"],
+    "requires_api": true,
+    "command": ["fetch", "stock.stock-day-all", "--json", "--code", "2330", "--fields", "Code,Name,ClosingPrice"],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "min_records": 1,
+      "required_fields": ["Code", "Name", "ClosingPrice"],
+      "absent_fields": ["TradeVolume", "TradeValue", "OpeningPrice", "HighestPrice", "LowestPrice"]
+    }
+  },
+  {
+    "id": "fields-filter-chinese",
+    "description": "Fields filter works with Chinese field names",
+    "tags": ["fields", "company"],
+    "requires_api": true,
+    "command": ["fetch", "company.t187ap05-l", "--json", "--code", "2330", "--fields", "公司代號,公司名稱,營業收入-當月營收"],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "min_records": 1,
+      "required_fields": ["公司代號", "公司名稱"]
+    }
+  },
+  {
+    "id": "fields-filter-nonexistent-silent",
+    "description": "Nonexistent field in --fields is silently ignored",
+    "tags": ["fields"],
+    "requires_api": true,
+    "command": ["fetch", "stock.stock-day-all", "--json", "--code", "2330", "--fields", "Code,NONEXISTENT"],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "min_records": 1,
+      "required_fields": ["Code"]
+    }
+  },
+
+  {"_comment": "--- limit ---"},
+  {
+    "id": "limit-basic",
+    "description": "Limit restricts number of records",
+    "tags": ["limit", "stock"],
+    "requires_api": true,
+    "command": ["fetch", "stock.stock-day-all", "--json", "--limit", "3"],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "min_records": 1,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "limit-one",
+    "description": "Limit 1 returns exactly one record",
+    "tags": ["limit"],
+    "requires_api": true,
+    "command": ["fetch", "stock.stock-day-all", "--json", "--limit", "1"],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "min_records": 1,
+      "max_records": 1
+    }
+  },
+
+  {"_comment": "--- combined flags ---"},
+  {
+    "id": "combined-all-filters",
+    "description": "All filters combined: code + fields + limit + normalize",
+    "tags": ["combined", "stock"],
+    "requires_api": true,
+    "command": ["fetch", "stock.stock-day-all", "--json", "--code", "2330", "--fields", "Code,Name,ClosingPrice,TradeVolume", "--limit", "1", "--normalize"],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "min_records": 1,
+      "max_records": 1,
+      "required_fields": ["Code", "Name", "ClosingPrice", "TradeVolume"],
+      "absent_fields": ["OpeningPrice", "HighestPrice"],
+      "field_types": {"ClosingPrice": "float", "TradeVolume": "int"}
+    }
+  },
+  {
+    "id": "combined-ndjson-code-limit",
+    "description": "NDJSON + code + limit combined",
+    "tags": ["combined", "ndjson"],
+    "requires_api": true,
+    "command": ["fetch", "stock.stock-day-all", "--ndjson", "--code", "2330", "--limit", "2"],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "ndjson",
+      "min_records": 1,
+      "max_records": 2,
+      "required_fields": ["Code", "Name"]
+    }
+  },
+  {
+    "id": "combined-raw-fields-limit",
+    "description": "Raw + fields + limit combined",
+    "tags": ["combined", "raw"],
+    "requires_api": true,
+    "command": ["fetch", "stock.bwibbu-all", "--raw", "--code", "2330", "--fields", "Code,Name,PEratio", "--limit", "1"],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "array",
+      "min_records": 1,
+      "max_records": 1,
+      "required_fields": ["Code", "Name", "PEratio"],
+      "absent_fields": ["DividendYield", "PBratio"]
+    }
+  },
+
+  {"_comment": "--- endpoint resolution ---"},
+  {
+    "id": "resolve-by-dotted-name",
+    "description": "Resolve endpoint by dotted name",
+    "tags": ["resolve"],
+    "requires_api": true,
+    "command": ["fetch", "stock.stock-day-all", "--json", "--limit", "1"],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "min_records": 1
+    }
+  },
+  {
+    "id": "resolve-by-raw-path",
+    "description": "Resolve endpoint by raw API path",
+    "tags": ["resolve"],
+    "requires_api": true,
+    "command": ["fetch", "/exchangeReport/STOCK_DAY_ALL", "--json", "--limit", "1"],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "min_records": 1
+    }
+  },
+  {
+    "id": "resolve-by-api-code",
+    "description": "Resolve endpoint by API code (case-insensitive)",
+    "tags": ["resolve"],
+    "requires_api": true,
+    "command": ["fetch", "STOCK_DAY_ALL", "--json", "--limit", "1"],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "min_records": 1
+    }
+  },
+
+  {"_comment": "--- schema command ---"},
+  {
+    "id": "schema-stock-day-all",
+    "description": "Schema introspection returns field metadata",
+    "tags": ["smoke", "schema"],
+    "requires_api": true,
+    "command": ["schema", "stock.stock-day-all", "--json"],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": ["endpoint", "fields", "record_count", "description", "path"]
+    }
+  },
+  {
+    "id": "schema-bwibbu-all",
+    "description": "Schema for PE ratio endpoint shows expected fields",
+    "tags": ["schema"],
+    "requires_api": true,
+    "command": ["schema", "stock.bwibbu-all", "--json"],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": ["endpoint", "fields", "record_count"]
+    }
+  },
+  {
+    "id": "schema-no-cache",
+    "description": "Schema with --no-cache bypasses cache",
+    "tags": ["schema"],
+    "requires_api": true,
+    "command": ["schema", "stock.stock-day-all", "--json", "--no-cache"],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": ["endpoint", "fields"]
+    }
+  },
+
+  {"_comment": "--- domain shortcuts ---"},
+  {
+    "id": "shortcut-stock-json",
+    "description": "Stock domain shortcut with JSON output",
+    "tags": ["shortcut", "stock"],
+    "requires_api": true,
+    "command": ["stock", "stock-day-all", "--json", "--code", "2330", "--limit", "2"],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "min_records": 1,
+      "max_records": 2,
+      "required_fields": ["Code", "Name"]
+    }
+  },
+  {
+    "id": "shortcut-stock-bwibbu",
+    "description": "Stock shortcut: PE ratio endpoint",
+    "tags": ["shortcut", "stock"],
+    "requires_api": true,
+    "command": ["stock", "bwibbu-all", "--json", "--code", "2330"],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "min_records": 1,
+      "required_fields": ["Code", "Name", "PEratio"]
+    }
+  },
+  {
+    "id": "shortcut-company-json",
+    "description": "Company domain shortcut",
+    "tags": ["shortcut", "company"],
+    "requires_api": true,
+    "command": ["company", "t187ap03-l", "--json", "--code", "2330"],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "min_records": 1,
+      "required_fields": ["公司代號", "公司名稱"]
+    }
+  },
+  {
+    "id": "shortcut-company-revenue",
+    "description": "Company shortcut: monthly revenue",
+    "tags": ["shortcut", "company"],
+    "requires_api": true,
+    "command": ["company", "t187ap05-l", "--json", "--code", "2330", "--limit", "3"],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "min_records": 1,
+      "max_records": 3,
+      "required_fields": ["公司代號", "公司名稱"]
+    }
+  },
+  {
+    "id": "shortcut-broker-json",
+    "description": "Broker domain shortcut",
+    "tags": ["smoke", "shortcut", "broker"],
+    "requires_api": true,
+    "command": ["broker", "brokerlist", "--json", "--limit", "3"],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "min_records": 1,
+      "max_records": 3,
+      "required_fields": ["Code", "Name"]
+    }
+  },
+  {
+    "id": "shortcut-stock-normalize",
+    "description": "Stock shortcut with normalize",
+    "tags": ["shortcut", "normalize"],
+    "requires_api": true,
+    "command": ["stock", "stock-day-all", "--json", "--code", "2330", "--normalize"],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "min_records": 1,
+      "field_types": {"ClosingPrice": "float", "TradeVolume": "int"}
+    }
+  },
+
+  {"_comment": "--- stdin with real API ---"},
+  {
+    "id": "stdin-basic",
+    "description": "Stdin JSON input fetches data",
+    "tags": ["stdin"],
+    "requires_api": true,
+    "command": ["fetch", "--stdin", "--json"],
+    "stdin": {"endpoint": "stock.stock-day-all", "code": "2330", "limit": 2},
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "min_records": 1,
+      "max_records": 2
+    }
+  },
+  {
+    "id": "stdin-fields-as-array",
+    "description": "Stdin with fields as array",
+    "tags": ["stdin"],
+    "requires_api": true,
+    "command": ["fetch", "--stdin", "--json"],
+    "stdin": {"endpoint": "stock.stock-day-all", "code": "2330", "fields": ["Code", "Name"]},
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "min_records": 1,
+      "required_fields": ["Code", "Name"],
+      "absent_fields": ["ClosingPrice", "TradeVolume"]
+    }
+  },
+  {
+    "id": "stdin-fields-as-string",
+    "description": "Stdin with fields as comma-separated string",
+    "tags": ["stdin"],
+    "requires_api": true,
+    "command": ["fetch", "--stdin", "--json"],
+    "stdin": {"endpoint": "stock.stock-day-all", "code": "2330", "fields": "Code,Name"},
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "min_records": 1,
+      "required_fields": ["Code", "Name"]
+    }
+  },
+
+  {"_comment": "--- no-cache ---"},
+  {
+    "id": "fetch-no-cache",
+    "description": "Fetch with --no-cache bypasses disk cache",
+    "tags": ["cache"],
+    "requires_api": true,
+    "command": ["fetch", "stock.stock-day-all", "--json", "--code", "2330", "--no-cache", "--limit", "1"],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "min_records": 1,
+      "max_records": 1
+    }
+  },
+
+  {"_comment": "--- conditionally empty endpoints ---"},
+  {
+    "id": "empty-suspended-securities",
+    "description": "Suspended securities may return empty array",
+    "tags": ["stock", "allow-empty"],
+    "requires_api": true,
+    "command": ["fetch", "stock.twtawu", "--json"],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true
+    }
+  },
+  {
+    "id": "empty-abnormal-recommendations",
+    "description": "Abnormal stock recommendations may be empty",
+    "tags": ["stock", "allow-empty"],
+    "requires_api": true,
+    "command": ["fetch", "stock.bfzfzu-t", "--json"],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true
+    }
+  },
+  {
+    "id": "empty-day-trading-suspension",
+    "description": "Day trading suspension list may be empty",
+    "tags": ["stock", "allow-empty"],
+    "requires_api": true,
+    "command": ["fetch", "stock.twtbau1", "--json"],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true
+    }
+  },
+  {
+    "id": "empty-notice-stocks",
+    "description": "Notice stocks list may be empty on some days",
+    "tags": ["stock", "allow-empty"],
+    "requires_api": true,
+    "command": ["fetch", "stock.notice", "--json"],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true
+    }
+  },
+
+  {"_comment": "--- additional live API coverage ---"},
+  {
+    "id": "stock-index",
+    "description": "Market index data has expected fields",
+    "tags": ["stock"],
+    "requires_api": true,
+    "command": ["fetch", "stock.mi-index", "--json", "--limit", "5"],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "min_records": 1,
+      "max_records": 5
+    }
+  },
+  {
+    "id": "stock-margin-trading",
+    "description": "Margin trading data",
+    "tags": ["stock"],
+    "requires_api": true,
+    "command": ["fetch", "stock.mi-margn", "--json", "--limit", "3"],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "min_records": 1,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "stock-day-avg",
+    "description": "Stock daily average price",
+    "tags": ["stock"],
+    "requires_api": true,
+    "command": ["fetch", "stock.stock-day-avg-all", "--json", "--code", "2330"],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "min_records": 1,
+      "required_fields": ["Code", "Name", "ClosingPrice", "MonthlyAveragePrice"]
+    }
+  },
+  {
+    "id": "company-dividend",
+    "description": "Company dividend distribution info",
+    "tags": ["company"],
+    "requires_api": true,
+    "command": ["fetch", "company.t187ap45-l", "--json", "--code", "2330", "--limit", "3"],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "min_records": 1,
+      "max_records": 3,
+      "required_fields": ["公司代號", "公司名稱"]
+    }
+  },
+  {
+    "id": "company-esg-greenhouse",
+    "description": "ESG greenhouse gas emission data",
+    "tags": ["company", "esg"],
+    "requires_api": true,
+    "command": ["fetch", "company.t187ap46-l-1", "--json", "--limit", "3"],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "broker-branch-data",
+    "description": "Broker branch data",
+    "tags": ["broker"],
+    "requires_api": true,
+    "command": ["fetch", "broker.opendata-brk02", "--json", "--limit", "3"],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "min_records": 1,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "stock-holiday-schedule",
+    "description": "Holiday schedule data",
+    "tags": ["stock"],
+    "requires_api": true,
+    "command": ["fetch", "stock.holidayschedule", "--json", "--limit", "5"],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "min_records": 1,
+      "max_records": 5
+    }
+  },
+  {
+    "id": "stock-etf-rank",
+    "description": "ETF rank data",
+    "tags": ["broker"],
+    "requires_api": true,
+    "command": ["fetch", "broker.etfrank", "--json", "--limit", "3"],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "min_records": 1,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "company-balance-sheet",
+    "description": "Company balance sheet (general industry)",
+    "tags": ["company"],
+    "requires_api": true,
+    "command": ["fetch", "company.t187ap07-l-ci", "--json", "--code", "2330", "--limit", "3"],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true
+    }
+  },
+  {
+    "id": "company-income-statement",
+    "description": "Company income statement (general industry)",
+    "tags": ["company"],
+    "requires_api": true,
+    "command": ["fetch", "company.t187ap06-l-ci", "--json", "--code", "2330", "--limit", "3"],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true
+    }
+  }
+]
