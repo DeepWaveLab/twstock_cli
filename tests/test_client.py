@@ -28,7 +28,7 @@ class TestTWSEClientFetch:
         mock_response.status_code = 200
         mock_response.json.return_value = [{"Code": "2330"}]
 
-        with TWSEClient() as client:
+        with TWSEClient(use_cache=False) as client:
             client._http = MagicMock()
             client._http.get.return_value = mock_response
             result = client.fetch("/exchangeReport/STOCK_DAY_ALL")
@@ -40,7 +40,7 @@ class TestTWSEClientFetch:
         mock_response.status_code = 200
         mock_response.json.return_value = {"data": [{"Code": "2330"}]}
 
-        with TWSEClient() as client:
+        with TWSEClient(use_cache=False) as client:
             client._http = MagicMock()
             client._http.get.return_value = mock_response
             result = client.fetch("/test")
@@ -51,7 +51,7 @@ class TestTWSEClientFetch:
         mock_response = MagicMock()
         mock_response.status_code = 404
 
-        with TWSEClient() as client:
+        with TWSEClient(use_cache=False) as client:
             client._http = MagicMock()
             client._http.get.return_value = mock_response
             with pytest.raises(TWSEApiError, match="404"):
@@ -68,7 +68,7 @@ class TestTWSEClientFetch:
         mock_http = MagicMock()
         mock_http.get.side_effect = [fail_response, success_response]
 
-        with TWSEClient(request_interval=0) as client:
+        with TWSEClient(request_interval=0, use_cache=False) as client:
             client._http = mock_http
             with patch("twse_cli.client.time.sleep"):
                 result = client.fetch("/test")
@@ -77,7 +77,7 @@ class TestTWSEClientFetch:
         assert mock_http.get.call_count == 2
 
     def test_fetch_raises_network_error(self):
-        with TWSEClient(request_interval=0) as client:
+        with TWSEClient(request_interval=0, use_cache=False) as client:
             client._http = MagicMock()
             client._http.get.side_effect = httpx.NetworkError("connection refused")
             with patch("twse_cli.client.time.sleep"):
@@ -93,7 +93,7 @@ class TestTWSEClientRateLimit:
         mock_response.json.return_value = []
 
         with patch("twse_cli.client.time.sleep") as mock_sleep:
-            with TWSEClient(request_interval=0.5) as client:
+            with TWSEClient(request_interval=0.5, use_cache=False) as client:
                 client._http = MagicMock()
                 client._http.get.return_value = mock_response
                 # Set last request time to "just now" to trigger rate limit

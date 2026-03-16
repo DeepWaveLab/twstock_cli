@@ -31,9 +31,10 @@ class TWSEClient:
             data = client.fetch("/exchangeReport/STOCK_DAY_ALL")
     """
 
-    def __init__(self, timeout: float = 30.0, request_interval: float = 0.5):
+    def __init__(self, timeout: float = 30.0, request_interval: float = 0.5, use_cache: bool = True):
         self._timeout = timeout
         self._request_interval = request_interval
+        self._use_cache = use_cache
         self._last_request_time = 0.0
         self._http: httpx.Client | None = None
 
@@ -80,6 +81,14 @@ class TWSEClient:
         if not self._http:
             raise RuntimeError("Client not initialized. Use 'with TWSEClient() as client:'")
 
+        # Check cache first
+        if self._use_cache:
+            from .cache import get_cached
+
+            cached = get_cached(path)
+            if cached is not None:
+                return cached
+
         self._rate_limit()
         last_exc: Exception | None = None
 
@@ -102,16 +111,28 @@ class TWSEClient:
                     raise TWSEApiError(f"TWSE API returned {resp.status_code}")
 
                 data = resp.json()
+                result: list[dict[str, Any]]
                 if isinstance(data, list):
-                    return data
-                # Some endpoints wrap in an object
-                if isinstance(data, dict):
+                    result = data
+                elif isinstance(data, dict):
                     # Try common wrapper keys
+                    result = []
                     for key in ("data", "Data", "tables"):
                         if key in data and isinstance(data[key], list):
-                            return data[key]
-                    return [data]
-                return []
+                            result = data[key]
+                            break
+                    else:
+                        result = [data]
+                else:
+                    result = []
+
+                # Write to cache
+                if self._use_cache:
+                    from .cache import set_cached
+
+                    set_cached(path, result)
+
+                return result
 
             except (httpx.TimeoutException, httpx.NetworkError) as exc:
                 last_exc = exc

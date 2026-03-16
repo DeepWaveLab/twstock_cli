@@ -3,6 +3,9 @@
 Usage:
     twse fetch <endpoint> [--json] [--fields F] [--code C] [--limit N]
     twse endpoints [--json] [--search K] [--category C] [--with-fields]
+    twse stock <command> [options]    # Domain shortcuts
+    twse company <command> [options]  # Domain shortcuts
+    twse broker <command> [options]   # Domain shortcuts
     twse version
 """
 
@@ -15,7 +18,6 @@ import sys
 import click
 
 from . import __version__
-from .client import TWSEApiError, TWSEClient, TWSENetworkError
 from .endpoints import list_endpoints, resolve_endpoint
 from .output import (
     console,
@@ -34,7 +36,48 @@ EXIT_VALIDATION_ERROR = 2
 EXIT_NETWORK_ERROR = 3
 
 
-@click.group()
+class LazyGroup(click.Group):
+    """Click group that defers loading domain subgroups until needed.
+
+    This keeps `twse --help` fast by not importing 143 command definitions
+    until a subgroup is actually invoked.
+    """
+
+    def __init__(self, *args, lazy_subgroups: dict[str, str] | None = None, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._lazy_subgroups: dict[str, str] = lazy_subgroups or {}
+
+    def list_commands(self, ctx: click.Context) -> list[str]:
+        base = super().list_commands(ctx)
+        lazy = sorted(self._lazy_subgroups.keys())
+        return base + [name for name in lazy if name not in base]
+
+    def get_command(self, ctx: click.Context, cmd_name: str) -> click.BaseCommand | None:
+        # Check eagerly registered commands first
+        rv = super().get_command(ctx, cmd_name)
+        if rv is not None:
+            return rv
+
+        # Lazy-load domain subgroup
+        if cmd_name in self._lazy_subgroups:
+            return self._load_group(cmd_name)
+
+        return None
+
+    def _load_group(self, name: str) -> click.BaseCommand:
+        from .commands._factory import make_group
+
+        grp = make_group(name)
+        # Cache it so we don't rebuild on next access
+        self.add_command(grp, name)
+        return grp
+
+
+@click.group(cls=LazyGroup, lazy_subgroups={
+    "stock": "twse_cli.commands._factory",
+    "company": "twse_cli.commands._factory",
+    "broker": "twse_cli.commands._factory",
+})
 @click.version_option(version=__version__, prog_name="twse")
 @click.option("-v", "--verbose", is_flag=True, help="Enable verbose logging")
 @click.pass_context
@@ -51,7 +94,8 @@ def cli(ctx: click.Context, verbose: bool) -> None:
 @click.option("--fields", "field_list", default=None, help="Comma-separated fields to include")
 @click.option("--code", "stock_code", default=None, help="Filter by stock code")
 @click.option("--limit", "max_records", type=int, default=None, help="Limit number of records")
-def fetch(endpoint_ref: str, as_json: bool, field_list: str | None, stock_code: str | None, max_records: int | None) -> None:
+@click.option("--no-cache", is_flag=True, help="Bypass disk cache")
+def fetch(endpoint_ref: str, as_json: bool, field_list: str | None, stock_code: str | None, max_records: int | None, no_cache: bool) -> None:
     """Fetch data from any TWSE endpoint.
 
     ENDPOINT_REF can be a dotted name (stock.stock-day-all), raw API path
@@ -71,33 +115,9 @@ def fetch(endpoint_ref: str, as_json: bool, field_list: str | None, stock_code: 
         console.print("Use [bold]twse endpoints --search <keyword>[/bold] to discover endpoints.")
         raise SystemExit(EXIT_VALIDATION_ERROR)
 
-    try:
-        with TWSEClient() as client:
-            data = client.fetch(ep.path)
-    except TWSEApiError as exc:
-        if as_json or is_agent_mode():
-            emit_error("api_error", str(exc), EXIT_API_ERROR)
-        console.print(f"[red]{exc}[/red]")
-        raise SystemExit(EXIT_API_ERROR) from None
-    except TWSENetworkError as exc:
-        if as_json or is_agent_mode():
-            emit_error("network_error", str(exc), EXIT_NETWORK_ERROR)
-        console.print(f"[red]{exc}[/red]")
-        raise SystemExit(EXIT_NETWORK_ERROR) from None
+    from .commands._factory import _run_fetch
 
-    # Apply filters
-    if stock_code:
-        data = filter_by_code(data, stock_code, ep.code_field)
-    if field_list:
-        data = filter_fields(data, field_list)
-    if max_records:
-        data = data[:max_records]
-
-    # Output
-    if as_json or is_agent_mode():
-        emit_json(data)
-    else:
-        render_table(data, title=f"{ep.description} ({endpoint_ref})")
+    _run_fetch(ep, as_json, field_list, stock_code, max_records, no_cache=no_cache)
 
 
 @cli.command()

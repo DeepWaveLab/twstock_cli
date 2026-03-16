@@ -20,7 +20,7 @@ def _mock_fetch(data):
     mock_client.__enter__ = MagicMock(return_value=mock_client)
     mock_client.__exit__ = MagicMock(return_value=False)
     mock_client.fetch.return_value = data
-    return patch("twse_cli.cli.TWSEClient", return_value=mock_client)
+    return patch("twse_cli.client.TWSEClient", return_value=mock_client)
 
 
 class TestFetchCommand:
@@ -73,7 +73,7 @@ class TestFetchCommand:
         mock_client.__exit__ = MagicMock(return_value=False)
         mock_client.fetch.side_effect = TWSEApiError("TWSE API returned 503")
 
-        with patch("twse_cli.cli.TWSEClient", return_value=mock_client):
+        with patch("twse_cli.client.TWSEClient", return_value=mock_client):
             result = runner.invoke(cli, ["fetch", "stock.stock-day-all", "--json"])
         assert result.exit_code == 1
         envelope = json.loads(result.output)
@@ -88,7 +88,7 @@ class TestFetchCommand:
         mock_client.__exit__ = MagicMock(return_value=False)
         mock_client.fetch.side_effect = TWSENetworkError("Cannot reach TWSE")
 
-        with patch("twse_cli.cli.TWSEClient", return_value=mock_client):
+        with patch("twse_cli.client.TWSEClient", return_value=mock_client):
             result = runner.invoke(cli, ["fetch", "stock.stock-day-all", "--json"])
         assert result.exit_code == 3
         envelope = json.loads(result.output)
