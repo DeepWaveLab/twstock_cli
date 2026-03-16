@@ -24,6 +24,7 @@ from .output import (
     emit_error,
     is_agent_mode,
 )
+from .validate import validate_input
 
 # Exit codes
 EXIT_SUCCESS = 0
@@ -109,6 +110,19 @@ def fetch(endpoint_ref: str, as_json: bool, field_list: str | None, stock_code: 
         twse fetch stock.stock-day-all --ndjson
         twse fetch stock.stock-day-all --raw
     """
+    # Validate user-supplied inputs
+    try:
+        endpoint_ref = validate_input(endpoint_ref, "ENDPOINT_REF")
+        if field_list:
+            field_list = validate_input(field_list, "--fields")
+        if stock_code:
+            stock_code = validate_input(stock_code, "--code")
+    except click.BadParameter as exc:
+        if as_json or ndjson or raw or is_agent_mode():
+            emit_error("validation_error", str(exc), EXIT_VALIDATION_ERROR)
+        console.print(f"[red]{exc}[/red]")
+        raise SystemExit(EXIT_VALIDATION_ERROR) from None
+
     ep = resolve_endpoint(endpoint_ref)
     if not ep:
         if as_json or ndjson or raw or is_agent_mode():
@@ -138,6 +152,16 @@ def endpoints(as_json: bool, keyword: str | None, category: str | None, with_fie
         twse endpoints --category stock --json
         twse endpoints --search "stock.bwibbu" --with-fields --json
     """
+    # Validate search keyword
+    if keyword:
+        try:
+            keyword = validate_input(keyword, "--search")
+        except click.BadParameter as exc:
+            if as_json or is_agent_mode():
+                emit_error("validation_error", str(exc), EXIT_VALIDATION_ERROR)
+            console.print(f"[red]{exc}[/red]")
+            raise SystemExit(EXIT_VALIDATION_ERROR) from None
+
     results = list_endpoints(category=category, search=keyword, with_fields=with_fields)
 
     if as_json or is_agent_mode():
@@ -172,6 +196,15 @@ def schema(endpoint_ref: str, as_json: bool, no_cache: bool) -> None:
         twse schema stock.stock-day-all --json
         twse schema company.t187ap03-l
     """
+    # Validate user-supplied input
+    try:
+        endpoint_ref = validate_input(endpoint_ref, "ENDPOINT_REF")
+    except click.BadParameter as exc:
+        if as_json or is_agent_mode():
+            emit_error("validation_error", str(exc), EXIT_VALIDATION_ERROR)
+        console.print(f"[red]{exc}[/red]")
+        raise SystemExit(EXIT_VALIDATION_ERROR) from None
+
     ep = resolve_endpoint(endpoint_ref)
     if not ep:
         if as_json or is_agent_mode():

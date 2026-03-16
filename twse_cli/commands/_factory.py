@@ -32,9 +32,22 @@ def _run_fetch(
     raw: bool = False,
 ) -> None:
     """Shared fetch-filter-output pipeline used by both `twse fetch` and domain shortcuts."""
-    from ..cli import EXIT_API_ERROR, EXIT_NETWORK_ERROR
+    from ..cli import EXIT_API_ERROR, EXIT_NETWORK_ERROR, EXIT_VALIDATION_ERROR
     from ..client import TWSEApiError, TWSEClient, TWSENetworkError
     from ..output import console, emit_error, emit_json, emit_ndjson, emit_raw, filter_by_code, filter_fields, is_agent_mode, render_table
+    from ..validate import validate_input
+
+    # Validate user-supplied inputs (for domain shortcuts that bypass cli.py validation)
+    try:
+        if field_list:
+            field_list = validate_input(field_list, "--fields")
+        if stock_code:
+            stock_code = validate_input(stock_code, "--code")
+    except click.BadParameter as exc:
+        if as_json or ndjson or raw or is_agent_mode():
+            emit_error("validation_error", str(exc), EXIT_VALIDATION_ERROR)
+        console.print(f"[red]{exc}[/red]")
+        raise SystemExit(EXIT_VALIDATION_ERROR) from None
 
     try:
         with TWSEClient(use_cache=not no_cache) as client:

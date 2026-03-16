@@ -16,10 +16,13 @@ from typing import Any
 
 from mcp.server.fastmcp import FastMCP
 
+import click
+
 from .client import TWSEApiError, TWSEClient, TWSENetworkError
 from .endpoints import list_endpoints, resolve_endpoint
 from .normalize import normalize_data
 from .schema import analyze_schema
+from .validate import validate_input
 
 mcp = FastMCP(
     "twse-cli",
@@ -49,6 +52,16 @@ def twse_fetch(
     Returns:
         Standard envelope: {"ok": true, "data": [...]} or {"ok": false, "error": {...}}
     """
+    # Validate user-supplied inputs
+    try:
+        endpoint = validate_input(endpoint, "endpoint")
+        if fields:
+            fields = validate_input(fields, "fields")
+        if code:
+            code = validate_input(code, "code")
+    except click.BadParameter as exc:
+        return {"ok": False, "error": {"code": "validation_error", "message": str(exc)}}
+
     ep = resolve_endpoint(endpoint)
     if not ep:
         return {"ok": False, "error": {"code": "unknown_endpoint", "message": f"Unknown endpoint: {endpoint}"}}
@@ -94,6 +107,13 @@ def twse_endpoints(
     Returns:
         List of endpoint descriptors with name, path, group, description.
     """
+    # Validate user-supplied inputs
+    try:
+        if search:
+            search = validate_input(search, "search")
+    except click.BadParameter as exc:
+        return {"ok": False, "error": {"code": "validation_error", "message": str(exc)}}
+
     return list_endpoints(
         category=category or None,
         search=search or None,
@@ -113,6 +133,12 @@ def twse_schema(endpoint: str) -> dict[str, Any]:
     Returns:
         Schema info with field names, inferred types, examples, and non-empty percentages.
     """
+    # Validate user-supplied input
+    try:
+        endpoint = validate_input(endpoint, "endpoint")
+    except click.BadParameter as exc:
+        return {"ok": False, "error": {"code": "validation_error", "message": str(exc)}}
+
     ep = resolve_endpoint(endpoint)
     if not ep:
         return {"ok": False, "error": {"code": "unknown_endpoint", "message": f"Unknown endpoint: {endpoint}"}}
