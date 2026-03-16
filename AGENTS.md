@@ -192,6 +192,28 @@ twse --help-json
 twse stock --help-json
 ```
 
+## Skills
+
+See `skills/` directory for guided multi-step workflows that compose multiple `twse` commands:
+
+| Skill | Description |
+|-------|-------------|
+| `twse-shared` | Shared conventions, output format, token tips |
+| `twse-market-overview` | Daily market snapshot (TAIEX, top movers, margin, institutional) |
+| `twse-stock-lookup` | Comprehensive single-stock lookup |
+| `twse-dividend-screener` | Screen for high dividend yield stocks |
+| `twse-institutional-flow` | Track 三大法人 buying/selling |
+| `twse-revenue-tracker` | Monthly revenue analysis with YoY growth |
+| `twse-stock-compare` | Side-by-side stock comparison |
+| `twse-ex-dividend-calendar` | Ex-dividend schedule lookup |
+| `twse-company-profile` | Company fundamentals deep-dive |
+| `twse-margin-sentiment` | Margin balance sentiment analysis |
+| `twse-etf-rankings` | ETF regular investment rankings |
+| `persona-stock-analyst` | Think like a Taiwan stock analyst |
+| `persona-dividend-investor` | Think like a 存股 dividend investor |
+
+Each skill has a `SKILL.md` file with preconditions, step-by-step workflows, and expected output.
+
 ## Token-Saving Tips
 
 1. Always use `--fields` to select only needed columns
