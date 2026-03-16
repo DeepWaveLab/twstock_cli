@@ -95,7 +95,8 @@ def cli(ctx: click.Context, verbose: bool) -> None:
 @click.option("--normalize", is_flag=True, help="Normalize data: string→number, ROC→ISO dates")
 @click.option("--ndjson", is_flag=True, help="Output as newline-delimited JSON")
 @click.option("--raw", is_flag=True, help="Output bare JSON array (no envelope)")
-def fetch(endpoint_ref: str, as_json: bool, field_list: str | None, stock_code: str | None, max_records: int | None, no_cache: bool, normalize: bool, ndjson: bool, raw: bool) -> None:
+@click.option("--dry-run", is_flag=True, help="Preview request as JSON without making an HTTP call")
+def fetch(endpoint_ref: str, as_json: bool, field_list: str | None, stock_code: str | None, max_records: int | None, no_cache: bool, normalize: bool, ndjson: bool, raw: bool, dry_run: bool) -> None:
     """Fetch data from any TWSE endpoint.
 
     ENDPOINT_REF can be a dotted name (stock.stock-day-all), raw API path
@@ -133,7 +134,7 @@ def fetch(endpoint_ref: str, as_json: bool, field_list: str | None, stock_code: 
 
     from .commands._factory import _run_fetch
 
-    _run_fetch(ep, as_json, field_list, stock_code, max_records, no_cache=no_cache, normalize=normalize, ndjson=ndjson, raw=raw)
+    _run_fetch(ep, as_json, field_list, stock_code, max_records, no_cache=no_cache, normalize=normalize, ndjson=ndjson, raw=raw, dry_run=dry_run)
 
 
 @cli.command()
@@ -186,7 +187,8 @@ def endpoints(as_json: bool, keyword: str | None, category: str | None, with_fie
 @click.argument("endpoint_ref")
 @click.option("--json", "as_json", is_flag=True, help="Output JSON to stdout")
 @click.option("--no-cache", is_flag=True, help="Bypass disk cache")
-def schema(endpoint_ref: str, as_json: bool, no_cache: bool) -> None:
+@click.option("--dry-run", is_flag=True, help="Preview request as JSON without making an HTTP call")
+def schema(endpoint_ref: str, as_json: bool, no_cache: bool, dry_run: bool) -> None:
     """Inspect schema of a TWSE endpoint (fields, types, examples).
 
     Fetches a sample from the endpoint and analyzes field characteristics.
@@ -211,6 +213,20 @@ def schema(endpoint_ref: str, as_json: bool, no_cache: bool) -> None:
             emit_error("unknown_endpoint", f"Unknown endpoint: {endpoint_ref}", EXIT_VALIDATION_ERROR)
         console.print(f"[red]Unknown endpoint: {endpoint_ref}[/red]")
         raise SystemExit(EXIT_VALIDATION_ERROR)
+
+    # Dry-run: show what schema fetch would do
+    if dry_run:
+        from .client import BASE_URL
+
+        preview = {
+            "dry_run": True,
+            "command": "schema",
+            "method": "GET",
+            "url": f"{BASE_URL}{ep.path}",
+            "endpoint": f"{ep.group}.{ep.cli_name}",
+        }
+        click.echo(json.dumps(preview, ensure_ascii=False, indent=2))
+        return
 
     from .client import TWSEApiError, TWSEClient, TWSENetworkError
 

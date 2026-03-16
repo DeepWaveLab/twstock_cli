@@ -7,6 +7,8 @@ by filtering the registry.
 
 from __future__ import annotations
 
+import json
+
 import click
 
 from ..endpoints import ENDPOINTS, EndpointDef
@@ -30,6 +32,7 @@ def _run_fetch(
     normalize: bool = False,
     ndjson: bool = False,
     raw: bool = False,
+    dry_run: bool = False,
 ) -> None:
     """Shared fetch-filter-output pipeline used by both `twse fetch` and domain shortcuts."""
     from ..cli import EXIT_API_ERROR, EXIT_NETWORK_ERROR, EXIT_VALIDATION_ERROR
@@ -48,6 +51,29 @@ def _run_fetch(
             emit_error("validation_error", str(exc), EXIT_VALIDATION_ERROR)
         console.print(f"[red]{exc}[/red]")
         raise SystemExit(EXIT_VALIDATION_ERROR) from None
+
+    # Dry-run: emit preview JSON without making an HTTP call
+    if dry_run:
+        from ..client import BASE_URL
+
+        preview = {
+            "dry_run": True,
+            "method": "GET",
+            "url": f"{BASE_URL}{ep.path}",
+            "endpoint": f"{ep.group}.{ep.cli_name}",
+            "filters": {
+                "fields": [f.strip() for f in field_list.split(",")] if field_list else None,
+                "code": stock_code,
+                "limit": max_records,
+                "normalize": normalize,
+            },
+        }
+        # Remove None values from filters
+        preview["filters"] = {k: v for k, v in preview["filters"].items() if v is not None}
+        if not preview["filters"]:
+            del preview["filters"]
+        click.echo(json.dumps(preview, ensure_ascii=False, indent=2))
+        return
 
     try:
         with TWSEClient(use_cache=not no_cache) as client:
@@ -97,8 +123,9 @@ def make_endpoint_command(ep: EndpointDef) -> click.Command:
     @click.option("--normalize", is_flag=True, help="Normalize data: string→number, ROC→ISO dates")
     @click.option("--ndjson", is_flag=True, help="Output as newline-delimited JSON")
     @click.option("--raw", is_flag=True, help="Output bare JSON array (no envelope)")
-    def cmd(as_json: bool, field_list: str | None, stock_code: str | None, max_records: int | None, no_cache: bool, normalize: bool, ndjson: bool, raw: bool) -> None:
-        _run_fetch(ep, as_json, field_list, stock_code, max_records, no_cache=no_cache, normalize=normalize, ndjson=ndjson, raw=raw)
+    @click.option("--dry-run", is_flag=True, help="Preview request as JSON without making an HTTP call")
+    def cmd(as_json: bool, field_list: str | None, stock_code: str | None, max_records: int | None, no_cache: bool, normalize: bool, ndjson: bool, raw: bool, dry_run: bool) -> None:
+        _run_fetch(ep, as_json, field_list, stock_code, max_records, no_cache=no_cache, normalize=normalize, ndjson=ndjson, raw=raw, dry_run=dry_run)
 
     return cmd
 

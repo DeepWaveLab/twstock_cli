@@ -215,6 +215,53 @@ class TestDomainShortcuts:
         assert command_count == 44
 
 
+class TestDryRun:
+    """Test --dry-run flag on fetch, domain shortcuts, and schema."""
+
+    def test_fetch_dry_run_emits_preview(self, runner):
+        result = runner.invoke(cli, ["fetch", "stock.stock-day-all", "--dry-run"])
+        assert result.exit_code == 0
+        preview = json.loads(result.output)
+        assert preview["dry_run"] is True
+        assert preview["method"] == "GET"
+        assert "openapi.twse.com.tw" in preview["url"]
+        assert preview["endpoint"] == "stock.stock-day-all"
+
+    def test_fetch_dry_run_with_filters(self, runner):
+        result = runner.invoke(cli, ["fetch", "stock.stock-day-all", "--dry-run", "--fields", "Code,Name", "--code", "2330", "--limit", "5"])
+        assert result.exit_code == 0
+        preview = json.loads(result.output)
+        assert preview["filters"]["fields"] == ["Code", "Name"]
+        assert preview["filters"]["code"] == "2330"
+        assert preview["filters"]["limit"] == 5
+
+    def test_fetch_dry_run_no_http_call(self, runner):
+        """--dry-run should NOT make any HTTP call."""
+        with patch("twse_cli.client.TWSEClient") as mock_cls:
+            result = runner.invoke(cli, ["fetch", "stock.stock-day-all", "--dry-run"])
+        assert result.exit_code == 0
+        mock_cls.assert_not_called()
+
+    def test_fetch_dry_run_unknown_endpoint(self, runner):
+        result = runner.invoke(cli, ["fetch", "NONEXISTENT", "--dry-run", "--json"])
+        assert result.exit_code == 2
+
+    def test_domain_shortcut_dry_run(self, runner):
+        result = runner.invoke(cli, ["stock", "stock-day-all", "--dry-run"])
+        assert result.exit_code == 0
+        preview = json.loads(result.output)
+        assert preview["dry_run"] is True
+        assert preview["endpoint"] == "stock.stock-day-all"
+
+    def test_schema_dry_run(self, runner):
+        result = runner.invoke(cli, ["schema", "stock.stock-day-all", "--dry-run"])
+        assert result.exit_code == 0
+        preview = json.loads(result.output)
+        assert preview["dry_run"] is True
+        assert preview["command"] == "schema"
+        assert "openapi.twse.com.tw" in preview["url"]
+
+
 class TestLazyGroup:
     def test_help_lists_all_groups(self, runner):
         result = runner.invoke(cli, ["--help"])
