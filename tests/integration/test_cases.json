@@ -78,14 +78,14 @@
   {"_comment": "--- endpoints discovery ---"},
   {
     "id": "endpoints-json-all",
-    "description": "List all 144 endpoints as JSON array",
+    "description": "List all endpoints as JSON array",
     "tags": ["smoke", "endpoints"],
     "requires_api": false,
     "command": ["endpoints", "--json"],
     "expected": {
       "exit_code": 0,
       "output_format": "array",
-      "min_records": 144
+      "min_records": 169
     }
   },
   {

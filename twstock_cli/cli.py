@@ -75,6 +75,8 @@ class LazyGroup(click.Group):
     "stock": "twstock_cli.commands._factory",
     "company": "twstock_cli.commands._factory",
     "broker": "twstock_cli.commands._factory",
+    "otc": "twstock_cli.commands._factory",
+    "otc_company": "twstock_cli.commands._factory",
 })
 @click.version_option(version=__version__, prog_name="twstock")
 @help_json_option
@@ -183,7 +185,7 @@ def fetch(endpoint_ref: str | None, as_json: bool, field_list: str | None, stock
 @cli.command()
 @click.option("--json", "as_json", is_flag=True, help="Output JSON to stdout")
 @click.option("--search", "keyword", default=None, help="Search by keyword (en/zh)")
-@click.option("--category", default=None, type=click.Choice(["stock", "company", "broker", "other"]), help="Filter by category")
+@click.option("--category", default=None, type=click.Choice(["stock", "company", "broker", "other", "otc", "otc_company"]), help="Filter by category")
 @click.option("--with-fields", is_flag=True, help="Include field definitions")
 @help_json_option
 def endpoints(as_json: bool, keyword: str | None, category: str | None, with_fields: bool) -> None:

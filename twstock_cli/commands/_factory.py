@@ -19,6 +19,8 @@ GROUPS: dict[str, str] = {
     "stock": "Stock trading, indices, warrants, and market data (證券交易)",
     "company": "Company governance, financials, and disclosures (公司治理)",
     "broker": "Broker information and statistics (券商資料)",
+    "otc": "OTC stock trading, indices, and market data (上櫃證券交易)",
+    "otc_company": "OTC company governance, financials, and disclosures (上櫃公司治理)",
 }
 
 
@@ -47,7 +49,9 @@ def _run_fetch(
     from ..output import console, emit_error, emit_json, emit_ndjson, emit_raw, filter_by_code, filter_fields, is_agent_mode, render_table
     from ..validate import validate_input
 
-    is_web = ep.base_url is not None
+    # Web API endpoints have field_aliases (fields+data format, e.g. T86).
+    # TPEX OpenAPI endpoints have base_url but no field_aliases (list-of-dicts format).
+    is_web = ep.base_url is not None and bool(ep.field_aliases)
 
     # Validate user-supplied inputs (for domain shortcuts that bypass cli.py validation)
     try:
@@ -78,10 +82,11 @@ def _run_fetch(
                 "endpoint": f"{ep.group}.{ep.cli_name}",
             }
         else:
+            effective_base = ep.base_url or BASE_URL
             preview = {
                 "dry_run": True,
                 "method": "GET",
-                "url": f"{BASE_URL}{ep.path}",
+                "url": f"{effective_base}{ep.path}",
                 "endpoint": f"{ep.group}.{ep.cli_name}",
             }
 
@@ -105,7 +110,7 @@ def _run_fetch(
                     params["date"] = date
                 data = client.fetch_web(ep.base_url, ep.path, params)
             else:
-                data = client.fetch(ep.path)
+                data = client.fetch(ep.path, base_url=ep.base_url)
     except TWStockApiError as exc:
         if as_json or ndjson or raw or is_agent_mode():
             emit_error("api_error", str(exc), EXIT_API_ERROR)
@@ -150,7 +155,7 @@ def _run_fetch(
 
 def make_endpoint_command(ep: EndpointDef) -> click.Command:
     """Create a Click command from an EndpointDef."""
-    if ep.base_url:
+    if ep.base_url and ep.field_aliases:
         return _make_web_endpoint_command(ep)
 
     @click.command(name=ep.cli_name, help=ep.description)

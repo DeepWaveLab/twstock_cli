@@ -4,18 +4,19 @@ from twstock_cli.endpoints import ENDPOINTS, EndpointDef, list_endpoints, resolv
 
 
 class TestEndpointRegistry:
-    def test_has_144_endpoints(self):
-        assert len(ENDPOINTS) == 144
+    def test_endpoint_count(self):
+        assert len(ENDPOINTS) == 169  # 144 TWSE + 18 otc + 7 otc_company
 
     def test_endpoint_is_frozen_dataclass(self):
         ep = next(iter(ENDPOINTS.values()))
         assert isinstance(ep, EndpointDef)
 
     def test_all_endpoints_have_required_fields(self):
+        valid_groups = ("stock", "company", "broker", "other", "otc", "otc_company")
         for key, ep in ENDPOINTS.items():
             assert ep.path.startswith("/"), f"{key}: path should start with /"
             assert ep.cli_name, f"{key}: cli_name is empty"
-            assert ep.group in ("stock", "company", "broker", "other"), f"{key}: invalid group {ep.group}"
+            assert ep.group in valid_groups, f"{key}: invalid group {ep.group}"
             assert ep.description, f"{key}: description is empty"
 
 
@@ -42,7 +43,7 @@ class TestResolveEndpoint:
 class TestListEndpoints:
     def test_list_all(self):
         results = list_endpoints()
-        assert len(results) == 144
+        assert len(results) == 169
 
     def test_list_by_category(self):
         results = list_endpoints(category="stock")
@@ -92,11 +93,59 @@ class TestWebApiEndpoint:
         assert ep is not None
         assert ep.group == "stock"
 
-    def test_existing_endpoints_unaffected(self):
-        """All 143 original endpoints should have no base_url set."""
+    def test_twse_openapi_endpoints_unaffected(self):
+        """All 143 original TWSE OpenAPI endpoints should have no base_url set."""
         for key, ep in ENDPOINTS.items():
-            if key == "stock.t86":
+            if key == "stock.t86" or ep.group.startswith("otc"):
                 continue
             assert ep.base_url is None, f"{key} should not have base_url"
             assert ep.default_params == {}, f"{key} should have empty default_params"
             assert ep.field_aliases == {}, f"{key} should have empty field_aliases"
+
+
+class TestTpexEndpoints:
+    def test_otc_endpoint_count(self):
+        otc = [k for k in ENDPOINTS if k.startswith("otc.")]
+        assert len(otc) == 18
+
+    def test_otc_company_endpoint_count(self):
+        otc_company = [k for k in ENDPOINTS if k.startswith("otc_company.")]
+        assert len(otc_company) == 7
+
+    def test_tpex_endpoints_have_base_url(self):
+        from twstock_cli.endpoints import TPEX_BASE_URL
+
+        for key, ep in ENDPOINTS.items():
+            if ep.group.startswith("otc"):
+                assert ep.base_url == TPEX_BASE_URL, f"{key}: missing TPEX base_url"
+
+    def test_tpex_endpoints_no_field_aliases(self):
+        """TPEX OpenAPI endpoints return list-of-dicts, not fields+data."""
+        for key, ep in ENDPOINTS.items():
+            if ep.group.startswith("otc"):
+                assert ep.field_aliases == {}, f"{key}: should not have field_aliases"
+                assert ep.default_params == {}, f"{key}: should not have default_params"
+
+    def test_resolve_otc_by_dotted_name(self):
+        ep = resolve_endpoint("otc.mainboard-daily-close-quotes")
+        assert ep is not None
+        assert ep.path == "/tpex_mainboard_daily_close_quotes"
+
+    def test_resolve_otc_company_by_dotted_name(self):
+        ep = resolve_endpoint("otc_company.t187ap05-o")
+        assert ep is not None
+        assert ep.group == "otc_company"
+
+    def test_search_otc_by_chinese(self):
+        results = list_endpoints(search="上櫃")
+        assert len(results) >= 18
+
+    def test_list_by_otc_category(self):
+        results = list_endpoints(category="otc")
+        assert all(r["group"] == "otc" for r in results)
+        assert len(results) == 18
+
+    def test_list_by_otc_company_category(self):
+        results = list_endpoints(category="otc_company")
+        assert all(r["group"] == "otc_company" for r in results)
+        assert len(results) == 7

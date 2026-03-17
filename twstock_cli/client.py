@@ -65,14 +65,15 @@ class TWStockClient:
         if elapsed < self._request_interval:
             time.sleep(self._request_interval - elapsed)
 
-    def fetch(self, path: str) -> list[dict[str, Any]]:
-        """Fetch data from any TWSE endpoint.
+    def fetch(self, path: str, *, base_url: str | None = None) -> list[dict[str, Any]]:
+        """Fetch data from a TWSE/TPEX OpenAPI endpoint.
 
         Args:
             path: API path (e.g., "/exchangeReport/STOCK_DAY_ALL").
+            base_url: Override base URL (e.g., TPEX "https://www.tpex.org.tw/openapi/v1").
 
         Returns:
-            List of record dicts from the TWSE API.
+            List of record dicts from the API.
 
         Raises:
             TWStockApiError: On 4xx/5xx responses.
@@ -81,11 +82,15 @@ class TWStockClient:
         if not self._http:
             raise RuntimeError("Client not initialized. Use 'with TWStockClient() as client:'")
 
+        # For non-default base URLs, build full URL; otherwise use relative path
+        url = f"{base_url}{path}" if base_url else path
+        cache_key = url if base_url else path
+
         # Check cache first
         if self._use_cache:
             from .cache import get_cached
 
-            cached = get_cached(path)
+            cached = get_cached(cache_key)
             if cached is not None:
                 return cached
 
@@ -95,11 +100,11 @@ class TWStockClient:
         for attempt in range(3):
             try:
                 t0 = time.monotonic()
-                resp = self._http.get(path)
+                resp = self._http.get(url)
                 elapsed = time.monotonic() - t0
                 self._last_request_time = time.monotonic()
 
-                logger.info("GET %s -> %d (%.2fs)", path, resp.status_code, elapsed)
+                logger.info("GET %s -> %d (%.2fs)", url, resp.status_code, elapsed)
 
                 if resp.status_code in (429, 500, 502, 503, 504):
                     wait = 2**attempt + 0.5
@@ -108,7 +113,7 @@ class TWStockClient:
                     continue
 
                 if resp.status_code >= 400:
-                    raise TWStockApiError(f"TWSE API returned {resp.status_code}")
+                    raise TWStockApiError(f"API returned {resp.status_code}")
 
                 data = resp.json()
                 result: list[dict[str, Any]]
@@ -130,7 +135,7 @@ class TWStockClient:
                 if self._use_cache:
                     from .cache import set_cached
 
-                    set_cached(path, result)
+                    set_cached(cache_key, result)
 
                 return result
 
