@@ -5,14 +5,19 @@ from twstock_cli.endpoints import ENDPOINTS, EndpointDef, list_endpoints, resolv
 
 class TestEndpointRegistry:
     def test_endpoint_count(self):
-        assert len(ENDPOINTS) == 169  # 144 TWSE + 18 otc + 7 otc_company
+        assert len(ENDPOINTS) == 351  # 144 TWSE + 207 TPEX
 
     def test_endpoint_is_frozen_dataclass(self):
         ep = next(iter(ENDPOINTS.values()))
         assert isinstance(ep, EndpointDef)
 
     def test_all_endpoints_have_required_fields(self):
-        valid_groups = ("stock", "company", "broker", "other", "otc", "otc_company")
+        valid_groups = (
+            "stock", "company", "broker", "other",
+            "otc", "otc_company", "otc_index", "otc_esg", "otc_financial",
+            "otc_esb", "otc_gisa", "otc_warrant", "otc_fund", "otc_gold",
+            "otc_bond", "otc_broker",
+        )
         for key, ep in ENDPOINTS.items():
             assert ep.path.startswith("/"), f"{key}: path should start with /"
             assert ep.cli_name, f"{key}: cli_name is empty"
@@ -43,7 +48,7 @@ class TestResolveEndpoint:
 class TestListEndpoints:
     def test_list_all(self):
         results = list_endpoints()
-        assert len(results) == 169
+        assert len(results) == 351
 
     def test_list_by_category(self):
         results = list_endpoints(category="stock")
@@ -106,11 +111,15 @@ class TestWebApiEndpoint:
 class TestTpexEndpoints:
     def test_otc_endpoint_count(self):
         otc = [k for k in ENDPOINTS if k.startswith("otc.")]
-        assert len(otc) == 18
+        assert len(otc) == 64  # 18 Phase 1 + 46 Phase 2
 
     def test_otc_company_endpoint_count(self):
         otc_company = [k for k in ENDPOINTS if k.startswith("otc_company.")]
-        assert len(otc_company) == 7
+        assert len(otc_company) == 29  # 7 Phase 1 + 22 Phase 2
+
+    def test_all_tpex_endpoint_count(self):
+        tpex = [k for k in ENDPOINTS if k.startswith("otc")]
+        assert len(tpex) == 207  # All TPEX OpenAPI endpoints
 
     def test_tpex_endpoints_have_base_url(self):
         from twstock_cli.endpoints import TPEX_BASE_URL
@@ -143,9 +152,9 @@ class TestTpexEndpoints:
     def test_list_by_otc_category(self):
         results = list_endpoints(category="otc")
         assert all(r["group"] == "otc" for r in results)
-        assert len(results) == 18
+        assert len(results) == 64
 
     def test_list_by_otc_company_category(self):
         results = list_endpoints(category="otc_company")
         assert all(r["group"] == "otc_company" for r in results)
-        assert len(results) == 7
+        assert len(results) == 29

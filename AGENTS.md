@@ -32,7 +32,7 @@ twstock schema stock.stock-day-all --json
 
 ## Core Commands
 
-### 1. `twstock fetch <endpoint>` — Access any of 143 endpoints
+### 1. `twstock fetch <endpoint>` — Access any of 351 endpoints
 
 ```bash
 # By dotted name
@@ -60,7 +60,7 @@ twstock fetch STOCK_DAY_ALL --json
 ### 2. `twstock endpoints` — Discover endpoints
 
 ```bash
-# List all 143 endpoints
+# List all 351 endpoints
 twstock endpoints --json
 
 # Search by keyword (Chinese or English)
