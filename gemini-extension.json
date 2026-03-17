@@ -1,18 +1,18 @@
 {
-  "name": "twse-cli",
-  "description": "Agent-friendly CLI for Taiwan Stock Exchange (TWSE) OpenAPI — 143 endpoints, one tool",
+  "name": "twstock-cli",
+  "description": "Agent-friendly CLI for Taiwan Stock Exchange (TWSE) and Taipei Exchange (TPEX) — stock market data, one tool",
   "version": "0.1.0",
   "commands": [
     {
-      "name": "twse fetch",
-      "description": "Fetch data from any TWSE endpoint by dotted name, raw path, or API code",
-      "usage": "twse fetch <endpoint> --json [--fields F] [--code C] [--limit N] [--normalize] [--ndjson] [--raw] [--dry-run] [--stdin]",
+      "name": "twstock fetch",
+      "description": "Fetch data from any TWSE/TPEX endpoint by dotted name, raw path, or API code",
+      "usage": "twstock fetch <endpoint> --json [--fields F] [--code C] [--limit N] [--normalize] [--ndjson] [--raw] [--dry-run] [--stdin]",
       "examples": [
-        "twse fetch stock.stock-day-all --json",
-        "twse fetch stock.stock-day-all --json --code 2330 --fields Code,Name,ClosingPrice",
-        "twse fetch stock.bwibbu-all --json --normalize",
-        "twse fetch stock.stock-day-all --dry-run",
-        "echo '{\"endpoint\":\"stock.stock-day-all\",\"fields\":[\"Code\",\"Name\"]}' | twse fetch --stdin --json"
+        "twstock fetch stock.stock-day-all --json",
+        "twstock fetch stock.stock-day-all --json --code 2330 --fields Code,Name,ClosingPrice",
+        "twstock fetch stock.bwibbu-all --json --normalize",
+        "twstock fetch stock.stock-day-all --dry-run",
+        "echo '{\"endpoint\":\"stock.stock-day-all\",\"fields\":[\"Code\",\"Name\"]}' | twstock fetch --stdin --json"
       ],
       "guardrails": [
         "Always use --fields to select only needed columns (saves tokens)",
@@ -22,20 +22,20 @@
       ]
     },
     {
-      "name": "twse endpoints",
-      "description": "Discover and search TWSE OpenAPI endpoints",
-      "usage": "twse endpoints --json [--search K] [--category C] [--with-fields]",
+      "name": "twstock endpoints",
+      "description": "Discover and search TWSE/TPEX endpoints",
+      "usage": "twstock endpoints --json [--search K] [--category C] [--with-fields]",
       "examples": [
-        "twse endpoints --search dividend --json",
-        "twse endpoints --category stock --json"
+        "twstock endpoints --search dividend --json",
+        "twstock endpoints --category stock --json"
       ]
     },
     {
-      "name": "twse schema",
+      "name": "twstock schema",
       "description": "Inspect endpoint schema: field names, types, examples",
-      "usage": "twse schema <endpoint> --json [--dry-run]",
+      "usage": "twstock schema <endpoint> --json [--dry-run]",
       "examples": [
-        "twse schema stock.stock-day-all --json"
+        "twstock schema stock.stock-day-all --json"
       ],
       "guardrails": [
         "Use schema to understand fields before querying with fetch"

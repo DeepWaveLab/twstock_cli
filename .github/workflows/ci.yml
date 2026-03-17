@@ -26,7 +26,7 @@ jobs:
         run: uv sync --dev
 
       - name: Lint with ruff
-        run: uv run ruff check twse_cli/ tests/
+        run: uv run ruff check twstock_cli/ tests/
 
       - name: Run tests
         run: uv run pytest tests/ -v

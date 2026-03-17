@@ -1,6 +1,6 @@
 """Tests for data normalization — string→number, ROC→ISO dates."""
 
-from twse_cli.normalize import normalize_data, normalize_record
+from twstock_cli.normalize import normalize_data, normalize_record
 
 
 class TestNormalizeRecord:

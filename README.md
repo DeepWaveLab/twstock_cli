@@ -1,51 +1,51 @@
-# twse-cli
+# twstock-cli
 
-Agent-friendly CLI for Taiwan Stock Exchange (TWSE) OpenAPI — 143 endpoints, one tool.
+Agent-friendly CLI for Taiwan Stock Exchange (TWSE) and Taipei Exchange (TPEX) — stock market data, one tool.
 
 ## Install
 
 ```
-uv tool install twse-cli
+uv tool install twstock-cli
 ```
 
 With MCP server support:
 
 ```
-uv tool install 'twse-cli[mcp]'
+uv tool install 'twstock-cli[mcp]'
 ```
 
 ## Quick Start
 
 ```bash
 # Fetch daily stock data (all stocks)
-twse fetch stock.stock-day-all --json
+twstock fetch stock.stock-day-all --json
 
 # Filter to specific fields (saves tokens)
-twse fetch stock.stock-day-all --json --fields "Code,Name,ClosingPrice"
+twstock fetch stock.stock-day-all --json --fields "Code,Name,ClosingPrice"
 
 # Filter by stock code
-twse fetch stock.stock-day-all --json --code 2330
+twstock fetch stock.stock-day-all --json --code 2330
 
 # Get PE ratio and dividend yield
-twse fetch stock.bwibbu-all --json --code 2330
+twstock fetch stock.bwibbu-all --json --code 2330
 
 # Discover endpoints
-twse endpoints --search "股利" --json
+twstock endpoints --search "股利" --json
 
 # Inspect endpoint schema
-twse schema stock.stock-day-all --json
+twstock schema stock.stock-day-all --json
 ```
 
 ## Commands
 
-### `twse fetch <endpoint>`
+### `twstock fetch <endpoint>`
 
 Fetch data from any TWSE endpoint.
 
 ```bash
-twse fetch stock.stock-day-all --json              # by dotted name
-twse fetch /exchangeReport/STOCK_DAY_ALL --json     # by raw API path
-twse fetch STOCK_DAY_ALL --json                     # by API code
+twstock fetch stock.stock-day-all --json              # by dotted name
+twstock fetch /exchangeReport/STOCK_DAY_ALL --json     # by raw API path
+twstock fetch STOCK_DAY_ALL --json                     # by API code
 ```
 
 | Flag | Description |
@@ -61,45 +61,45 @@ twse fetch STOCK_DAY_ALL --json                     # by API code
 | `--stdin` | Read parameters from JSON on stdin |
 | `--no-cache` | Bypass disk cache |
 
-### `twse endpoints`
+### `twstock endpoints`
 
 Discover available endpoints.
 
 ```bash
-twse endpoints --json                           # list all 143
-twse endpoints --search "daily" --json          # search by keyword
-twse endpoints --category stock --json          # filter by category
-twse endpoints --search "bwibbu" --with-fields --json  # show fields
+twstock endpoints --json                           # list all 143
+twstock endpoints --search "daily" --json          # search by keyword
+twstock endpoints --category stock --json          # filter by category
+twstock endpoints --search "bwibbu" --with-fields --json  # show fields
 ```
 
 Categories: `stock` (44), `company` (86), `broker` (9), `other` (4).
 
-### `twse schema <endpoint>`
+### `twstock schema <endpoint>`
 
 Inspect endpoint fields, inferred types, and example values.
 
 ```bash
-twse schema stock.stock-day-all --json
+twstock schema stock.stock-day-all --json
 ```
 
-### `twse serve`
+### `twstock serve`
 
 Start as an MCP (Model Context Protocol) server on stdio.
 
 ```bash
-twse serve
+twstock serve
 ```
 
-Exposes tools: `twse_fetch`, `twse_endpoints`, `twse_schema`. Requires `mcp` extra.
+Exposes tools: `twstock_fetch`, `twstock_endpoints`, `twstock_schema`. Requires `mcp` extra.
 
-### `twse <command> --help-json`
+### `twstock <command> --help-json`
 
 Output structured command metadata as JSON (flags, types, defaults).
 
 ```bash
-twse --help-json                  # list all commands
-twse fetch --help-json            # list fetch params with types
-twse stock --help-json            # list stock subcommands
+twstock --help-json                  # list all commands
+twstock fetch --help-json            # list fetch params with types
+twstock stock --help-json            # list stock subcommands
 ```
 
 ### `--dry-run`
@@ -107,7 +107,7 @@ twse stock --help-json            # list stock subcommands
 Preview the planned request without making an HTTP call.
 
 ```bash
-twse fetch stock.stock-day-all --dry-run --fields "Code,Name" --code 2330
+twstock fetch stock.stock-day-all --dry-run --fields "Code,Name" --code 2330
 ```
 
 ### `--stdin`
@@ -115,7 +115,7 @@ twse fetch stock.stock-day-all --dry-run --fields "Code,Name" --code 2330
 Accept structured JSON input from stdin (CLI flags override stdin values).
 
 ```bash
-echo '{"endpoint":"stock.stock-day-all","fields":["Code","Name"],"limit":5}' | twse fetch --stdin --json
+echo '{"endpoint":"stock.stock-day-all","fields":["Code","Name"],"limit":5}' | twstock fetch --stdin --json
 ```
 
 ## Output Formats
@@ -149,7 +149,7 @@ echo '{"endpoint":"stock.stock-day-all","fields":["Code","Name"],"limit":5}' | t
 
 | Variable | Values | Description |
 |----------|--------|-------------|
-| `TWSE_OUTPUT` | `json`, `human` | Override auto-detection of output format |
+| `TWSTOCK_OUTPUT` | `json`, `human` | Override auto-detection of output format |
 
 ## Exit Codes
 

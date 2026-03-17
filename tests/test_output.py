@@ -2,7 +2,7 @@
 
 import json
 
-from twse_cli.output import filter_by_code, filter_fields, make_envelope
+from twstock_cli.output import filter_by_code, filter_fields, make_envelope
 
 
 class TestEnvelope:

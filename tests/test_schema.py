@@ -1,6 +1,6 @@
 """Tests for runtime schema introspection."""
 
-from twse_cli.schema import analyze_schema
+from twstock_cli.schema import analyze_schema
 
 
 class TestAnalyzeSchema:

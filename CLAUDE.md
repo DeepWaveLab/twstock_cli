@@ -1,8 +1,8 @@
-# twse-cli
+# twstock-cli
 
 ## Project Overview
 
-twse-cli is a Python CLI wrapping Taiwan Stock Exchange (TWSE) OpenAPI — 143 endpoints for stock market data. Designed for AI agents to query efficiently with minimal token consumption.
+twstock-cli is a Python CLI wrapping Taiwan Stock Exchange (TWSE) and Taipei Exchange (TPEX) APIs — stock market data for both exchanges. Designed for AI agents to query efficiently with minimal token consumption.
 
 ## Tech Stack
 
@@ -16,12 +16,12 @@ twse-cli is a Python CLI wrapping Taiwan Stock Exchange (TWSE) OpenAPI — 143 e
 
 ## Key Files
 
-- `twse_cli/cli.py` — Click root group, top-level commands (fetch, endpoints, schema, version, serve)
-- `twse_cli/endpoints.py` — Registry of 143 `EndpointDef` dataclasses (single source of truth)
-- `twse_cli/commands/_factory.py` — Dynamically generates Click commands from endpoint registry
-- `twse_cli/client.py` — TWSEClient with httpx, 3x retry, rate limiting
-- `twse_cli/normalize.py` — String→number, ROC dates→ISO 8601 conversion
-- `twse_cli/serve.py` — MCP server mode (FastMCP, stdio transport)
+- `twstock_cli/cli.py` — Click root group, top-level commands (fetch, endpoints, schema, version, serve)
+- `twstock_cli/endpoints.py` — Registry of `EndpointDef` dataclasses (single source of truth)
+- `twstock_cli/commands/_factory.py` — Dynamically generates Click commands from endpoint registry
+- `twstock_cli/client.py` — TWStockClient with httpx, 3x retry, rate limiting
+- `twstock_cli/normalize.py` — String→number, ROC dates→ISO 8601 conversion
+- `twstock_cli/serve.py` — MCP server mode (FastMCP, stdio transport)
 - `AGENTS.md` — Agent-facing instructions with command guardrails
 
 ## Development Commands
@@ -30,8 +30,8 @@ twse-cli is a Python CLI wrapping Taiwan Stock Exchange (TWSE) OpenAPI — 143 e
 uv sync                          # Install dependencies
 uv run pytest                    # Run unit tests
 uv run pytest -m integration     # Run integration tests
-uv run ruff check twse_cli/      # Lint
-uv run ruff format twse_cli/     # Format
+uv run ruff check twstock_cli/   # Lint
+uv run ruff format twstock_cli/  # Format
 ```
 
 ## Conventions
@@ -48,22 +48,22 @@ uv run ruff format twse_cli/     # Format
 
 When a user asks about Taiwan stock market data, use the skills in `skills/` to compose multi-step workflows. Each skill is a `SKILL.md` file with step-by-step instructions.
 
-**Always read `skills/twse-shared/SKILL.md` first** for conventions and token-saving rules.
+**Always read `skills/twstock-shared/SKILL.md` first** for conventions and token-saving rules.
 
 ### When to use which skill
 
 | User intent | Skill to use |
 |-------------|-------------|
-| "How's the market today?" | `skills/twse-market-overview/SKILL.md` |
-| "Tell me about stock 2330" / any specific stock | `skills/twse-stock-lookup/SKILL.md` |
-| "Find high dividend stocks" / 存股 | `skills/twse-dividend-screener/SKILL.md` |
-| "What are institutions buying?" / 三大法人 | `skills/twse-institutional-flow/SKILL.md` |
-| "Show me revenue growth leaders" | `skills/twse-revenue-tracker/SKILL.md` |
-| "Compare TSMC vs MediaTek" / any stock comparison | `skills/twse-stock-compare/SKILL.md` |
-| "When is the ex-dividend date?" / 除權息 | `skills/twse-ex-dividend-calendar/SKILL.md` |
-| "Give me full company analysis" / due diligence | `skills/twse-company-profile/SKILL.md` |
-| "What's the margin sentiment?" / 融資融券 | `skills/twse-margin-sentiment/SKILL.md` |
-| "What ETFs are popular?" / 定期定額 | `skills/twse-etf-rankings/SKILL.md` |
+| "How's the market today?" | `skills/twstock-market-overview/SKILL.md` |
+| "Tell me about stock 2330" / any specific stock | `skills/twstock-stock-lookup/SKILL.md` |
+| "Find high dividend stocks" / 存股 | `skills/twstock-dividend-screener/SKILL.md` |
+| "What are institutions buying?" / 三大法人 | `skills/twstock-institutional-flow/SKILL.md` |
+| "Show me revenue growth leaders" | `skills/twstock-revenue-tracker/SKILL.md` |
+| "Compare TSMC vs MediaTek" / any stock comparison | `skills/twstock-stock-compare/SKILL.md` |
+| "When is the ex-dividend date?" / 除權息 | `skills/twstock-ex-dividend-calendar/SKILL.md` |
+| "Give me full company analysis" / due diligence | `skills/twstock-company-profile/SKILL.md` |
+| "What's the margin sentiment?" / 融資融券 | `skills/twstock-margin-sentiment/SKILL.md` |
+| "What ETFs are popular?" / 定期定額 | `skills/twstock-etf-rankings/SKILL.md` |
 
 ### Persona skills (for broader analysis)
 
@@ -78,4 +78,4 @@ When a user asks about Taiwan stock market data, use the skills in `skills/` to 
 4. Use `--limit` for sampling before full fetches
 5. Use `--normalize` for clean numbers
 6. Use `--dry-run` to preview before fetching
-7. Search endpoints first: `twse endpoints --search <keyword> --json`
+7. Search endpoints first: `twstock endpoints --search <keyword> --json`

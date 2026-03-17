@@ -13,7 +13,7 @@ from pathlib import Path
 import pytest
 from click.testing import CliRunner
 
-from twse_cli.cli import cli
+from twstock_cli.cli import cli
 
 CASES_FILE = Path(__file__).parent / "test_cases.json"
 

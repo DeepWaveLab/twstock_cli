@@ -6,7 +6,7 @@ from unittest.mock import MagicMock, patch
 import pytest
 from click.testing import CliRunner
 
-from twse_cli.cli import cli
+from twstock_cli.cli import cli
 
 
 @pytest.fixture
@@ -15,21 +15,21 @@ def runner():
 
 
 def _mock_fetch(data):
-    """Create a mock that patches TWSEClient to return given data."""
+    """Create a mock that patches TWStockClient to return given data."""
     mock_client = MagicMock()
     mock_client.__enter__ = MagicMock(return_value=mock_client)
     mock_client.__exit__ = MagicMock(return_value=False)
     mock_client.fetch.return_value = data
-    return patch("twse_cli.client.TWSEClient", return_value=mock_client)
+    return patch("twstock_cli.client.TWStockClient", return_value=mock_client)
 
 
 def _mock_fetch_web(data):
-    """Create a mock that patches TWSEClient.fetch_web to return given data."""
+    """Create a mock that patches TWStockClient.fetch_web to return given data."""
     mock_client = MagicMock()
     mock_client.__enter__ = MagicMock(return_value=mock_client)
     mock_client.__exit__ = MagicMock(return_value=False)
     mock_client.fetch_web.return_value = data
-    return patch("twse_cli.client.TWSEClient", return_value=mock_client)
+    return patch("twstock_cli.client.TWStockClient", return_value=mock_client)
 
 
 class TestFetchCommand:
@@ -75,14 +75,14 @@ class TestFetchCommand:
         assert envelope["error"]["code"] == "unknown_endpoint"
 
     def test_fetch_api_error_exit_code(self, runner):
-        from twse_cli.client import TWSEApiError
+        from twstock_cli.client import TWStockApiError
 
         mock_client = MagicMock()
         mock_client.__enter__ = MagicMock(return_value=mock_client)
         mock_client.__exit__ = MagicMock(return_value=False)
-        mock_client.fetch.side_effect = TWSEApiError("TWSE API returned 503")
+        mock_client.fetch.side_effect = TWStockApiError("TWSE API returned 503")
 
-        with patch("twse_cli.client.TWSEClient", return_value=mock_client):
+        with patch("twstock_cli.client.TWStockClient", return_value=mock_client):
             result = runner.invoke(cli, ["fetch", "stock.stock-day-all", "--json"])
         assert result.exit_code == 1
         envelope = json.loads(result.output)
@@ -90,14 +90,14 @@ class TestFetchCommand:
         assert envelope["error"]["code"] == "api_error"
 
     def test_fetch_network_error_exit_code(self, runner):
-        from twse_cli.client import TWSENetworkError
+        from twstock_cli.client import TWStockNetworkError
 
         mock_client = MagicMock()
         mock_client.__enter__ = MagicMock(return_value=mock_client)
         mock_client.__exit__ = MagicMock(return_value=False)
-        mock_client.fetch.side_effect = TWSENetworkError("Cannot reach TWSE")
+        mock_client.fetch.side_effect = TWStockNetworkError("Cannot reach TWSE")
 
-        with patch("twse_cli.client.TWSEClient", return_value=mock_client):
+        with patch("twstock_cli.client.TWStockClient", return_value=mock_client):
             result = runner.invoke(cli, ["fetch", "stock.stock-day-all", "--json"])
         assert result.exit_code == 3
         envelope = json.loads(result.output)
@@ -149,7 +149,7 @@ class TestEndpointsCommand:
 
 
 class TestDomainShortcuts:
-    """Test domain shortcut commands (twse stock <cmd>, twse company <cmd>, etc.)."""
+    """Test domain shortcut commands (twstock stock <cmd>, twstock company <cmd>, etc.)."""
 
     def test_stock_subgroup_exists(self, runner):
         result = runner.invoke(cli, ["stock", "--help"])
@@ -246,7 +246,7 @@ class TestDryRun:
 
     def test_fetch_dry_run_no_http_call(self, runner):
         """--dry-run should NOT make any HTTP call."""
-        with patch("twse_cli.client.TWSEClient") as mock_cls:
+        with patch("twstock_cli.client.TWStockClient") as mock_cls:
             result = runner.invoke(cli, ["fetch", "stock.stock-day-all", "--dry-run"])
         assert result.exit_code == 0
         mock_cls.assert_not_called()
@@ -438,20 +438,20 @@ class TestT86WebEndpoint:
         assert envelope["ok"] is True
 
     def test_resolve_t86_by_dotted_name(self):
-        from twse_cli.endpoints import resolve_endpoint
+        from twstock_cli.endpoints import resolve_endpoint
         ep = resolve_endpoint("stock.t86")
         assert ep is not None
         assert ep.base_url == "https://www.twse.com.tw/rwd/zh"
         assert ep.field_aliases["證券代號"] == "Code"
 
     def test_search_t86(self):
-        from twse_cli.endpoints import list_endpoints
+        from twstock_cli.endpoints import list_endpoints
         results = list_endpoints(search="t86")
         assert len(results) >= 1
         assert any(r["name"] == "stock.t86" for r in results)
 
     def test_search_institutional(self):
-        from twse_cli.endpoints import list_endpoints
+        from twstock_cli.endpoints import list_endpoints
         results = list_endpoints(search="法人")
         assert any(r["name"] == "stock.t86" for r in results)
 
@@ -460,7 +460,7 @@ class TestVersionCommand:
     def test_version_flag(self, runner):
         result = runner.invoke(cli, ["--version"])
         assert result.exit_code == 0
-        assert "twse" in result.output
+        assert "twstock" in result.output
 
     def test_version_command(self, runner):
         result = runner.invoke(cli, ["version"])

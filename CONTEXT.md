@@ -1,41 +1,41 @@
-# twse-cli Context
+# twstock-cli Context
 
 ## What This Tool Does
 
-twse-cli is a CLI tool that wraps Taiwan Stock Exchange (TWSE) OpenAPI with 143 endpoints.
+twstock-cli is a CLI tool that wraps Taiwan Stock Exchange (TWSE) OpenAPI with 143 endpoints.
 It's designed for AI agents to efficiently query stock market data with minimal token consumption.
 
 ## Installation
 
 ```bash
-uv tool install twse-cli
+uv tool install twstock-cli
 ```
 
 ## Core Commands
 
 ```bash
 # Fetch any endpoint (143 available)
-twse fetch <endpoint> --json [--fields F] [--code C] [--limit N] [--normalize] [--ndjson] [--raw] [--dry-run] [--stdin]
+twstock fetch <endpoint> --json [--fields F] [--code C] [--limit N] [--normalize] [--ndjson] [--raw] [--dry-run] [--stdin]
 
 # Discover endpoints
-twse endpoints --json [--search K] [--category C] [--with-fields]
+twstock endpoints --json [--search K] [--category C] [--with-fields]
 
 # Inspect endpoint schema
-twse schema <endpoint> --json [--dry-run]
+twstock schema <endpoint> --json [--dry-run]
 
 # Structured command metadata
-twse <command> --help-json
+twstock <command> --help-json
 
 # Version info
-twse version
+twstock version
 ```
 
 ## Endpoint Reference Formats
 
 ```bash
-twse fetch stock.stock-day-all        # dotted name
-twse fetch /exchangeReport/STOCK_DAY_ALL  # raw API path
-twse fetch STOCK_DAY_ALL              # API code
+twstock fetch stock.stock-day-all        # dotted name
+twstock fetch /exchangeReport/STOCK_DAY_ALL  # raw API path
+twstock fetch STOCK_DAY_ALL              # API code
 ```
 
 ## Output Formats

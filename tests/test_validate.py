@@ -3,7 +3,7 @@
 import pytest
 import click
 
-from twse_cli.validate import validate_input, MAX_INPUT_LENGTH
+from twstock_cli.validate import validate_input, MAX_INPUT_LENGTH
 
 
 class TestValidateInputClean:

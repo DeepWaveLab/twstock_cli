@@ -1,6 +1,6 @@
 """Tests for response sanitization — strip control chars from API data."""
 
-from twse_cli.sanitize import sanitize_data, sanitize_record
+from twstock_cli.sanitize import sanitize_data, sanitize_record
 
 
 class TestSanitizeRecord:

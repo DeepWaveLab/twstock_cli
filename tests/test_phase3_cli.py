@@ -6,7 +6,7 @@ from unittest.mock import MagicMock, patch
 import pytest
 from click.testing import CliRunner
 
-from twse_cli.cli import cli
+from twstock_cli.cli import cli
 
 
 @pytest.fixture
@@ -15,12 +15,12 @@ def runner():
 
 
 def _mock_fetch(data):
-    """Create a mock that patches TWSEClient to return given data."""
+    """Create a mock that patches TWStockClient to return given data."""
     mock_client = MagicMock()
     mock_client.__enter__ = MagicMock(return_value=mock_client)
     mock_client.__exit__ = MagicMock(return_value=False)
     mock_client.fetch.return_value = data
-    return patch("twse_cli.client.TWSEClient", return_value=mock_client)
+    return patch("twstock_cli.client.TWStockClient", return_value=mock_client)
 
 
 class TestNormalizeFlag:

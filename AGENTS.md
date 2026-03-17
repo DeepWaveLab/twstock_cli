@@ -1,48 +1,48 @@
 ---
-name: twse-cli
-description: Agent-friendly CLI for Taiwan Stock Exchange (TWSE) OpenAPI — 143 endpoints
-install: uv tool install twse-cli
+name: twstock-cli
+description: Agent-friendly CLI for Taiwan Stock Exchange (TWSE) and Taipei Exchange (TPEX) — stock market data
+install: uv tool install twstock-cli
 security: read-only
 commands:
-  - twse fetch <endpoint> --json [--fields F] [--code C] [--limit N] [--normalize] [--ndjson] [--raw] [--dry-run] [--stdin]
-  - twse endpoints --json [--search K] [--category C] [--with-fields]
-  - twse schema <endpoint> --json [--dry-run]
-  - twse serve
-  - twse version
-  - twse <command> --help-json
+  - twstock fetch <endpoint> --json [--fields F] [--code C] [--limit N] [--normalize] [--ndjson] [--raw] [--dry-run] [--stdin]
+  - twstock endpoints --json [--search K] [--category C] [--with-fields]
+  - twstock schema <endpoint> --json [--dry-run]
+  - twstock serve
+  - twstock version
+  - twstock <command> --help-json
 ---
 
-# twse-cli — Agent Instructions
+# twstock-cli — Agent Instructions
 
 ## Quick Start
 
 ```bash
 # Install
-uv tool install twse-cli
+uv tool install twstock-cli
 
 # Fetch any endpoint
-twse fetch stock.stock-day-all --json
+twstock fetch stock.stock-day-all --json
 
 # Discover endpoints
-twse endpoints --search "dividend" --json
+twstock endpoints --search "dividend" --json
 
 # Inspect schema
-twse schema stock.stock-day-all --json
+twstock schema stock.stock-day-all --json
 ```
 
 ## Core Commands
 
-### 1. `twse fetch <endpoint>` — Access any of 143 endpoints
+### 1. `twstock fetch <endpoint>` — Access any of 143 endpoints
 
 ```bash
 # By dotted name
-twse fetch stock.stock-day-all --json
+twstock fetch stock.stock-day-all --json
 
 # By raw API path
-twse fetch /exchangeReport/STOCK_DAY_ALL --json
+twstock fetch /exchangeReport/STOCK_DAY_ALL --json
 
 # By API code
-twse fetch STOCK_DAY_ALL --json
+twstock fetch STOCK_DAY_ALL --json
 ```
 
 **Flags:**
@@ -57,39 +57,39 @@ twse fetch STOCK_DAY_ALL --json
 - `--stdin` — Read parameters from JSON on stdin
 - `--help-json` — Output command metadata as structured JSON
 
-### 2. `twse endpoints` — Discover endpoints
+### 2. `twstock endpoints` — Discover endpoints
 
 ```bash
 # List all 143 endpoints
-twse endpoints --json
+twstock endpoints --json
 
 # Search by keyword (Chinese or English)
-twse endpoints --search "股利" --json
-twse endpoints --search "daily" --json
+twstock endpoints --search "股利" --json
+twstock endpoints --search "daily" --json
 
 # Filter by category
-twse endpoints --category stock --json
+twstock endpoints --category stock --json
 
 # Show field definitions
-twse endpoints --search "stock.stock-day-all" --with-fields --json
+twstock endpoints --search "stock.stock-day-all" --with-fields --json
 ```
 
-### 3. `twse schema <endpoint>` — Inspect endpoint fields
+### 3. `twstock schema <endpoint>` — Inspect endpoint fields
 
 ```bash
-twse schema stock.stock-day-all --json
+twstock schema stock.stock-day-all --json
 # Returns: field names, inferred types, examples, non-empty percentages
 ```
 
-### 4. `twse serve` — MCP server mode
+### 4. `twstock serve` — MCP server mode
 
 ```bash
 # Start as MCP server (stdio transport)
-twse serve
-# Requires: uv pip install 'twse-cli[mcp]'
+twstock serve
+# Requires: uv pip install 'twstock-cli[mcp]'
 ```
 
-Exposes tools: `twse_fetch`, `twse_endpoints`, `twse_schema`.
+Exposes tools: `twstock_fetch`, `twstock_endpoints`, `twstock_schema`.
 
 ## Output Formats
 
@@ -140,75 +140,75 @@ Exposes tools: `twse_fetch`, `twse_endpoints`, `twse_schema`.
 ### Find stocks with high dividend yield
 ```bash
 # 1. Discover dividend endpoint
-twse endpoints --search "殖利率" --json
+twstock endpoints --search "殖利率" --json
 # 2. Fetch PE/dividend/PB data with normalization
-twse fetch stock.bwibbu-all --json --fields "Code,Name,DividendYield,PEratio" --normalize
+twstock fetch stock.bwibbu-all --json --fields "Code,Name,DividendYield,PEratio" --normalize
 ```
 
 ### Get TSMC data
 ```bash
-twse fetch stock.stock-day-all --json --code 2330
+twstock fetch stock.stock-day-all --json --code 2330
 ```
 
 ### Get company info
 ```bash
-twse fetch company.t187ap03-l --json --code 2330 --fields "公司代號,公司名稱,董事長,產業別"
+twstock fetch company.t187ap03-l --json --code 2330 --fields "公司代號,公司名稱,董事長,產業別"
 ```
 
 ### Monthly revenue
 ```bash
-twse fetch company.t187ap05-l --json --fields "公司代號,公司名稱,營業收入-當月營收,營業收入-去年同月增減(%)"
+twstock fetch company.t187ap05-l --json --fields "公司代號,公司名稱,營業收入-當月營收,營業收入-去年同月增減(%)"
 ```
 
 ### Stream large dataset
 ```bash
-twse fetch stock.stock-day-all --ndjson | head -5
+twstock fetch stock.stock-day-all --ndjson | head -5
 ```
 
 ### Pipe bare array to jq
 ```bash
-twse fetch stock.stock-day-all --raw | jq '.[0:3]'
+twstock fetch stock.stock-day-all --raw | jq '.[0:3]'
 ```
 
 ### Inspect endpoint fields before fetching
 ```bash
-twse schema stock.bwibbu-all --json
+twstock schema stock.bwibbu-all --json
 ```
 
 ### Preview before fetching
 ```bash
-twse fetch stock.stock-day-all --dry-run --fields "Code,Name" --code 2330
+twstock fetch stock.stock-day-all --dry-run --fields "Code,Name" --code 2330
 ```
 
 ### Structured input via stdin
 ```bash
-echo '{"endpoint":"stock.stock-day-all","fields":["Code","Name"],"limit":5}' | twse fetch --stdin --json
+echo '{"endpoint":"stock.stock-day-all","fields":["Code","Name"],"limit":5}' | twstock fetch --stdin --json
 ```
 
 ### Discover command flags programmatically
 ```bash
-twse fetch --help-json
-twse --help-json
-twse stock --help-json
+twstock fetch --help-json
+twstock --help-json
+twstock stock --help-json
 ```
 
 ## Skills
 
-See `skills/` directory for guided multi-step workflows that compose multiple `twse` commands:
+See `skills/` directory for guided multi-step workflows that compose multiple `twstock` commands:
 
 | Skill | Description |
 |-------|-------------|
-| `twse-shared` | Shared conventions, output format, token tips |
-| `twse-market-overview` | Daily market snapshot (TAIEX, top movers, margin, institutional) |
-| `twse-stock-lookup` | Comprehensive single-stock lookup |
-| `twse-dividend-screener` | Screen for high dividend yield stocks |
-| `twse-institutional-flow` | Track 三大法人 buying/selling |
-| `twse-revenue-tracker` | Monthly revenue analysis with YoY growth |
-| `twse-stock-compare` | Side-by-side stock comparison |
-| `twse-ex-dividend-calendar` | Ex-dividend schedule lookup |
-| `twse-company-profile` | Company fundamentals deep-dive |
-| `twse-margin-sentiment` | Margin balance sentiment analysis |
-| `twse-etf-rankings` | ETF regular investment rankings |
+| `twstock-shared` | Shared conventions, output format, token tips |
+| `twstock-market-overview` | Daily market snapshot (TAIEX, top movers, margin, institutional) |
+| `twstock-stock-lookup` | Comprehensive single-stock lookup |
+| `twstock-dividend-screener` | Screen for high dividend yield stocks |
+| `twstock-institutional-flow` | Track 三大法人 buying/selling |
+| `twstock-revenue-tracker` | Monthly revenue analysis with YoY growth |
+| `twstock-stock-compare` | Side-by-side stock comparison |
+| `twstock-ex-dividend-calendar` | Ex-dividend schedule lookup |
+| `twstock-company-profile` | Company fundamentals deep-dive |
+| `twstock-margin-sentiment` | Margin balance sentiment analysis |
+| `twstock-etf-rankings` | ETF regular investment rankings |
 | `persona-stock-analyst` | Think like a Taiwan stock analyst |
 | `persona-dividend-investor` | Think like a 存股 dividend investor |
 
@@ -219,20 +219,20 @@ Each skill has a `SKILL.md` file with preconditions, step-by-step workflows, and
 1. Always use `--fields` to select only needed columns
 2. Use `--code` to filter by stock code (avoids downloading full dataset)
 3. Use `--limit` for quick sampling
-4. Search endpoints first: `twse endpoints --search <keyword> --json`
+4. Search endpoints first: `twstock endpoints --search <keyword> --json`
 5. Use `--normalize` to get clean numbers instead of string parsing
-6. Use `twse schema` to understand fields before querying
+6. Use `twstock schema` to understand fields before querying
 7. Use `--dry-run` to preview the request before executing
 8. Use `--help-json` to discover flags without parsing help text
 
 ## Security Model
 
-twse-cli is a **read-only** data fetcher. Its security posture:
+twstock-cli is a **read-only** data fetcher. Its security posture:
 
 - **Network**: Only contacts `https://openapi.twse.com.tw/v1` (single host, HTTPS)
 - **SSL**: Certificate verification disabled (`verify=False`) due to known TWSE certificate issues. MITM risk acknowledged — data is public market data, not secrets.
 - **Authentication**: None. TWSE OpenAPI is public and auth-free.
-- **File system**: Writes only to `~/.cache/twse-cli/` (disk cache). No other file writes.
+- **File system**: Writes only to `~/.cache/twstock-cli/` (disk cache). No other file writes.
 - **Input validation**: All user-supplied strings validated against control characters, path traversal, and injection patterns. Unknown endpoints rejected against fixed registry. Max input length: 1000 chars.
 - **Output sanitization**: Control characters stripped from all API response values before output.
 - **Agent trust boundary**: The agent is an untrusted operator. The CLI validates all inputs and sanitizes all outputs. The agent does not need elevated permissions.
@@ -275,5 +275,5 @@ guardrails:
 guardrails:
   - rule: inspect-before-fetch
     severity: recommend
-    message: "Use 'twse schema <endpoint> --json' to understand fields before querying."
+    message: "Use 'twstock schema <endpoint> --json' to understand fields before querying."
 ```

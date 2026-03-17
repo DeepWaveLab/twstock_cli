@@ -40,7 +40,7 @@ def twse_health_check(request: pytest.FixtureRequest) -> None:
 @pytest.fixture(scope="session", autouse=True)
 def clear_cache_before_run() -> None:
     """Clear the TWSE CLI disk cache for a clean baseline."""
-    cache_dir = Path.home() / ".cache" / "twse-cli"
+    cache_dir = Path.home() / ".cache" / "twstock-cli"
     if cache_dir.exists():
         shutil.rmtree(cache_dir)
 

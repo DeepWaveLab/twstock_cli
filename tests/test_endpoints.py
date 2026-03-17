@@ -1,6 +1,6 @@
 """Tests for endpoint registry — resolve, list, search."""
 
-from twse_cli.endpoints import ENDPOINTS, EndpointDef, list_endpoints, resolve_endpoint
+from twstock_cli.endpoints import ENDPOINTS, EndpointDef, list_endpoints, resolve_endpoint
 
 
 class TestEndpointRegistry:

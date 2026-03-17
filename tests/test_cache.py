@@ -4,7 +4,7 @@ import time
 
 import pytest
 
-from twse_cli.cache import _cache_path, _ttl_for_path, clear_cache, get_cached, set_cached
+from twstock_cli.cache import _cache_path, _ttl_for_path, clear_cache, get_cached, set_cached
 
 
 @pytest.fixture(autouse=True)
@@ -26,7 +26,7 @@ class TestCacheReadWrite:
 
     def test_cache_creates_directory(self, isolated_cache):
         set_cached("/test", [{"ok": True}])
-        cache_dir = isolated_cache / "twse-cli"
+        cache_dir = isolated_cache / "twstock-cli"
         assert cache_dir.exists()
         assert len(list(cache_dir.glob("*.json"))) == 1
 

@@ -1,8 +1,8 @@
-# Copilot Instructions for twse-cli
+# Copilot Instructions for twstock-cli
 
 ## Project Overview
 
-twse-cli is a Python CLI tool wrapping Taiwan Stock Exchange (TWSE) OpenAPI.
+twstock-cli is a Python CLI tool wrapping Taiwan Stock Exchange (TWSE) OpenAPI.
 It provides agent-friendly access to 143 stock market endpoints.
 
 ## Tech Stack
@@ -14,27 +14,27 @@ It provides agent-friendly access to 143 stock market endpoints.
 ## Key Commands
 
 ```bash
-twse fetch <endpoint> --json        # Fetch data from any endpoint
-twse endpoints --search "keyword"   # Discover endpoints
-twse schema <endpoint> --json       # Inspect endpoint fields/types
+twstock fetch <endpoint> --json        # Fetch data from any endpoint
+twstock endpoints --search "keyword"   # Discover endpoints
+twstock schema <endpoint> --json       # Inspect endpoint fields/types
 ```
 
 ## Code Architecture
 
-- `twse_cli/cli.py` — Click root group with LazyGroup for domain shortcuts
-- `twse_cli/client.py` — TWSEClient with httpx, retry, rate limiting
-- `twse_cli/endpoints.py` — Registry of 143 EndpointDef dataclasses
-- `twse_cli/output.py` — Envelope, TTY detection, field filtering
-- `twse_cli/normalize.py` — Data normalization (string→number, ROC→ISO)
-- `twse_cli/schema.py` — Runtime schema introspection
-- `twse_cli/commands/_factory.py` — Dynamic command generation from registry
+- `twstock_cli/cli.py` — Click root group with LazyGroup for domain shortcuts
+- `twstock_cli/client.py` — TWStockClient with httpx, retry, rate limiting
+- `twstock_cli/endpoints.py` — Registry of 143 EndpointDef dataclasses
+- `twstock_cli/output.py` — Envelope, TTY detection, field filtering
+- `twstock_cli/normalize.py` — Data normalization (string→number, ROC→ISO)
+- `twstock_cli/schema.py` — Runtime schema introspection
+- `twstock_cli/commands/_factory.py` — Dynamic command generation from registry
 
 ## Conventions
 
 - All output follows `{"ok": true, "data": [...]}` envelope format
 - Exit codes: 0=success, 1=API error, 2=validation, 3=network
 - TTY-aware: Rich tables for humans (stderr), JSON for agents (stdout)
-- Domain shortcuts delegate to `twse fetch` pipeline
+- Domain shortcuts delegate to `twstock fetch` pipeline
 - Input validation: control chars, path traversal, injection patterns rejected
 - Output sanitization: control chars stripped from API response strings
 

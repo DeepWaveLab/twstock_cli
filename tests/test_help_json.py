@@ -5,7 +5,7 @@ import json
 import pytest
 from click.testing import CliRunner
 
-from twse_cli.cli import cli
+from twstock_cli.cli import cli
 
 
 @pytest.fixture
