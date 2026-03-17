@@ -1,7 +1,7 @@
 ---
 name: twstock-market-overview
-description: "Daily market snapshot — TAIEX index, top movers, margin balance, and institutional positioning."
-version: 1.0.0
+description: "Daily market snapshot — TAIEX + TPEX indices, top movers, margin balance, and institutional positioning for both exchanges."
+version: 2.0.0
 metadata:
   category: "recipe"
   requires:
@@ -11,9 +11,9 @@ metadata:
 
 # Market Overview
 
-> **PREREQUISITE:** Read `../twstock-shared/SKILL.md` for output format and token-saving conventions.
+> **PREREQUISITE:** Read `../twstock-shared/SKILL.md` for output format, token-saving conventions, and exchange detection.
 
-Get a comprehensive daily market snapshot combining index performance, top-traded stocks, margin sentiment, and foreign investor positioning.
+Get a comprehensive daily market snapshot combining TWSE and TPEX index performance, top-traded stocks, margin sentiment, and institutional positioning.
 
 ## Preconditions
 
@@ -22,46 +22,87 @@ Get a comprehensive daily market snapshot combining index performance, top-trade
 
 ## Workflow
 
-### Step 1: Fetch TAIEX Index Summary
+### Step 1: Fetch TAIEX Index Summary (TWSE)
 
 ```bash
 twstock fetch stock.mi-index --json --limit 10
 ```
 
-Returns market index data including closing index level, change, and volume.
+Returns TWSE market index data including closing index level, change, and volume.
 
-### Step 2: Fetch Top 20 Most-Traded Stocks
+### Step 2: Fetch TPEX Index Summary (OTC)
+
+```bash
+twstock fetch otc.index --json --limit 5
+```
+
+Returns TPEX (櫃買指數) index data — the primary index for the OTC market.
+
+### Step 3: Fetch OTC Market Highlights
+
+```bash
+twstock fetch otc.mainboard-highlight --json
+```
+
+Returns OTC market overview including trading volume, value, and number of advancing/declining stocks.
+
+### Step 4: Fetch Top 20 Most-Traded Stocks (TWSE)
 
 ```bash
 twstock fetch stock.mi-index20 --json --fields "Code,Name,TradeVolume,TradeValue,ClosingPrice,Change"
 ```
 
-Identifies the day's most active stocks by trading volume.
+Identifies the day's most active TWSE stocks by trading volume.
 
-### Step 3: Fetch Margin Trading Balance
+### Step 5: Fetch Margin Trading Balance (TWSE)
 
 ```bash
-twstock fetch stock.mi-margn --json --limit 10
+twstock fetch stock.mi-margn --json --limit 10 --normalize
 ```
 
-Shows margin financing and short-selling balances. High margin financing indicates bullish retail sentiment.
+Shows TWSE margin financing and short-selling balances.
 
-### Step 4: Fetch Foreign Investor Holdings by Sector
+### Step 6: Fetch OTC Margin Balance
+
+```bash
+twstock fetch otc.mainboard-margin-balance --json --limit 10 --normalize
+```
+
+Shows TPEX margin financing and short-selling balances.
+
+### Step 7: Fetch Institutional Summary (TWSE)
 
 ```bash
 twstock fetch stock.mi-qfiis-cat --json
 ```
 
-Shows foreign investor holding ratios by industry sector — reveals where institutional money is concentrated.
+Shows TWSE foreign investor holding ratios by industry sector.
+
+### Step 8: Fetch OTC Institutional Summary
+
+```bash
+twstock fetch otc.3insti-summary --json
+```
+
+Shows TPEX institutional (三大法人) buy/sell summary for the OTC market.
 
 ## Expected Output
 
-Synthesize the four data sources into a market overview:
+Synthesize the data into a dual-exchange market overview:
 
-1. **Index level** — TAIEX closing index, daily change, and percentage
-2. **Top movers** — Top 5 most-traded stocks with price and volume
-3. **Margin sentiment** — Overall margin balance trend (bullish/bearish signal)
-4. **Institutional positioning** — Sectors with highest/lowest foreign investor exposure
+1. **TWSE (上市)**
+   - TAIEX closing index, daily change, and percentage
+   - Top 5 most-traded stocks with price and volume
+   - Margin balance trend (bullish/bearish signal)
+   - Sectors with highest/lowest foreign investor exposure
+
+2. **TPEX (上櫃)**
+   - TPEX index closing level and daily change
+   - Market highlights (advancing vs declining stocks)
+   - OTC margin balance trend
+   - OTC institutional net buy/sell
+
+3. **Combined signals** — Are both markets moving in the same direction? Divergence between TWSE and TPEX can signal sector rotation.
 
 ## Troubleshooting
 
@@ -71,14 +112,16 @@ Synthesize the four data sources into a market overview:
 
 ### Partial data
 - Some endpoints update at different times. TAIEX index updates first, margin data updates later.
+- TPEX data may update slightly after TWSE data.
 
 ## See Also
 
-- [twstock-institutional-flow](../twstock-institutional-flow/SKILL.md) — Detailed institutional tracking
-- [twstock-margin-sentiment](../twstock-margin-sentiment/SKILL.md) — Deep margin analysis
+- [twstock-institutional-flow](../twstock-institutional-flow/SKILL.md) — Detailed institutional tracking for both exchanges
+- [twstock-margin-sentiment](../twstock-margin-sentiment/SKILL.md) — Deep margin analysis with OTC data
 
 ## Notes
 
 - Run this skill first before diving into individual stock analysis.
 - Weekend and holiday data will return the most recent trading day's data.
-- Use `--normalize` on Step 3 to get clean numeric values for margin balances.
+- TPEX index (櫃買指數) often moves differently from TAIEX — tech-heavy OTC stocks can diverge from the main board.
+- Use `--normalize` on margin steps to get clean numeric values.

@@ -66,6 +66,8 @@ When a user asks about Taiwan stock market data, use the skills in `skills/` to 
 |-------------|-------------|
 | "How's the market today?" | `skills/twstock-market-overview/SKILL.md` |
 | "Tell me about stock 2330" / any specific stock | `skills/twstock-stock-lookup/SKILL.md` |
+| "Tell me about stock 6510" / any OTC stock | `skills/twstock-stock-lookup/SKILL.md` |
+| "How's the OTC market?" / 上櫃 | `skills/twstock-market-overview/SKILL.md` |
 | "Find high dividend stocks" / 存股 | `skills/twstock-dividend-screener/SKILL.md` |
 | "What are institutions buying?" / 三大法人 | `skills/twstock-institutional-flow/SKILL.md` |
 | "Show me revenue growth leaders" | `skills/twstock-revenue-tracker/SKILL.md` |
@@ -75,10 +77,12 @@ When a user asks about Taiwan stock market data, use the skills in `skills/` to 
 | "What's the margin sentiment?" / 融資融券 | `skills/twstock-margin-sentiment/SKILL.md` |
 | "What ETFs are popular?" / 定期定額 | `skills/twstock-etf-rankings/SKILL.md` |
 
+All skills now cover both TWSE (上市) and TPEX (上櫃) markets. The `twstock-shared` skill documents all 359 endpoints across 17 groups with exchange detection patterns.
+
 ### Persona skills (for broader analysis)
 
-- `skills/persona-stock-analyst/SKILL.md` — Systematic top-down analysis framework
-- `skills/persona-dividend-investor/SKILL.md` — 存股 income investing mindset
+- `skills/persona-stock-analyst/SKILL.md` — Systematic top-down analysis framework (TWSE + TPEX)
+- `skills/persona-dividend-investor/SKILL.md` — 存股 income investing mindset (both exchanges)
 
 ### Token-saving rules (always follow)
 
@@ -89,3 +93,5 @@ When a user asks about Taiwan stock market data, use the skills in `skills/` to 
 5. Use `--normalize` for clean numbers
 6. Use `--dry-run` to preview before fetching
 7. Search endpoints first: `twstock endpoints --search <keyword> --json`
+8. Use Web API `--date` for historical per-stock data: `twstock fetch web.stock-day --date YYYYMMDD --stock-no CODE --json`
+9. For OTC stocks, use `otc.*` and `otc_company.*` endpoints (see `twstock-shared` for full mapping)
