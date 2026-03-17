@@ -124,7 +124,7 @@ class TestEndpointsCommand:
         result = runner.invoke(cli, ["endpoints", "--json"])
         assert result.exit_code == 0
         data = json.loads(result.output)
-        assert len(data) == 351
+        assert len(data) == 359
 
     def test_endpoints_search(self, runner):
         result = runner.invoke(cli, ["endpoints", "--search", "股利", "--json"])

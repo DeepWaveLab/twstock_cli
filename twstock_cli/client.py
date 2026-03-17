@@ -15,6 +15,20 @@ logger = logging.getLogger(__name__)
 BASE_URL = "https://openapi.twse.com.tw/v1"
 
 
+def _dedup_fields(fields: list[str]) -> list[str]:
+    """De-duplicate field names by appending _2, _3, etc. for repeats."""
+    seen: dict[str, int] = {}
+    result: list[str] = []
+    for f in fields:
+        if f in seen:
+            seen[f] += 1
+            result.append(f"{f}_{seen[f]}")
+        else:
+            seen[f] = 1
+            result.append(f)
+    return result
+
+
 class TWStockApiError(Exception):
     """TWSE API returned an error response."""
 
@@ -149,6 +163,27 @@ class TWStockClient:
             raise TWStockNetworkError(f"Cannot reach TWSE API after 3 attempts: {last_exc}") from last_exc
         raise TWStockApiError("TWSE API request failed after 3 attempts")
 
+    @staticmethod
+    def _parse_tables(tables: list[dict[str, Any]]) -> list[dict[str, Any]]:
+        """Flatten a list of tables (MI_INDEX format) into a single list of dicts.
+
+        Only includes tables that have non-empty fields. Adds a _Table field
+        with the table title to each record.
+        """
+        result: list[dict[str, Any]] = []
+        for table in tables:
+            fields = table.get("fields", [])
+            data = table.get("data", [])
+            title = table.get("title", "")
+            if not fields or not data:
+                continue
+            deduped = _dedup_fields(fields)
+            for row in data:
+                record = dict(zip(deduped, row))
+                record["_Table"] = title
+                result.append(record)
+        return result
+
     def fetch_web(self, base_url: str, path: str, params: dict[str, str] | None = None) -> list[dict[str, Any]]:
         """Fetch data from a TWSE web API endpoint (fields+data format).
 
@@ -207,9 +242,13 @@ class TWStockClient:
                     msg = body.get("stat", "unknown error")
                     raise TWStockApiError(f"TWSE web API error: {msg}")
 
-                fields = body.get("fields", [])
-                raw_data = body.get("data", [])
-                result = [dict(zip(fields, row)) for row in raw_data]
+                # Handle both standard (fields+data) and tables format
+                if "tables" in body and isinstance(body["tables"], list):
+                    result = self._parse_tables(body["tables"])
+                else:
+                    fields = _dedup_fields(body.get("fields", []))
+                    raw_data = body.get("data", [])
+                    result = [dict(zip(fields, row)) for row in raw_data]
 
                 if self._use_cache:
                     from .cache import set_cached

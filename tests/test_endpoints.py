@@ -5,7 +5,7 @@ from twstock_cli.endpoints import ENDPOINTS, EndpointDef, list_endpoints, resolv
 
 class TestEndpointRegistry:
     def test_endpoint_count(self):
-        assert len(ENDPOINTS) == 351  # 144 TWSE + 207 TPEX
+        assert len(ENDPOINTS) == 359  # 144 TWSE + 8 web + 207 TPEX
 
     def test_endpoint_is_frozen_dataclass(self):
         ep = next(iter(ENDPOINTS.values()))
@@ -16,7 +16,7 @@ class TestEndpointRegistry:
             "stock", "company", "broker", "other",
             "otc", "otc_company", "otc_index", "otc_esg", "otc_financial",
             "otc_esb", "otc_gisa", "otc_warrant", "otc_fund", "otc_gold",
-            "otc_bond", "otc_broker",
+            "otc_bond", "otc_broker", "web",
         )
         for key, ep in ENDPOINTS.items():
             assert ep.path.startswith("/"), f"{key}: path should start with /"
@@ -48,7 +48,7 @@ class TestResolveEndpoint:
 class TestListEndpoints:
     def test_list_all(self):
         results = list_endpoints()
-        assert len(results) == 351
+        assert len(results) == 359
 
     def test_list_by_category(self):
         results = list_endpoints(category="stock")
@@ -101,7 +101,7 @@ class TestWebApiEndpoint:
     def test_twse_openapi_endpoints_unaffected(self):
         """All 143 original TWSE OpenAPI endpoints should have no base_url set."""
         for key, ep in ENDPOINTS.items():
-            if key == "stock.t86" or ep.group.startswith("otc"):
+            if key == "stock.t86" or ep.group.startswith("otc") or ep.group == "web":
                 continue
             assert ep.base_url is None, f"{key} should not have base_url"
             assert ep.default_params == {}, f"{key} should have empty default_params"

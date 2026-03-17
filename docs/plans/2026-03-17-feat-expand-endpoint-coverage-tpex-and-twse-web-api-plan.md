@@ -149,9 +149,9 @@ Add date-parameterized TWSE web API endpoints (~10-15).
 - `twse_web.fmsrfk` — `/afterTrading/FMSRFK` (per-stock monthly history)
 
 **Acceptance criteria:**
-- [ ] `twse fetch stock-day --stock-no 2330 --date 20260301 --json` returns TSMC's March 2026 daily data
-- [ ] `twse fetch bfi82u --date 20260316 --json` returns institutional buy/sell summary
-- [ ] `--date` option auto-generated only for web API endpoints that support it
+- [x] `twse fetch stock-day --stock-no 2330 --date 20260301 --json` returns TSMC's March 2026 daily data
+- [x] `twse fetch bfi82u --date 20260316 --json` returns institutional buy/sell summary
+- [x] `--date` option auto-generated only for web API endpoints that support it
 
 ## Technical Considerations
 

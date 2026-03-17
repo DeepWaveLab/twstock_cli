@@ -77,6 +77,7 @@ class LazyGroup(click.Group):
     "broker": "twstock_cli.commands._factory",
     "otc": "twstock_cli.commands._factory",
     "otc_company": "twstock_cli.commands._factory",
+    "web": "twstock_cli.commands._factory",
 })
 @click.version_option(version=__version__, prog_name="twstock")
 @help_json_option
@@ -101,10 +102,11 @@ def cli(ctx: click.Context, verbose: bool) -> None:
 @click.option("--raw", is_flag=True, help="Output bare JSON array (no envelope)")
 @click.option("--dry-run", is_flag=True, help="Preview request as JSON without making an HTTP call")
 @click.option("--stdin", "use_stdin", is_flag=True, help="Read parameters from JSON on stdin")
-@click.option("--date", default=None, help="Date in YYYYMMDD format (for web API endpoints like T86)")
+@click.option("--date", default=None, help="Date in YYYYMMDD format (for web API endpoints)")
+@click.option("--stock-no", default=None, help="Stock number for web API endpoints (e.g. 2330)")
 @help_json_option
-def fetch(endpoint_ref: str | None, as_json: bool, field_list: str | None, stock_code: str | None, max_records: int | None, no_cache: bool, normalize: bool, ndjson: bool, raw: bool, dry_run: bool, use_stdin: bool, date: str | None) -> None:
-    """Fetch data from any TWSE endpoint.
+def fetch(endpoint_ref: str | None, as_json: bool, field_list: str | None, stock_code: str | None, max_records: int | None, no_cache: bool, normalize: bool, ndjson: bool, raw: bool, dry_run: bool, use_stdin: bool, date: str | None, stock_no: str | None) -> None:
+    """Fetch data from any TWSE/TPEX endpoint.
 
     ENDPOINT_REF can be a dotted name (stock.stock-day-all), raw API path
     (/exchangeReport/STOCK_DAY_ALL), or API code (STOCK_DAY_ALL).
@@ -114,9 +116,8 @@ def fetch(endpoint_ref: str | None, as_json: bool, field_list: str | None, stock
         twstock fetch stock.stock-day-all --json
         twstock fetch /exchangeReport/STOCK_DAY_ALL --json --fields "Code,Name,ClosingPrice"
         twstock fetch stock.bwibbu-all --json --code 2330
-        twstock fetch stock.stock-day-all --json --normalize
-        twstock fetch stock.stock-day-all --ndjson
-        twstock fetch stock.stock-day-all --raw
+        twstock fetch web.stock-day --stock-no 2330 --date 20260301 --json
+        twstock fetch web.bfi82u --date 20260316 --json
         echo '{"endpoint":"stock.stock-day-all"}' | twstock fetch --stdin --json
     """
     # Parse stdin JSON if --stdin is set
@@ -155,6 +156,8 @@ def fetch(endpoint_ref: str | None, as_json: bool, field_list: str | None, stock
         dry_run = True
     if not date and stdin_data.get("date"):
         date = stdin_data["date"]
+    if not stock_no and stdin_data.get("stock_no"):
+        stock_no = stdin_data["stock_no"]
 
     # Validate user-supplied inputs
     try:
@@ -179,13 +182,13 @@ def fetch(endpoint_ref: str | None, as_json: bool, field_list: str | None, stock
 
     from .commands._factory import _run_fetch
 
-    _run_fetch(ep, as_json, field_list, stock_code, max_records, no_cache=no_cache, normalize=normalize, ndjson=ndjson, raw=raw, dry_run=dry_run, date=date)
+    _run_fetch(ep, as_json, field_list, stock_code, max_records, no_cache=no_cache, normalize=normalize, ndjson=ndjson, raw=raw, dry_run=dry_run, date=date, stock_no=stock_no)
 
 
 @cli.command()
 @click.option("--json", "as_json", is_flag=True, help="Output JSON to stdout")
 @click.option("--search", "keyword", default=None, help="Search by keyword (en/zh)")
-@click.option("--category", default=None, type=click.Choice(["stock", "company", "broker", "other", "otc", "otc_company"]), help="Filter by category")
+@click.option("--category", default=None, type=click.Choice(["stock", "company", "broker", "other", "otc", "otc_company", "web"]), help="Filter by category")
 @click.option("--with-fields", is_flag=True, help="Include field definitions")
 @help_json_option
 def endpoints(as_json: bool, keyword: str | None, category: str | None, with_fields: bool) -> None:
