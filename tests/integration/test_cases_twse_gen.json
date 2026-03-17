@@ -1,0 +1,6605 @@
+[
+  {
+    "_comment": "=== AUTO-GENERATED TWSE tests — do not edit manually ==="
+  },
+  {
+    "id": "dryrun-gen-broker-brokerlist",
+    "description": "Dry-run: broker.brokerlist URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "broker"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "broker.brokerlist",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "dryrun-gen-broker-etfrank",
+    "description": "Dry-run: broker.etfrank URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "broker"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "broker.etfrank",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "dryrun-gen-broker-opendata-brk01",
+    "description": "Dry-run: broker.opendata-brk01 URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "broker"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "broker.opendata-brk01",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-broker-opendata-brk01",
+    "description": "Smoke: broker.opendata-brk01 (證券商營業員男女人數統計資料)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "broker"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "broker.opendata-brk01",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-broker-opendata-brk02",
+    "description": "Dry-run: broker.opendata-brk02 URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "broker"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "broker.opendata-brk02",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "dryrun-gen-broker-secregdata",
+    "description": "Dry-run: broker.secregdata URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "broker"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "broker.secregdata",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-broker-secregdata",
+    "description": "Smoke: broker.secregdata (開辦定期定額業務證券商名單)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "broker"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "broker.secregdata",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-broker-t187ap01",
+    "description": "Dry-run: broker.t187ap01 URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "broker"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "broker.t187ap01",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-broker-t187ap01",
+    "description": "Smoke: broker.t187ap01 (券商業務別人員數)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "broker"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "broker.t187ap01",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-broker-t187ap18",
+    "description": "Dry-run: broker.t187ap18 URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "broker"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "broker.t187ap18",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-broker-t187ap18",
+    "description": "Smoke: broker.t187ap18 (證券商基本資料)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "broker"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "broker.t187ap18",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-broker-t187ap20",
+    "description": "Dry-run: broker.t187ap20 URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "broker"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "broker.t187ap20",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-broker-t187ap20",
+    "description": "Smoke: broker.t187ap20 (各券商每月月計表)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "broker"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "broker.t187ap20",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-broker-t187ap21",
+    "description": "Dry-run: broker.t187ap21 URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "broker"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "broker.t187ap21",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-broker-t187ap21",
+    "description": "Smoke: broker.t187ap21 (各券商收支概況表資料)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "broker"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "broker.t187ap21",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-company-applylistingforeign",
+    "description": "Dry-run: company.applylistingforeign URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "company.applylistingforeign",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-company-applylistingforeign",
+    "description": "Smoke: company.applylistingforeign (外國公司向證交所申請第一上市之公司)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "company.applylistingforeign",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-company-applylistinglocal",
+    "description": "Dry-run: company.applylistinglocal URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "company.applylistinglocal",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-company-applylistinglocal",
+    "description": "Smoke: company.applylistinglocal (申請上市之本國公司)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "company.applylistinglocal",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-company-newlisting",
+    "description": "Dry-run: company.newlisting URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "company.newlisting",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-company-newlisting",
+    "description": "Smoke: company.newlisting (最近上市公司)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "company.newlisting",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-company-punish",
+    "description": "Dry-run: company.punish URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "company.punish",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-company-punish",
+    "description": "Smoke: company.punish (集中市場公布處置股票)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "company.punish",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-company-suspendlistingcsvandhtml",
+    "description": "Dry-run: company.suspendlistingcsvandhtml URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "company.suspendlistingcsvandhtml",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-company-suspendlistingcsvandhtml",
+    "description": "Smoke: company.suspendlistingcsvandhtml (終止上市公司)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "company.suspendlistingcsvandhtml",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-company-t187ap02-l",
+    "description": "Dry-run: company.t187ap02-l URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "company.t187ap02-l",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-company-t187ap02-l",
+    "description": "Smoke: company.t187ap02-l (上市公司持股逾 10% 大股東名單)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "company.t187ap02-l",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-company-t187ap03-l",
+    "description": "Dry-run: company.t187ap03-l URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "company.t187ap03-l",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "dryrun-gen-company-t187ap03-p",
+    "description": "Dry-run: company.t187ap03-p URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "company.t187ap03-p",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-company-t187ap03-p",
+    "description": "Smoke: company.t187ap03-p (公開發行公司基本資料)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "company.t187ap03-p",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-company-t187ap04-l",
+    "description": "Dry-run: company.t187ap04-l URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "company.t187ap04-l",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-company-t187ap04-l",
+    "description": "Smoke: company.t187ap04-l (上市公司每日重大訊息)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "company.t187ap04-l",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-company-t187ap05-l",
+    "description": "Dry-run: company.t187ap05-l URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "company.t187ap05-l",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "dryrun-gen-company-t187ap05-p",
+    "description": "Dry-run: company.t187ap05-p URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "company.t187ap05-p",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-company-t187ap05-p",
+    "description": "Smoke: company.t187ap05-p (公開發行公司每月營業收入彙總表)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "company.t187ap05-p",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-company-t187ap06-l-basi",
+    "description": "Dry-run: company.t187ap06-l-basi URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "company.t187ap06-l-basi",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-company-t187ap06-l-basi",
+    "description": "Smoke: company.t187ap06-l-basi (上市公司綜合損益表(金融業))",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "company.t187ap06-l-basi",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-company-t187ap06-l-bd",
+    "description": "Dry-run: company.t187ap06-l-bd URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "company.t187ap06-l-bd",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-company-t187ap06-l-bd",
+    "description": "Smoke: company.t187ap06-l-bd (上市公司綜合損益表(證券期貨業))",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "company.t187ap06-l-bd",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-company-t187ap06-l-ci",
+    "description": "Dry-run: company.t187ap06-l-ci URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "company.t187ap06-l-ci",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "dryrun-gen-company-t187ap06-l-fh",
+    "description": "Dry-run: company.t187ap06-l-fh URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "company.t187ap06-l-fh",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-company-t187ap06-l-fh",
+    "description": "Smoke: company.t187ap06-l-fh (上市公司綜合損益表(金控業))",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "company.t187ap06-l-fh",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-company-t187ap06-l-ins",
+    "description": "Dry-run: company.t187ap06-l-ins URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "company.t187ap06-l-ins",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-company-t187ap06-l-ins",
+    "description": "Smoke: company.t187ap06-l-ins (上市公司綜合損益表(保險業))",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "company.t187ap06-l-ins",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-company-t187ap06-l-mim",
+    "description": "Dry-run: company.t187ap06-l-mim URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "company.t187ap06-l-mim",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-company-t187ap06-l-mim",
+    "description": "Smoke: company.t187ap06-l-mim (上市公司綜合損益表(異業))",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "company.t187ap06-l-mim",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-company-t187ap06-x-basi",
+    "description": "Dry-run: company.t187ap06-x-basi URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "company.t187ap06-x-basi",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-company-t187ap06-x-basi",
+    "description": "Smoke: company.t187ap06-x-basi (公發公司綜合損益表-金融業)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "company.t187ap06-x-basi",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-company-t187ap06-x-bd",
+    "description": "Dry-run: company.t187ap06-x-bd URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "company.t187ap06-x-bd",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-company-t187ap06-x-bd",
+    "description": "Smoke: company.t187ap06-x-bd (公發公司綜合損益表-證券期貨業)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "company.t187ap06-x-bd",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-company-t187ap06-x-ci",
+    "description": "Dry-run: company.t187ap06-x-ci URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "company.t187ap06-x-ci",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-company-t187ap06-x-ci",
+    "description": "Smoke: company.t187ap06-x-ci (公發公司綜合損益表-一般業)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "company.t187ap06-x-ci",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-company-t187ap06-x-fh",
+    "description": "Dry-run: company.t187ap06-x-fh URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "company.t187ap06-x-fh",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-company-t187ap06-x-fh",
+    "description": "Smoke: company.t187ap06-x-fh (公發公司綜合損益表-金控業)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "company.t187ap06-x-fh",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-company-t187ap06-x-ins",
+    "description": "Dry-run: company.t187ap06-x-ins URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "company.t187ap06-x-ins",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-company-t187ap06-x-ins",
+    "description": "Smoke: company.t187ap06-x-ins (公發公司綜合損益表-保險業)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "company.t187ap06-x-ins",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-company-t187ap06-x-mim",
+    "description": "Dry-run: company.t187ap06-x-mim URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "company.t187ap06-x-mim",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-company-t187ap06-x-mim",
+    "description": "Smoke: company.t187ap06-x-mim (公發公司綜合損益表-異業)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "company.t187ap06-x-mim",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-company-t187ap07-l-basi",
+    "description": "Dry-run: company.t187ap07-l-basi URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "company.t187ap07-l-basi",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-company-t187ap07-l-basi",
+    "description": "Smoke: company.t187ap07-l-basi (上市公司資產負債表(金融業))",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "company.t187ap07-l-basi",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-company-t187ap07-l-bd",
+    "description": "Dry-run: company.t187ap07-l-bd URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "company.t187ap07-l-bd",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-company-t187ap07-l-bd",
+    "description": "Smoke: company.t187ap07-l-bd (上市公司資產負債表(證券期貨業))",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "company.t187ap07-l-bd",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-company-t187ap07-l-ci",
+    "description": "Dry-run: company.t187ap07-l-ci URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "company.t187ap07-l-ci",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "dryrun-gen-company-t187ap07-l-fh",
+    "description": "Dry-run: company.t187ap07-l-fh URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "company.t187ap07-l-fh",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-company-t187ap07-l-fh",
+    "description": "Smoke: company.t187ap07-l-fh (上市公司資產負債表(金控業))",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "company.t187ap07-l-fh",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-company-t187ap07-l-ins",
+    "description": "Dry-run: company.t187ap07-l-ins URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "company.t187ap07-l-ins",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-company-t187ap07-l-ins",
+    "description": "Smoke: company.t187ap07-l-ins (上市公司資產負債表(保險業))",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "company.t187ap07-l-ins",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-company-t187ap07-l-mim",
+    "description": "Dry-run: company.t187ap07-l-mim URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "company.t187ap07-l-mim",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-company-t187ap07-l-mim",
+    "description": "Smoke: company.t187ap07-l-mim (上市公司資產負債表(異業))",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "company.t187ap07-l-mim",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-company-t187ap07-x-basi",
+    "description": "Dry-run: company.t187ap07-x-basi URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "company.t187ap07-x-basi",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-company-t187ap07-x-basi",
+    "description": "Smoke: company.t187ap07-x-basi (公發公司資產負債表-金融業)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "company.t187ap07-x-basi",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-company-t187ap07-x-bd",
+    "description": "Dry-run: company.t187ap07-x-bd URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "company.t187ap07-x-bd",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-company-t187ap07-x-bd",
+    "description": "Smoke: company.t187ap07-x-bd (公發公司資產負債表-證券期貨業)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "company.t187ap07-x-bd",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-company-t187ap07-x-ci",
+    "description": "Dry-run: company.t187ap07-x-ci URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "company.t187ap07-x-ci",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-company-t187ap07-x-ci",
+    "description": "Smoke: company.t187ap07-x-ci (公發公司資產負債表-一般業)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "company.t187ap07-x-ci",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-company-t187ap07-x-fh",
+    "description": "Dry-run: company.t187ap07-x-fh URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "company.t187ap07-x-fh",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-company-t187ap07-x-fh",
+    "description": "Smoke: company.t187ap07-x-fh (公發公司資產負債表-金控業)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "company.t187ap07-x-fh",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-company-t187ap07-x-ins",
+    "description": "Dry-run: company.t187ap07-x-ins URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "company.t187ap07-x-ins",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-company-t187ap07-x-ins",
+    "description": "Smoke: company.t187ap07-x-ins (公發公司資產負債表-保險業)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "company.t187ap07-x-ins",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-company-t187ap07-x-mim",
+    "description": "Dry-run: company.t187ap07-x-mim URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "company.t187ap07-x-mim",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-company-t187ap07-x-mim",
+    "description": "Smoke: company.t187ap07-x-mim (公發公司資產負債表-異業)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "company.t187ap07-x-mim",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-company-t187ap08-l",
+    "description": "Dry-run: company.t187ap08-l URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "company.t187ap08-l",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-company-t187ap08-l",
+    "description": "Smoke: company.t187ap08-l (上市公司董事、監察人持股不足法定成數彙總表)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "company.t187ap08-l",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-company-t187ap09-l",
+    "description": "Dry-run: company.t187ap09-l URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "company.t187ap09-l",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-company-t187ap09-l",
+    "description": "Smoke: company.t187ap09-l (上市公司董事、監察人質權設定占董事及監察人實際持有股數彙總表)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "company.t187ap09-l",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-company-t187ap10-l",
+    "description": "Dry-run: company.t187ap10-l URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "company.t187ap10-l",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-company-t187ap10-l",
+    "description": "Smoke: company.t187ap10-l (上市公司董事、監察人持股不足法定成數連續達3個月以上彙總表)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "company.t187ap10-l",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-company-t187ap11-l",
+    "description": "Dry-run: company.t187ap11-l URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "company.t187ap11-l",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-company-t187ap11-l",
+    "description": "Smoke: company.t187ap11-l (上市公司董監事持股餘額明細資料)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "company.t187ap11-l",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-company-t187ap11-p",
+    "description": "Dry-run: company.t187ap11-p URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "company.t187ap11-p",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-company-t187ap11-p",
+    "description": "Smoke: company.t187ap11-p (公發公司董監事持股餘額明細)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "company.t187ap11-p",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-company-t187ap12-l",
+    "description": "Dry-run: company.t187ap12-l URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "company.t187ap12-l",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-company-t187ap12-l",
+    "description": "Smoke: company.t187ap12-l (上市公司每日內部人持股轉讓事前申報表-持股轉讓日報表)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "company.t187ap12-l",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-company-t187ap13-l",
+    "description": "Dry-run: company.t187ap13-l URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "company.t187ap13-l",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-company-t187ap13-l",
+    "description": "Smoke: company.t187ap13-l (上市公司每日內部人持股轉讓事前申報表-持股未轉讓日報表)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "company.t187ap13-l",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-company-t187ap14-l",
+    "description": "Dry-run: company.t187ap14-l URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "company.t187ap14-l",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-company-t187ap14-l",
+    "description": "Smoke: company.t187ap14-l (上市公司各產業EPS統計資訊)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "company.t187ap14-l",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-company-t187ap15-l",
+    "description": "Dry-run: company.t187ap15-l URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "company.t187ap15-l",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-company-t187ap15-l",
+    "description": "Smoke: company.t187ap15-l (上市公司截至各季綜合損益財測達成情形(簡式))",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "company.t187ap15-l",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-company-t187ap16-l",
+    "description": "Dry-run: company.t187ap16-l URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "company.t187ap16-l",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-company-t187ap16-l",
+    "description": "Smoke: company.t187ap16-l (上市公司當季綜合損益經會計師查核(核閱)數與當季預測數差異達百分之十以上者，或截至當季累計差異達百分之二十以上者(簡式))",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "company.t187ap16-l",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-company-t187ap17-l",
+    "description": "Dry-run: company.t187ap17-l URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "company.t187ap17-l",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-company-t187ap17-l",
+    "description": "Smoke: company.t187ap17-l (上市公司營益分析查詢彙總表(全體公司彙總報表))",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "company.t187ap17-l",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-company-t187ap22-l",
+    "description": "Dry-run: company.t187ap22-l URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "company.t187ap22-l",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-company-t187ap22-l",
+    "description": "Smoke: company.t187ap22-l (上市公司金管會證券期貨局裁罰案件專區)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "company.t187ap22-l",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-company-t187ap23-l",
+    "description": "Dry-run: company.t187ap23-l URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "company.t187ap23-l",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-company-t187ap23-l",
+    "description": "Smoke: company.t187ap23-l (上市公司違反資訊申報、重大訊息及說明記者會規定專區)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "company.t187ap23-l",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-company-t187ap24-l",
+    "description": "Dry-run: company.t187ap24-l URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "company.t187ap24-l",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-company-t187ap24-l",
+    "description": "Smoke: company.t187ap24-l (上市公司經營權及營業範圍異(變)動專區-經營權異動公司)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "company.t187ap24-l",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-company-t187ap25-l",
+    "description": "Dry-run: company.t187ap25-l URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "company.t187ap25-l",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-company-t187ap25-l",
+    "description": "Smoke: company.t187ap25-l (上市公司經營權及營業範圍異(變)動專區-營業範圍重大變更公司)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "company.t187ap25-l",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-company-t187ap26-l",
+    "description": "Dry-run: company.t187ap26-l URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "company.t187ap26-l",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-company-t187ap26-l",
+    "description": "Smoke: company.t187ap26-l (上市公司經營權及營業範圍異(變)動專區-經營權異動且營業範圍重大變更停止買賣公司)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "company.t187ap26-l",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-company-t187ap27-l",
+    "description": "Dry-run: company.t187ap27-l URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "company.t187ap27-l",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-company-t187ap27-l",
+    "description": "Smoke: company.t187ap27-l (上市公司經營權及營業範圍異(變)動專區-經營權異動且營業範圍重大變更列為變更交易公司)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "company.t187ap27-l",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-company-t187ap29-a-l",
+    "description": "Dry-run: company.t187ap29-a-l URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "company.t187ap29-a-l",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-company-t187ap29-a-l",
+    "description": "Smoke: company.t187ap29-a-l (上市公司董事酬金相關資訊 )",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "company.t187ap29-a-l",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-company-t187ap29-b-l",
+    "description": "Dry-run: company.t187ap29-b-l URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "company.t187ap29-b-l",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-company-t187ap29-b-l",
+    "description": "Smoke: company.t187ap29-b-l (上市公司監察人酬金相關資訊 )",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "company.t187ap29-b-l",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-company-t187ap29-c-l",
+    "description": "Dry-run: company.t187ap29-c-l URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "company.t187ap29-c-l",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-company-t187ap29-c-l",
+    "description": "Smoke: company.t187ap29-c-l (上市公司合併報表董事酬金相關資訊 )",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "company.t187ap29-c-l",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-company-t187ap29-d-l",
+    "description": "Dry-run: company.t187ap29-d-l URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "company.t187ap29-d-l",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-company-t187ap29-d-l",
+    "description": "Smoke: company.t187ap29-d-l (上市公司合併報表監察人酬金相關資訊 )",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "company.t187ap29-d-l",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-company-t187ap30-l",
+    "description": "Dry-run: company.t187ap30-l URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "company.t187ap30-l",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-company-t187ap30-l",
+    "description": "Smoke: company.t187ap30-l (上市公司獨立董監事兼任情形彙總表)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "company.t187ap30-l",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-company-t187ap31-l",
+    "description": "Dry-run: company.t187ap31-l URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "company.t187ap31-l",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-company-t187ap31-l",
+    "description": "Smoke: company.t187ap31-l (上市公司財務報告經監察人承認情形)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "company.t187ap31-l",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-company-t187ap32-l",
+    "description": "Dry-run: company.t187ap32-l URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "company.t187ap32-l",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-company-t187ap32-l",
+    "description": "Smoke: company.t187ap32-l (上市公司公司治理之相關規程規則)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "company.t187ap32-l",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-company-t187ap33-l",
+    "description": "Dry-run: company.t187ap33-l URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "company.t187ap33-l",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-company-t187ap33-l",
+    "description": "Smoke: company.t187ap33-l (上市公司董事長是否兼任總經理)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "company.t187ap33-l",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-company-t187ap34-l",
+    "description": "Dry-run: company.t187ap34-l URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "company.t187ap34-l",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-company-t187ap34-l",
+    "description": "Smoke: company.t187ap34-l (上市公司採累積投票制、全額連記法、候選人提名制選任董監事及當選資料彙總表)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "company.t187ap34-l",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-company-t187ap35-l",
+    "description": "Dry-run: company.t187ap35-l URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "company.t187ap35-l",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-company-t187ap35-l",
+    "description": "Smoke: company.t187ap35-l (上市公司股東行使提案權情形彙總表)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "company.t187ap35-l",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-company-t187ap38-l",
+    "description": "Dry-run: company.t187ap38-l URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "company.t187ap38-l",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-company-t187ap38-l",
+    "description": "Smoke: company.t187ap38-l (上市公司股東會公告-召集股東常(臨時)會公告資料彙總表(95年度起適用))",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "company.t187ap38-l",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-company-t187ap41-l",
+    "description": "Dry-run: company.t187ap41-l URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "company.t187ap41-l",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-company-t187ap41-l",
+    "description": "Smoke: company.t187ap41-l (上市公司召開股東常 (臨時) 會日期、地點及採用電子投票情形等資料彙總表)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "company.t187ap41-l",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-company-t187ap45-l",
+    "description": "Dry-run: company.t187ap45-l URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "company.t187ap45-l",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "dryrun-gen-company-t187ap46-l-1",
+    "description": "Dry-run: company.t187ap46-l-1 URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "company.t187ap46-l-1",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "dryrun-gen-company-t187ap46-l-10",
+    "description": "Dry-run: company.t187ap46-l-10 URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "company.t187ap46-l-10",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-company-t187ap46-l-10",
+    "description": "Smoke: company.t187ap46-l-10 (上市公司企業ESG資訊揭露彙總資料-燃料管理)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "company.t187ap46-l-10",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-company-t187ap46-l-11",
+    "description": "Dry-run: company.t187ap46-l-11 URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "company.t187ap46-l-11",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-company-t187ap46-l-11",
+    "description": "Smoke: company.t187ap46-l-11 (上市公司企業ESG資訊揭露彙總資料-產品生命週期)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "company.t187ap46-l-11",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-company-t187ap46-l-12",
+    "description": "Dry-run: company.t187ap46-l-12 URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "company.t187ap46-l-12",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "dryrun-gen-company-t187ap46-l-13",
+    "description": "Dry-run: company.t187ap46-l-13 URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "company.t187ap46-l-13",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-company-t187ap46-l-13",
+    "description": "Smoke: company.t187ap46-l-13 (上市公司企業ESG資訊揭露彙總資料-供應鏈管理)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "company.t187ap46-l-13",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-company-t187ap46-l-14",
+    "description": "Dry-run: company.t187ap46-l-14 URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "company.t187ap46-l-14",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-company-t187ap46-l-14",
+    "description": "Smoke: company.t187ap46-l-14 (上市公司企業ESG資訊揭露彙總資料-產品品質與安全)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "company.t187ap46-l-14",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-company-t187ap46-l-15",
+    "description": "Dry-run: company.t187ap46-l-15 URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "company.t187ap46-l-15",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-company-t187ap46-l-15",
+    "description": "Smoke: company.t187ap46-l-15 (上市公司企業ESG資訊揭露彙總資料-社區關係)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "company.t187ap46-l-15",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-company-t187ap46-l-16",
+    "description": "Dry-run: company.t187ap46-l-16 URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "company.t187ap46-l-16",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-company-t187ap46-l-16",
+    "description": "Smoke: company.t187ap46-l-16 (上市公司企業ESG資訊揭露彙總資料-資訊安全)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "company.t187ap46-l-16",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-company-t187ap46-l-17",
+    "description": "Dry-run: company.t187ap46-l-17 URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "company.t187ap46-l-17",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-company-t187ap46-l-17",
+    "description": "Smoke: company.t187ap46-l-17 (上市公司企業ESG資訊揭露彙總資料-普惠金融)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "company.t187ap46-l-17",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-company-t187ap46-l-18",
+    "description": "Dry-run: company.t187ap46-l-18 URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "company.t187ap46-l-18",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-company-t187ap46-l-18",
+    "description": "Smoke: company.t187ap46-l-18 (上市公司企業ESG資訊揭露彙總資料-持股及控制力)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "company.t187ap46-l-18",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-company-t187ap46-l-19",
+    "description": "Dry-run: company.t187ap46-l-19 URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "company.t187ap46-l-19",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-company-t187ap46-l-19",
+    "description": "Smoke: company.t187ap46-l-19 (上市公司企業ESG資訊揭露彙總資料-風險管理政策)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "company.t187ap46-l-19",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-company-t187ap46-l-2",
+    "description": "Dry-run: company.t187ap46-l-2 URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "company.t187ap46-l-2",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-company-t187ap46-l-2",
+    "description": "Smoke: company.t187ap46-l-2 (上市公司企業ESG資訊揭露彙總資料-能源管理)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "company.t187ap46-l-2",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-company-t187ap46-l-20",
+    "description": "Dry-run: company.t187ap46-l-20 URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "company.t187ap46-l-20",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-company-t187ap46-l-20",
+    "description": "Smoke: company.t187ap46-l-20 (上市公司企業ESG資訊揭露彙總資料-反競爭行為法律訴訟)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "company.t187ap46-l-20",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-company-t187ap46-l-21",
+    "description": "Dry-run: company.t187ap46-l-21 URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "company.t187ap46-l-21",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-company-t187ap46-l-21",
+    "description": "Smoke: company.t187ap46-l-21 (上市公司企業ESG資訊揭露彙總資料-職業安全衛生)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "company.t187ap46-l-21",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-company-t187ap46-l-3",
+    "description": "Dry-run: company.t187ap46-l-3 URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "company.t187ap46-l-3",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-company-t187ap46-l-3",
+    "description": "Smoke: company.t187ap46-l-3 (上市公司企業ESG資訊揭露彙總資料-水資源管理)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "company.t187ap46-l-3",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-company-t187ap46-l-4",
+    "description": "Dry-run: company.t187ap46-l-4 URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "company.t187ap46-l-4",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-company-t187ap46-l-4",
+    "description": "Smoke: company.t187ap46-l-4 (上市公司企業ESG資訊揭露彙總資料-廢棄物管理)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "company.t187ap46-l-4",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-company-t187ap46-l-5",
+    "description": "Dry-run: company.t187ap46-l-5 URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "company.t187ap46-l-5",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-company-t187ap46-l-5",
+    "description": "Smoke: company.t187ap46-l-5 (上市公司企業ESG資訊揭露彙總資料-人力發展)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "company.t187ap46-l-5",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-company-t187ap46-l-6",
+    "description": "Dry-run: company.t187ap46-l-6 URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "company.t187ap46-l-6",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-company-t187ap46-l-6",
+    "description": "Smoke: company.t187ap46-l-6 (上市公司企業ESG資訊揭露彙總資料-董事會)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "company.t187ap46-l-6",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-company-t187ap46-l-7",
+    "description": "Dry-run: company.t187ap46-l-7 URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "company.t187ap46-l-7",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-company-t187ap46-l-7",
+    "description": "Smoke: company.t187ap46-l-7 (上市公司企業ESG資訊揭露彙總資料-投資人溝通)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "company.t187ap46-l-7",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-company-t187ap46-l-8",
+    "description": "Dry-run: company.t187ap46-l-8 URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "company.t187ap46-l-8",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-company-t187ap46-l-8",
+    "description": "Smoke: company.t187ap46-l-8 (上市公司企業ESG資訊揭露彙總資料-氣候相關議題管理)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "company.t187ap46-l-8",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-company-t187ap46-l-9",
+    "description": "Dry-run: company.t187ap46-l-9 URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "company.t187ap46-l-9",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-company-t187ap46-l-9",
+    "description": "Smoke: company.t187ap46-l-9 (上市公司企業ESG資訊揭露彙總資料-功能性委員會)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "company"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "company.t187ap46-l-9",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-other-bfi61u",
+    "description": "Dry-run: other.bfi61u URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "other"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "other.bfi61u",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-other-bfi61u",
+    "description": "Smoke: other.bfi61u (中央登錄公債補息資料表)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "other"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "other.bfi61u",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-other-eventlist",
+    "description": "Dry-run: other.eventlist URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "other"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "other.eventlist",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-other-eventlist",
+    "description": "Smoke: other.eventlist (證交所活動訊息)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "other"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "other.eventlist",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-other-newslist",
+    "description": "Dry-run: other.newslist URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "other"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "other.newslist",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "dryrun-gen-other-t187ap47-l",
+    "description": "Dry-run: other.t187ap47-l URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "other"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "other.t187ap47-l",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-other-t187ap47-l",
+    "description": "Smoke: other.t187ap47-l (基金基本資料彙總表)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "other"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "other.t187ap47-l",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-stock-bfi84u",
+    "description": "Dry-run: stock.bfi84u URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "stock"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "stock.bfi84u",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-stock-bfi84u",
+    "description": "Smoke: stock.bfi84u (集中市場停資停券預告表)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "stock"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "stock.bfi84u",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-stock-bfiauu-d",
+    "description": "Dry-run: stock.bfiauu-d URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "stock"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "stock.bfiauu-d",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-stock-bfiauu-d",
+    "description": "Smoke: stock.bfiauu-d (集中市場鉅額交易日成交量值統計)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "stock"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "stock.bfiauu-d",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-stock-bfiauu-m",
+    "description": "Dry-run: stock.bfiauu-m URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "stock"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "stock.bfiauu-m",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-stock-bfiauu-m",
+    "description": "Smoke: stock.bfiauu-m (集中市場鉅額交易月成交量值統計)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "stock"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "stock.bfiauu-m",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-stock-bfiauu-y",
+    "description": "Dry-run: stock.bfiauu-y URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "stock"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "stock.bfiauu-y",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-stock-bfiauu-y",
+    "description": "Smoke: stock.bfiauu-y (集中市場鉅額交易年成交量值統計)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "stock"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "stock.bfiauu-y",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-stock-bft41u",
+    "description": "Dry-run: stock.bft41u URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "stock"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "stock.bft41u",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-stock-bft41u",
+    "description": "Smoke: stock.bft41u (集中市場盤後定價交易)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "stock"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "stock.bft41u",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-stock-bfzfzu-t",
+    "description": "Dry-run: stock.bfzfzu-t URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "stock"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "stock.bfzfzu-t",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "dryrun-gen-stock-bwibbu-all",
+    "description": "Dry-run: stock.bwibbu-all URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "stock"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "stock.bwibbu-all",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "dryrun-gen-stock-bwibbu-d",
+    "description": "Dry-run: stock.bwibbu-d URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "stock"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "stock.bwibbu-d",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-stock-bwibbu-d",
+    "description": "Smoke: stock.bwibbu-d (上市個股日本益比、殖利率及股價淨值比（依日期查詢）)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "stock"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "stock.bwibbu-d",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-stock-fmnptk-all",
+    "description": "Dry-run: stock.fmnptk-all URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "stock"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "stock.fmnptk-all",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-stock-fmnptk-all",
+    "description": "Smoke: stock.fmnptk-all (上市個股年成交資訊)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "stock"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "stock.fmnptk-all",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-stock-fmsrfk-all",
+    "description": "Dry-run: stock.fmsrfk-all URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "stock"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "stock.fmsrfk-all",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-stock-fmsrfk-all",
+    "description": "Smoke: stock.fmsrfk-all (上市個股月成交資訊)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "stock"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "stock.fmsrfk-all",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-stock-fmtqik",
+    "description": "Dry-run: stock.fmtqik URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "stock"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "stock.fmtqik",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-stock-fmtqik",
+    "description": "Smoke: stock.fmtqik (集中市場每日市場成交資訊)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "stock"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "stock.fmtqik",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-stock-frmsa",
+    "description": "Dry-run: stock.frmsa URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "stock"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "stock.frmsa",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "dryrun-gen-stock-holidayschedule",
+    "description": "Dry-run: stock.holidayschedule URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "stock"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "stock.holidayschedule",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "dryrun-gen-stock-mfi94u",
+    "description": "Dry-run: stock.mfi94u URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "stock"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "stock.mfi94u",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-stock-mfi94u",
+    "description": "Smoke: stock.mfi94u (發行量加權股價報酬指數)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "stock"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "stock.mfi94u",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-stock-mi-5mins",
+    "description": "Dry-run: stock.mi-5mins URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "stock"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "stock.mi-5mins",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-stock-mi-5mins",
+    "description": "Smoke: stock.mi-5mins (每 5 秒委託成交統計)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "stock"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "stock.mi-5mins",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-stock-mi-5mins-hist",
+    "description": "Dry-run: stock.mi-5mins-hist URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "stock"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "stock.mi-5mins-hist",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-stock-mi-5mins-hist",
+    "description": "Smoke: stock.mi-5mins-hist (發行量加權股價指數歷史資料)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "stock"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "stock.mi-5mins-hist",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-stock-mi-index",
+    "description": "Dry-run: stock.mi-index URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "stock"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "stock.mi-index",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "dryrun-gen-stock-mi-index20",
+    "description": "Dry-run: stock.mi-index20 URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "stock"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "stock.mi-index20",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-stock-mi-index20",
+    "description": "Smoke: stock.mi-index20 (集中市場每日成交量前二十名證券)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "stock"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "stock.mi-index20",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-stock-mi-index4",
+    "description": "Dry-run: stock.mi-index4 URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "stock"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "stock.mi-index4",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-stock-mi-index4",
+    "description": "Smoke: stock.mi-index4 (每日上市上櫃跨市場成交資訊)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "stock"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "stock.mi-index4",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-stock-mi-margn",
+    "description": "Dry-run: stock.mi-margn URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "stock"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "stock.mi-margn",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "dryrun-gen-stock-mi-qfiis-cat",
+    "description": "Dry-run: stock.mi-qfiis-cat URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "stock"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "stock.mi-qfiis-cat",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-stock-mi-qfiis-cat",
+    "description": "Smoke: stock.mi-qfiis-cat (集中市場外資及陸資投資類股持股比率表)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "stock"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "stock.mi-qfiis-cat",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-stock-mi-qfiis-sort-20",
+    "description": "Dry-run: stock.mi-qfiis-sort-20 URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "stock"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "stock.mi-qfiis-sort-20",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-stock-mi-qfiis-sort-20",
+    "description": "Smoke: stock.mi-qfiis-sort-20 (集中市場外資及陸資持股前 20 名彙總表)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "stock"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "stock.mi-qfiis-sort-20",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-stock-notetrans",
+    "description": "Dry-run: stock.notetrans URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "stock"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "stock.notetrans",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-stock-notetrans",
+    "description": "Smoke: stock.notetrans (集中市場公布注意累計次數異常資訊)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "stock"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "stock.notetrans",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-stock-notice",
+    "description": "Dry-run: stock.notice URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "stock"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "stock.notice",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "dryrun-gen-stock-stock-day-all",
+    "description": "Dry-run: stock.stock-day-all URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "stock"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "stock.stock-day-all",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "dryrun-gen-stock-stock-day-avg-all",
+    "description": "Dry-run: stock.stock-day-avg-all URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "stock"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "stock.stock-day-avg-all",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "dryrun-gen-stock-stock-first",
+    "description": "Dry-run: stock.stock-first URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "stock"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "stock.stock-first",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-stock-stock-first",
+    "description": "Smoke: stock.stock-first (每日第一上市外國股票成交量值)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "stock"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "stock.stock-first",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-stock-t187ap19",
+    "description": "Dry-run: stock.t187ap19 URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "stock"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "stock.t187ap19",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-stock-t187ap19",
+    "description": "Smoke: stock.t187ap19 (電子式交易統計資訊)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "stock"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "stock.t187ap19",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-stock-t187ap36-l",
+    "description": "Dry-run: stock.t187ap36-l URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "stock"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "stock.t187ap36-l",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-stock-t187ap36-l",
+    "description": "Smoke: stock.t187ap36-l (上市認購(售)權證年度發行量概況統計表)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "stock"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "stock.t187ap36-l",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-stock-t187ap37-l",
+    "description": "Dry-run: stock.t187ap37-l URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "stock"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "stock.t187ap37-l",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-stock-t187ap37-l",
+    "description": "Smoke: stock.t187ap37-l (上市權證基本資料彙總表)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "stock"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "stock.t187ap37-l",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-stock-t187ap42-l",
+    "description": "Dry-run: stock.t187ap42-l URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "stock"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "stock.t187ap42-l",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-stock-t187ap42-l",
+    "description": "Smoke: stock.t187ap42-l (上市認購(售)權證每日成交資料檔)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "stock"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "stock.t187ap42-l",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-stock-t187ap43-l",
+    "description": "Dry-run: stock.t187ap43-l URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "stock"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "stock.t187ap43-l",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-stock-t187ap43-l",
+    "description": "Smoke: stock.t187ap43-l (上市認購(售)權證交易人數檔)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "stock"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "stock.t187ap43-l",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-stock-tai50i",
+    "description": "Dry-run: stock.tai50i URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "stock"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "stock.tai50i",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-stock-tai50i",
+    "description": "Smoke: stock.tai50i (臺灣 50 指數歷史資料)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "stock"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "stock.tai50i",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-stock-twt48u-all",
+    "description": "Dry-run: stock.twt48u-all URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "stock"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "stock.twt48u-all",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-stock-twt48u-all",
+    "description": "Smoke: stock.twt48u-all (上市股票除權除息預告表)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "stock"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "stock.twt48u-all",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-stock-twt53u",
+    "description": "Dry-run: stock.twt53u URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "stock"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "stock.twt53u",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-stock-twt53u",
+    "description": "Smoke: stock.twt53u (集中市場零股交易行情單)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "stock"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "stock.twt53u",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-stock-twt84u",
+    "description": "Dry-run: stock.twt84u URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "stock"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "stock.twt84u",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-stock-twt84u",
+    "description": "Smoke: stock.twt84u (上市個股股價升降幅度)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "stock"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "stock.twt84u",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-stock-twt85u",
+    "description": "Dry-run: stock.twt85u URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "stock"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "stock.twt85u",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-stock-twt85u",
+    "description": "Smoke: stock.twt85u (集中市場證券變更交易)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "stock"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "stock.twt85u",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-stock-twt88u",
+    "description": "Dry-run: stock.twt88u URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "stock"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "stock.twt88u",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-stock-twt88u",
+    "description": "Smoke: stock.twt88u (上市個股首五日無漲跌幅)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "stock"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "stock.twt88u",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-stock-twt96u",
+    "description": "Dry-run: stock.twt96u URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "stock"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "stock.twt96u",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-stock-twt96u",
+    "description": "Smoke: stock.twt96u (上市上櫃股票當日可借券賣出股數)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "stock"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "stock.twt96u",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-stock-twtawu",
+    "description": "Dry-run: stock.twtawu URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "stock"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "stock.twtawu",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "dryrun-gen-stock-twtazu-od",
+    "description": "Dry-run: stock.twtazu-od URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "stock"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "stock.twtazu-od",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-stock-twtazu-od",
+    "description": "Smoke: stock.twtazu-od (集中市場漲跌證券數統計表)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "stock"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "stock.twtazu-od",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-stock-twtb4u",
+    "description": "Dry-run: stock.twtb4u URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "stock"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "stock.twtb4u",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-stock-twtb4u",
+    "description": "Smoke: stock.twtb4u (上市股票每日當日沖銷交易標的及統計)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "stock"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "stock.twtb4u",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-stock-twtbau1",
+    "description": "Dry-run: stock.twtbau1 URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "stock"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "stock.twtbau1",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "dryrun-gen-stock-twtbau2",
+    "description": "Dry-run: stock.twtbau2 URL construction",
+    "tags": [
+      "dry-run-gen",
+      "twse",
+      "stock"
+    ],
+    "exchange": "twse",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "stock.twtbau2",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-stock-twtbau2",
+    "description": "Smoke: stock.twtbau2 (集中市場暫停先賣後買當日沖銷交易歷史查詢)",
+    "tags": [
+      "smoke-gen",
+      "twse",
+      "stock"
+    ],
+    "exchange": "twse",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "stock.twtbau2",
+      "--json",
+      "--limit",
+      "3"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  }
+]

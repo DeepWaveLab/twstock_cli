@@ -47,8 +47,11 @@ packages = ["twstock_cli"]
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 markers = [
-    "integration: hits real TWSE API (deselect with '-m not integration')",
+    "integration: hits real TWSE/TPEX API (deselect with '-m not integration')",
     "smoke: minimal smoke test subset",
+    "twse: TWSE OpenAPI endpoints only",
+    "tpex: TPEX OpenAPI endpoints only",
+    "web: TWSE web API endpoints only",
 ]
 addopts = "-m 'not integration'"
 

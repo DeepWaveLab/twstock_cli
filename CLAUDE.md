@@ -12,7 +12,7 @@ twstock-cli is a Python CLI wrapping Taiwan Stock Exchange (TWSE) and Taipei Exc
 - **Terminal:** Rich (tables to stderr for humans, JSON to stdout for agents)
 - **Package manager:** uv + Hatchling
 - **Linting:** ruff (line-length 140)
-- **Testing:** pytest (markers: `integration`, `smoke`)
+- **Testing:** pytest (markers: `integration`, `smoke`, `twse`, `tpex`, `web`)
 
 ## Key Files
 
@@ -29,7 +29,10 @@ twstock-cli is a Python CLI wrapping Taiwan Stock Exchange (TWSE) and Taipei Exc
 ```bash
 uv sync                          # Install dependencies
 uv run pytest                    # Run unit tests
-uv run pytest -m integration     # Run integration tests
+uv run pytest -m integration     # Run all integration tests (TWSE+TPEX+Web)
+uv run pytest -m twse            # Run TWSE-only integration tests
+uv run pytest -m tpex            # Run TPEX-only integration tests
+uv run pytest -m web             # Run Web API integration tests
 uv run ruff check twstock_cli/   # Lint
 uv run ruff format twstock_cli/  # Format
 ```

@@ -1,0 +1,494 @@
+[
+  {
+    "_comment": "=== AUTO-GENERATED WEB tests — do not edit manually ==="
+  },
+  {
+    "id": "dryrun-gen-stock-t86",
+    "description": "Dry-run: stock.t86 URL construction",
+    "tags": [
+      "dry-run-gen",
+      "web",
+      "stock"
+    ],
+    "exchange": "web",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "stock.t86",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-stock-t86",
+    "description": "Smoke: stock.t86 (三大法人買賣超日報)",
+    "tags": [
+      "smoke-gen",
+      "web",
+      "stock"
+    ],
+    "exchange": "web",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "stock.t86",
+      "--json",
+      "--limit",
+      "3",
+      "--date",
+      "20260316"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-web-bfi82u",
+    "description": "Dry-run: web.bfi82u URL construction",
+    "tags": [
+      "dry-run-gen",
+      "web",
+      "web"
+    ],
+    "exchange": "web",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "web.bfi82u",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-web-bfi82u",
+    "description": "Smoke: web.bfi82u (三大法人買賣金額統計表 (institutional buy/sell summary))",
+    "tags": [
+      "smoke-gen",
+      "web",
+      "web"
+    ],
+    "exchange": "web",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "web.bfi82u",
+      "--json",
+      "--limit",
+      "3",
+      "--date",
+      "20260316"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-web-bwibbu",
+    "description": "Dry-run: web.bwibbu URL construction",
+    "tags": [
+      "dry-run-gen",
+      "web",
+      "web"
+    ],
+    "exchange": "web",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "web.bwibbu",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-web-bwibbu",
+    "description": "Smoke: web.bwibbu (個股日本益比、殖利率及股價淨值比 (per-stock P/E, yield, PBR))",
+    "tags": [
+      "smoke-gen",
+      "web",
+      "web"
+    ],
+    "exchange": "web",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "web.bwibbu",
+      "--json",
+      "--limit",
+      "3",
+      "--date",
+      "20260316",
+      "--stock-no",
+      "2330"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3,
+      "required_fields": [
+        "Date",
+        "DividendYield",
+        "DividendYear"
+      ]
+    }
+  },
+  {
+    "id": "dryrun-gen-web-fmsrfk",
+    "description": "Dry-run: web.fmsrfk URL construction",
+    "tags": [
+      "dry-run-gen",
+      "web",
+      "web"
+    ],
+    "exchange": "web",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "web.fmsrfk",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-web-fmsrfk",
+    "description": "Smoke: web.fmsrfk (個股月成交資訊 (per-stock monthly trading history))",
+    "tags": [
+      "smoke-gen",
+      "web",
+      "web"
+    ],
+    "exchange": "web",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "web.fmsrfk",
+      "--json",
+      "--limit",
+      "3",
+      "--date",
+      "20260316",
+      "--stock-no",
+      "2330"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3,
+      "required_fields": [
+        "Year",
+        "Month",
+        "High"
+      ]
+    }
+  },
+  {
+    "id": "dryrun-gen-web-mi-index",
+    "description": "Dry-run: web.mi-index URL construction",
+    "tags": [
+      "dry-run-gen",
+      "web",
+      "web"
+    ],
+    "exchange": "web",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "web.mi-index",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-web-mi-index",
+    "description": "Smoke: web.mi-index (每日收盤行情 (daily market summary, tables format))",
+    "tags": [
+      "smoke-gen",
+      "web",
+      "web"
+    ],
+    "exchange": "web",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "web.mi-index",
+      "--json",
+      "--limit",
+      "3",
+      "--date",
+      "20260316"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-web-stock-day",
+    "description": "Dry-run: web.stock-day URL construction",
+    "tags": [
+      "dry-run-gen",
+      "web",
+      "web"
+    ],
+    "exchange": "web",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "web.stock-day",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-web-stock-day",
+    "description": "Smoke: web.stock-day (個股日成交資訊 (per-stock daily OHLCV by month))",
+    "tags": [
+      "smoke-gen",
+      "web",
+      "web"
+    ],
+    "exchange": "web",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "web.stock-day",
+      "--json",
+      "--limit",
+      "3",
+      "--date",
+      "20260316",
+      "--stock-no",
+      "2330"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3,
+      "required_fields": [
+        "Date",
+        "Volume",
+        "Amount"
+      ]
+    }
+  },
+  {
+    "id": "dryrun-gen-web-twt38u",
+    "description": "Dry-run: web.twt38u URL construction",
+    "tags": [
+      "dry-run-gen",
+      "web",
+      "web"
+    ],
+    "exchange": "web",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "web.twt38u",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-web-twt38u",
+    "description": "Smoke: web.twt38u (外資及陸資買賣超彙總表 (foreign investor buy/sell by stock))",
+    "tags": [
+      "smoke-gen",
+      "web",
+      "web"
+    ],
+    "exchange": "web",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "web.twt38u",
+      "--json",
+      "--limit",
+      "3",
+      "--date",
+      "20260316"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-web-twt43u",
+    "description": "Dry-run: web.twt43u URL construction",
+    "tags": [
+      "dry-run-gen",
+      "web",
+      "web"
+    ],
+    "exchange": "web",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "web.twt43u",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-web-twt43u",
+    "description": "Smoke: web.twt43u (投信買賣超彙總表 (investment trust buy/sell by stock))",
+    "tags": [
+      "smoke-gen",
+      "web",
+      "web"
+    ],
+    "exchange": "web",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "web.twt43u",
+      "--json",
+      "--limit",
+      "3",
+      "--date",
+      "20260316"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  },
+  {
+    "id": "dryrun-gen-web-twt44u",
+    "description": "Dry-run: web.twt44u URL construction",
+    "tags": [
+      "dry-run-gen",
+      "web",
+      "web"
+    ],
+    "exchange": "web",
+    "requires_api": false,
+    "command": [
+      "fetch",
+      "web.twt44u",
+      "--dry-run"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "object",
+      "contains_keys": [
+        "dry_run",
+        "method",
+        "url"
+      ]
+    }
+  },
+  {
+    "id": "smoke-gen-web-twt44u",
+    "description": "Smoke: web.twt44u (自營商買賣超彙總表 (dealer buy/sell by stock))",
+    "tags": [
+      "smoke-gen",
+      "web",
+      "web"
+    ],
+    "exchange": "web",
+    "requires_api": true,
+    "command": [
+      "fetch",
+      "web.twt44u",
+      "--json",
+      "--limit",
+      "3",
+      "--date",
+      "20260316"
+    ],
+    "expected": {
+      "exit_code": 0,
+      "output_format": "envelope",
+      "ok": true,
+      "allow_empty": true,
+      "max_records": 3
+    }
+  }
+]

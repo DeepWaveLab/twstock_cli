@@ -32,7 +32,7 @@ twstock schema stock.stock-day-all --json
 
 ## Core Commands
 
-### 1. `twstock fetch <endpoint>` — Access any of 351 endpoints
+### 1. `twstock fetch <endpoint>` — Access any of 359 endpoints
 
 ```bash
 # By dotted name
@@ -60,7 +60,7 @@ twstock fetch STOCK_DAY_ALL --json
 ### 2. `twstock endpoints` — Discover endpoints
 
 ```bash
-# List all 351 endpoints
+# List all 359 endpoints
 twstock endpoints --json
 
 # Search by keyword (Chinese or English)
@@ -131,7 +131,7 @@ Exposes tools: `twstock_fetch`, `twstock_endpoints`, `twstock_schema`.
 ## Vocabulary
 
 - **Endpoint ref**: `stock.stock-day-all`, `/exchangeReport/STOCK_DAY_ALL`, or `STOCK_DAY_ALL`
-- **Categories**: `stock` (44), `company` (86), `broker` (9), `other` (4)
+- **Categories**: `stock` (45), `company` (86), `broker` (9), `other` (4), `otc` (64), `otc_company` (29), `otc_index` (18), `otc_esg` (16), `otc_financial` (32), `otc_warrant` (16), `otc_bond` (8), `otc_broker` (8), `otc_esb` (5), `otc_gisa` (5), `otc_fund` (3), `otc_gold` (3), `web` (8)
 - **ROC dates**: `1150313` = 2026-03-13 (ROC year 115 + 1911 = 2026)
 - **All values are strings**: Prices like `"595.00"`, volumes like `"36317450"` (use `--normalize` to convert)
 
@@ -229,9 +229,9 @@ Each skill has a `SKILL.md` file with preconditions, step-by-step workflows, and
 
 twstock-cli is a **read-only** data fetcher. Its security posture:
 
-- **Network**: Only contacts `https://openapi.twse.com.tw/v1` (single host, HTTPS)
+- **Network**: Contacts three hosts — `https://openapi.twse.com.tw/v1` (TWSE OpenAPI), `https://www.tpex.org.tw/openapi/v1` (TPEX OpenAPI), `https://www.twse.com.tw/rwd/zh` (TWSE Web API). All HTTPS.
 - **SSL**: Certificate verification disabled (`verify=False`) due to known TWSE certificate issues. MITM risk acknowledged — data is public market data, not secrets.
-- **Authentication**: None. TWSE OpenAPI is public and auth-free.
+- **Authentication**: None. All APIs are public and auth-free.
 - **File system**: Writes only to `~/.cache/twstock-cli/` (disk cache). No other file writes.
 - **Input validation**: All user-supplied strings validated against control characters, path traversal, and injection patterns. Unknown endpoints rejected against fixed registry. Max input length: 1000 chars.
 - **Output sanitization**: Control characters stripped from all API response values before output.

@@ -2,7 +2,7 @@
 
 ## What This Tool Does
 
-twstock-cli is a CLI tool that wraps Taiwan Stock Exchange (TWSE) OpenAPI with 143 endpoints.
+twstock-cli is a CLI tool that wraps Taiwan Stock Exchange (TWSE) and Taipei Exchange (TPEX) APIs with 359 endpoints.
 It's designed for AI agents to efficiently query stock market data with minimal token consumption.
 
 ## Installation
@@ -14,7 +14,7 @@ uv tool install twstock-cli
 ## Core Commands
 
 ```bash
-# Fetch any endpoint (143 available)
+# Fetch any endpoint (359 available)
 twstock fetch <endpoint> --json [--fields F] [--code C] [--limit N] [--normalize] [--ndjson] [--raw] [--dry-run] [--stdin]
 
 # Discover endpoints
@@ -58,8 +58,8 @@ twstock fetch STOCK_DAY_ALL              # API code
 
 - All TWSE values are strings by default (use `--normalize` to convert)
 - ROC dates: `1150313` = 2026-03-13 (ROC year + 1911 = Gregorian)
-- Categories: stock (44), company (86), broker (9), other (4)
+- Categories: `stock` (45), `company` (86), `broker` (9), `other` (4), `otc` (64), `otc_company` (29), `otc_index` (18), `otc_esg` (16), `otc_financial` (32), `otc_warrant` (16), `otc_bond` (8), `otc_broker` (8), `otc_esb` (5), `otc_gisa` (5), `otc_fund` (3), `otc_gold` (3), `web` (8)
 
 ## Security
 
-Read-only tool. Inputs validated (control chars, path traversal, injection). Outputs sanitized (control chars stripped). See AGENTS.md for full security model.
+Read-only tool. Contacts three hosts: `openapi.twse.com.tw` (TWSE), `www.tpex.org.tw` (TPEX), `www.twse.com.tw` (Web). Inputs validated (control chars, path traversal, injection). Outputs sanitized (control chars stripped). See AGENTS.md for full security model.

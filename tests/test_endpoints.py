@@ -1,6 +1,11 @@
 """Tests for endpoint registry — resolve, list, search."""
 
+import json
+from pathlib import Path
+
 from twstock_cli.endpoints import ENDPOINTS, EndpointDef, list_endpoints, resolve_endpoint
+
+INTEGRATION_DIR = Path(__file__).parent / "integration"
 
 
 class TestEndpointRegistry:
@@ -158,3 +163,29 @@ class TestTpexEndpoints:
         results = list_endpoints(category="otc_company")
         assert all(r["group"] == "otc_company" for r in results)
         assert len(results) == 29
+
+
+class TestIntegrationTestSync:
+    """Verify every endpoint has at least one integration test case."""
+
+    def _load_all_tested_endpoints(self) -> set[str]:
+        """Parse all test_cases*.json and extract endpoint dotted names from commands."""
+        tested = set()
+        for f in INTEGRATION_DIR.glob("test_cases*.json"):
+            for case in json.loads(f.read_text()):
+                if "id" not in case:
+                    continue
+                cmd = case.get("command", [])
+                if len(cmd) >= 2 and cmd[0] == "fetch" and not cmd[1].startswith("-"):
+                    tested.add(cmd[1])
+        return tested
+
+    def test_all_endpoints_have_integration_tests(self):
+        """Every endpoint in the registry must have at least one test case."""
+        tested = self._load_all_tested_endpoints()
+        endpoint_keys = set(ENDPOINTS.keys())
+        untested = endpoint_keys - tested
+        assert not untested, (
+            f"{len(untested)} endpoints lack integration tests: "
+            f"{sorted(untested)[:10]}{'...' if len(untested) > 10 else ''}"
+        )

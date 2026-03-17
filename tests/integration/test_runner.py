@@ -1,7 +1,7 @@
 """Data-driven integration test runner.
 
-Reads test cases from ``test_cases.json`` and validates each command
-invocation against the real TWSE API (or deterministically for cases
+Reads test cases from ``test_cases*.json`` files and validates each command
+invocation against the real TWSE/TPEX APIs (or deterministically for cases
 that don't require network access).
 """
 
@@ -15,16 +15,20 @@ from click.testing import CliRunner
 
 from twstock_cli.cli import cli
 
-CASES_FILE = Path(__file__).parent / "test_cases.json"
+CASES_DIR = Path(__file__).parent
+
+# Stash key shared with conftest.py for per-exchange health status.
+_EXCHANGE_HEALTH_KEY = pytest.StashKey[dict[str, bool]]()
 
 
 def _load_cases() -> list[tuple[str, dict]]:
-    raw: list[dict] = json.loads(CASES_FILE.read_text())
-    # Filter out comment-only entries (have _comment but no id).
-    cases = [c for c in raw if "id" in c]
+    all_cases: list[dict] = []
+    for f in sorted(CASES_DIR.glob("test_cases*.json")):
+        raw = json.loads(f.read_text())
+        all_cases.extend(c for c in raw if "id" in c)
     # Sort so deterministic (requires_api=false) run first.
-    cases.sort(key=lambda c: c.get("requires_api", True))
-    return [(c["id"], c) for c in cases]
+    all_cases.sort(key=lambda c: c.get("requires_api", True))
+    return [(c["id"], c) for c in all_cases]
 
 
 def _parse_output(output: str, fmt: str) -> list[dict]:
@@ -50,7 +54,18 @@ _CASES = _load_cases()
 
 @pytest.mark.integration
 @pytest.mark.parametrize("case_id,case", _CASES, ids=[c[0] for c in _CASES])
-def test_integration(case_id: str, case: dict) -> None:
+def test_integration(case_id: str, case: dict, request: pytest.FixtureRequest) -> None:
+    # Apply exchange-specific markers dynamically.
+    exchange = case.get("exchange")
+    if exchange:
+        marker = getattr(pytest.mark, exchange)
+        request.node.add_marker(marker)
+
+    # Skip if the exchange health check failed.
+    health = request.config.stash.get(_EXCHANGE_HEALTH_KEY, {})
+    if exchange and case.get("requires_api") and not health.get(exchange, True):
+        pytest.skip(f"{exchange} API unreachable")
+
     expected = case["expected"]
     runner = CliRunner()
 
