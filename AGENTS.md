@@ -32,7 +32,7 @@ twstock schema stock.stock-day-all --json
 
 ## Core Commands
 
-### 1. `twstock fetch <endpoint>` — Access any of 359 endpoints
+### 1. `twstock fetch <endpoint>` — Access any of 359 endpoints (143 TWSE OpenAPI + 9 TWSE Web + 207 TPEX OpenAPI)
 
 ```bash
 # By dotted name
@@ -55,6 +55,7 @@ twstock fetch STOCK_DAY_ALL --json
 - `--raw` — Bare JSON array (no envelope wrapper)
 - `--dry-run` — Preview request as JSON without making an HTTP call
 - `--stdin` — Read parameters from JSON on stdin
+- `--no-cache` — Bypass disk cache
 - `--help-json` — Output command metadata as structured JSON
 
 ### 2. `twstock endpoints` — Discover endpoints

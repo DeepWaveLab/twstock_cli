@@ -17,10 +17,16 @@ twstock-cli is a Python CLI wrapping Taiwan Stock Exchange (TWSE) and Taipei Exc
 ## Key Files
 
 - `twstock_cli/cli.py` — Click root group, top-level commands (fetch, endpoints, schema, version, serve)
-- `twstock_cli/endpoints.py` — Registry of `EndpointDef` dataclasses (single source of truth)
+- `twstock_cli/endpoints.py` — Registry of 359 `EndpointDef` dataclasses (single source of truth)
 - `twstock_cli/commands/_factory.py` — Dynamically generates Click commands from endpoint registry
 - `twstock_cli/client.py` — TWStockClient with httpx, 3x retry, rate limiting
 - `twstock_cli/normalize.py` — String→number, ROC dates→ISO 8601 conversion
+- `twstock_cli/sanitize.py` — Output sanitization (control chars stripped from API responses)
+- `twstock_cli/validate.py` — Input validation (control chars, path traversal, injection patterns)
+- `twstock_cli/cache.py` — Disk cache for API responses (~/.cache/twstock-cli/)
+- `twstock_cli/schema.py` — Endpoint field inspection with inferred types
+- `twstock_cli/output.py` — TTY-aware output (Rich tables for humans, JSON for agents)
+- `twstock_cli/help_json.py` — Structured `--help-json` metadata output
 - `twstock_cli/serve.py` — MCP server mode (FastMCP, stdio transport)
 - `AGENTS.md` — Agent-facing instructions with command guardrails
 
@@ -30,6 +36,7 @@ twstock-cli is a Python CLI wrapping Taiwan Stock Exchange (TWSE) and Taipei Exc
 uv sync                          # Install dependencies
 uv run pytest                    # Run unit tests
 uv run pytest -m integration     # Run all integration tests (TWSE+TPEX+Web)
+uv run pytest -m smoke           # Run smoke tests for all 359 endpoints
 uv run pytest -m twse            # Run TWSE-only integration tests
 uv run pytest -m tpex            # Run TPEX-only integration tests
 uv run pytest -m web             # Run Web API integration tests

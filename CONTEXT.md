@@ -2,7 +2,7 @@
 
 ## What This Tool Does
 
-twstock-cli is a CLI tool that wraps Taiwan Stock Exchange (TWSE) and Taipei Exchange (TPEX) APIs with 359 endpoints.
+twstock-cli is a CLI tool that wraps Taiwan Stock Exchange (TWSE) and Taipei Exchange (TPEX) APIs with 359 endpoints (143 TWSE OpenAPI + 9 TWSE Web API + 207 TPEX OpenAPI).
 It's designed for AI agents to efficiently query stock market data with minimal token consumption.
 
 ## Installation

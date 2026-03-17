@@ -40,7 +40,7 @@ twstock schema stock.stock-day-all --json
 
 ### `twstock fetch <endpoint>`
 
-Fetch data from any TWSE endpoint.
+Fetch data from any TWSE/TPEX endpoint.
 
 ```bash
 twstock fetch stock.stock-day-all --json              # by dotted name
@@ -71,6 +71,8 @@ twstock endpoints --search "daily" --json          # search by keyword
 twstock endpoints --category stock --json          # filter by category
 twstock endpoints --search "bwibbu" --with-fields --json  # show fields
 ```
+
+**Sources:** 143 TWSE OpenAPI + 9 TWSE Web API + 207 TPEX OpenAPI = 359 endpoints.
 
 Categories: `stock` (45), `company` (86), `broker` (9), `other` (4), `otc` (64), `otc_company` (29), `otc_index` (18), `otc_esg` (16), `otc_financial` (32), `otc_warrant` (16), `otc_bond` (8), `otc_broker` (8), `otc_esb` (5), `otc_gisa` (5), `otc_fund` (3), `otc_gold` (3), `web` (8).
 
