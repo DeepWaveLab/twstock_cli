@@ -4,14 +4,25 @@ Agent-friendly CLI for Taiwan Stock Exchange (TWSE) and Taipei Exchange (TPEX) â
 
 ## Install
 
-```
-uv tool install twstock-cli
+```bash
+pip install twstock-cli
 ```
 
-With MCP server support:
+With optional extras:
 
+```bash
+pip install 'twstock-cli[mcp]'            # MCP server support
+pip install 'twstock-cli[analysis]'       # pandas, openpyxl, matplotlib, plotly
+pip install 'twstock-cli[mcp,analysis]'   # everything
 ```
-uv tool install 'twstock-cli[mcp]'
+
+### From source
+
+```bash
+git clone https://github.com/weirenlan/twstock-cli.git
+cd twstock-cli
+uv sync                                   # core only
+uv sync --extra mcp --extra analysis      # with all extras
 ```
 
 ## Quick Start
@@ -161,6 +172,91 @@ echo '{"endpoint":"stock.stock-day-all","fields":["Code","Name"],"limit":5}' | t
 | `1` | API error (TWSE returned 4xx/5xx) |
 | `2` | Validation error (unknown endpoint, bad args) |
 | `3` | Network error (cannot reach TWSE API) |
+
+## Data Analysis & Export (`[analysis]` extra)
+
+Install the `analysis` extra to unlock data analysis, visualization, and export capabilities.
+
+### Export to XLSX
+
+```python
+import subprocess, json, pandas as pd
+
+result = subprocess.run(
+    ["twstock", "fetch", "stock.stock-day-all", "--json", "--fields", "Code,Name,ClosingPrice,TradeVolume", "--normalize"],
+    capture_output=True, text=True,
+)
+data = json.loads(result.stdout)["data"]
+df = pd.DataFrame(data)
+df.to_excel("stock_daily.xlsx", index=False)
+```
+
+### Visualization with matplotlib
+
+```python
+import subprocess, json, pandas as pd, matplotlib.pyplot as plt
+
+result = subprocess.run(
+    ["twstock", "fetch", "stock.stock-day-all", "--json", "--fields", "Code,Name,ClosingPrice,TradeVolume", "--normalize", "--limit", "20"],
+    capture_output=True, text=True,
+)
+df = pd.DataFrame(json.loads(result.stdout)["data"])
+df.plot.bar(x="Name", y="TradeVolume", title="Top 20 Stocks by Volume")
+plt.tight_layout()
+plt.savefig("volume_chart.png")
+```
+
+### Interactive charts with plotly
+
+```python
+import subprocess, json, pandas as pd, plotly.express as px
+
+result = subprocess.run(
+    ["twstock", "fetch", "stock.stock-day-all", "--json", "--fields", "Code,Name,ClosingPrice,TradeVolume", "--normalize", "--limit", "30"],
+    capture_output=True, text=True,
+)
+df = pd.DataFrame(json.loads(result.stdout)["data"])
+fig = px.scatter(df, x="ClosingPrice", y="TradeVolume", hover_name="Name", title="Price vs Volume")
+fig.write_html("price_vs_volume.html")
+```
+
+### Export to PPTX
+
+```python
+from pptx import Presentation
+from pptx.util import Inches
+import subprocess, json
+
+result = subprocess.run(
+    ["twstock", "fetch", "stock.stock-day-all", "--json", "--fields", "Code,Name,ClosingPrice", "--limit", "10", "--normalize"],
+    capture_output=True, text=True,
+)
+data = json.loads(result.stdout)["data"]
+
+prs = Presentation()
+slide = prs.slides.add_slide(prs.slide_layouts[5])  # blank layout
+slide.shapes.title.text = "Top 10 Stocks"
+
+rows, cols = len(data) + 1, 3
+table = slide.shapes.add_table(rows, cols, Inches(0.5), Inches(1.5), Inches(9), Inches(4)).table
+for i, header in enumerate(["Code", "Name", "ClosingPrice"]):
+    table.cell(0, i).text = header
+for r, row in enumerate(data, 1):
+    for c, key in enumerate(["Code", "Name", "ClosingPrice"]):
+        table.cell(r, c).text = str(row.get(key, ""))
+
+prs.save("stocks.pptx")
+```
+
+### Analysis extras included
+
+| Package | Purpose |
+|---------|---------|
+| `pandas` | DataFrames, filtering, groupby, `.to_excel()`, `.to_csv()` |
+| `openpyxl` | XLSX read/write (powers `pandas.to_excel()`) |
+| `matplotlib` | Static charts and plots |
+| `plotly` | Interactive HTML charts |
+| `python-pptx` | PowerPoint slide generation (included in core) |
 
 ## For AI Agents
 
