@@ -3,8 +3,8 @@ class TwstockCli < Formula
 
   desc "Agent-friendly CLI for Taiwan Stock Exchange (TWSE) and Taipei Exchange (TPEX)"
   homepage "https://github.com/DeepWaveLab/twstock_cli"
-  url "https://files.pythonhosted.org/packages/56/bd/ad31947483e5a937d994e865a2c94e161a27ac7565deb3f4f8cf6ae212fa/twstock_cli-0.1.2.tar.gz"
-  sha256 "edf3ccbb81de54d943538e1be997f13822f90e189693ab0f0d04e64349b622bd"
+  url "https://files.pythonhosted.org/packages/03/6d/b46ce035351c15b0ad56aa66887bf817169fc0aa1e029ecbb91757ba1ce5/twstock_cli-0.1.3.tar.gz"
+  sha256 "0b24f3cb71961c7f52e08c7082998ac20aa8384ef44e49c26ca4116f0b83719e"
   license "MIT"
 
   depends_on "python@3.12"
@@ -14,6 +14,6 @@ class TwstockCli < Formula
   end
 
   test do
-    assert_match "twstock-cli", shell_output("#{bin}/twstock version")
+    assert_match "Usage", shell_output("#{bin}/twstock --help")
   end
 end
