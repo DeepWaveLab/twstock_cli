@@ -18,10 +18,23 @@ class TestEndpointRegistry:
 
     def test_all_endpoints_have_required_fields(self):
         valid_groups = (
-            "stock", "company", "broker", "other",
-            "otc", "otc_company", "otc_index", "otc_esg", "otc_financial",
-            "otc_esb", "otc_gisa", "otc_warrant", "otc_fund", "otc_gold",
-            "otc_bond", "otc_broker", "web",
+            "stock",
+            "company",
+            "broker",
+            "other",
+            "otc",
+            "otc_company",
+            "otc_index",
+            "otc_esg",
+            "otc_financial",
+            "otc_esb",
+            "otc_gisa",
+            "otc_warrant",
+            "otc_fund",
+            "otc_gold",
+            "otc_bond",
+            "otc_broker",
+            "web",
         )
         for key, ep in ENDPOINTS.items():
             assert ep.path.startswith("/"), f"{key}: path should start with /"
@@ -186,6 +199,5 @@ class TestIntegrationTestSync:
         endpoint_keys = set(ENDPOINTS.keys())
         untested = endpoint_keys - tested
         assert not untested, (
-            f"{len(untested)} endpoints lack integration tests: "
-            f"{sorted(untested)[:10]}{'...' if len(untested) > 10 else ''}"
+            f"{len(untested)} endpoints lack integration tests: {sorted(untested)[:10]}{'...' if len(untested) > 10 else ''}"
         )

@@ -38,10 +38,7 @@ def _check_url(url: str) -> bool:
 def exchange_health_checks(request: pytest.FixtureRequest) -> None:
     """Probe each exchange and store reachability in config stash."""
     items = request.session.items
-    needs_api = any(
-        getattr(m, "get_closest_marker", lambda _: None)("integration")
-        for m in items
-    )
+    needs_api = any(getattr(m, "get_closest_marker", lambda _: None)("integration") for m in items)
     if not needs_api:
         return
 

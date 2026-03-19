@@ -71,14 +71,17 @@ class LazyGroup(click.Group):
         return grp
 
 
-@click.group(cls=LazyGroup, lazy_subgroups={
-    "stock": "twstock_cli.commands._factory",
-    "company": "twstock_cli.commands._factory",
-    "broker": "twstock_cli.commands._factory",
-    "otc": "twstock_cli.commands._factory",
-    "otc_company": "twstock_cli.commands._factory",
-    "web": "twstock_cli.commands._factory",
-})
+@click.group(
+    cls=LazyGroup,
+    lazy_subgroups={
+        "stock": "twstock_cli.commands._factory",
+        "company": "twstock_cli.commands._factory",
+        "broker": "twstock_cli.commands._factory",
+        "otc": "twstock_cli.commands._factory",
+        "otc_company": "twstock_cli.commands._factory",
+        "web": "twstock_cli.commands._factory",
+    },
+)
 @click.version_option(version=__version__, prog_name="twstock")
 @help_json_option
 @click.option("-v", "--verbose", is_flag=True, help="Enable verbose logging")
@@ -105,7 +108,21 @@ def cli(ctx: click.Context, verbose: bool) -> None:
 @click.option("--date", default=None, help="Date in YYYYMMDD format (for web API endpoints)")
 @click.option("--stock-no", default=None, help="Stock number for web API endpoints (e.g. 2330)")
 @help_json_option
-def fetch(endpoint_ref: str | None, as_json: bool, field_list: str | None, stock_code: str | None, max_records: int | None, no_cache: bool, normalize: bool, ndjson: bool, raw: bool, dry_run: bool, use_stdin: bool, date: str | None, stock_no: str | None) -> None:
+def fetch(
+    endpoint_ref: str | None,
+    as_json: bool,
+    field_list: str | None,
+    stock_code: str | None,
+    max_records: int | None,
+    no_cache: bool,
+    normalize: bool,
+    ndjson: bool,
+    raw: bool,
+    dry_run: bool,
+    use_stdin: bool,
+    date: str | None,
+    stock_no: str | None,
+) -> None:
     """Fetch data from any TWSE/TPEX endpoint.
 
     ENDPOINT_REF can be a dotted name (stock.stock-day-all), raw API path
@@ -182,13 +199,31 @@ def fetch(endpoint_ref: str | None, as_json: bool, field_list: str | None, stock
 
     from .commands._factory import _run_fetch
 
-    _run_fetch(ep, as_json, field_list, stock_code, max_records, no_cache=no_cache, normalize=normalize, ndjson=ndjson, raw=raw, dry_run=dry_run, date=date, stock_no=stock_no)
+    _run_fetch(
+        ep,
+        as_json,
+        field_list,
+        stock_code,
+        max_records,
+        no_cache=no_cache,
+        normalize=normalize,
+        ndjson=ndjson,
+        raw=raw,
+        dry_run=dry_run,
+        date=date,
+        stock_no=stock_no,
+    )
 
 
 @cli.command()
 @click.option("--json", "as_json", is_flag=True, help="Output JSON to stdout")
 @click.option("--search", "keyword", default=None, help="Search by keyword (en/zh)")
-@click.option("--category", default=None, type=click.Choice(["stock", "company", "broker", "other", "otc", "otc_company", "web"]), help="Filter by category")
+@click.option(
+    "--category",
+    default=None,
+    type=click.Choice(["stock", "company", "broker", "other", "otc", "otc_company", "web"]),
+    help="Filter by category",
+)
 @click.option("--with-fields", is_flag=True, help="Include field definitions")
 @help_json_option
 def endpoints(as_json: bool, keyword: str | None, category: str | None, with_fields: bool) -> None:
@@ -299,9 +334,7 @@ def schema(endpoint_ref: str, as_json: bool, no_cache: bool, dry_run: bool) -> N
 
     data = sanitize_data(data)
 
-    schema_info = analyze_schema(
-        data, endpoint_name=f"{ep.group}.{ep.cli_name}", description=ep.description, path=ep.path
-    )
+    schema_info = analyze_schema(data, endpoint_name=f"{ep.group}.{ep.cli_name}", description=ep.description, path=ep.path)
 
     if as_json or is_agent_mode():
         click.echo(json.dumps(schema_info, ensure_ascii=False))

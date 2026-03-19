@@ -177,8 +177,29 @@ def make_endpoint_command(ep: EndpointDef) -> click.Command:
     @click.option("--raw", is_flag=True, help="Output bare JSON array (no envelope)")
     @click.option("--dry-run", is_flag=True, help="Preview request as JSON without making an HTTP call")
     @help_json_option
-    def cmd(as_json: bool, field_list: str | None, stock_code: str | None, max_records: int | None, no_cache: bool, normalize: bool, ndjson: bool, raw: bool, dry_run: bool) -> None:
-        _run_fetch(ep, as_json, field_list, stock_code, max_records, no_cache=no_cache, normalize=normalize, ndjson=ndjson, raw=raw, dry_run=dry_run)
+    def cmd(
+        as_json: bool,
+        field_list: str | None,
+        stock_code: str | None,
+        max_records: int | None,
+        no_cache: bool,
+        normalize: bool,
+        ndjson: bool,
+        raw: bool,
+        dry_run: bool,
+    ) -> None:
+        _run_fetch(
+            ep,
+            as_json,
+            field_list,
+            stock_code,
+            max_records,
+            no_cache=no_cache,
+            normalize=normalize,
+            ndjson=ndjson,
+            raw=raw,
+            dry_run=dry_run,
+        )
 
     return cmd
 
@@ -201,8 +222,33 @@ def _make_web_endpoint_command(ep: EndpointDef) -> click.Command:
     @click.option("--date", default=None, help="Date in YYYYMMDD format (default: today)")
     @click.option("--stock-no", default=None, help="Stock number (e.g. 2330)", hidden=not has_stock)
     @help_json_option
-    def cmd(as_json: bool, field_list: str | None, stock_code: str | None, max_records: int | None, no_cache: bool, normalize: bool, ndjson: bool, raw: bool, dry_run: bool, date: str | None, stock_no: str | None) -> None:
-        _run_fetch(ep, as_json, field_list, stock_code, max_records, no_cache=no_cache, normalize=normalize, ndjson=ndjson, raw=raw, dry_run=dry_run, date=date, stock_no=stock_no)
+    def cmd(
+        as_json: bool,
+        field_list: str | None,
+        stock_code: str | None,
+        max_records: int | None,
+        no_cache: bool,
+        normalize: bool,
+        ndjson: bool,
+        raw: bool,
+        dry_run: bool,
+        date: str | None,
+        stock_no: str | None,
+    ) -> None:
+        _run_fetch(
+            ep,
+            as_json,
+            field_list,
+            stock_code,
+            max_records,
+            no_cache=no_cache,
+            normalize=normalize,
+            ndjson=ndjson,
+            raw=raw,
+            dry_run=dry_run,
+            date=date,
+            stock_no=stock_no,
+        )
 
     return cmd
 

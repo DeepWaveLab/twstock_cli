@@ -15,10 +15,7 @@ _CONTROL_CHARS = re.compile(r"[\x00-\x08\x0b\x0c\x0d\x0e-\x1f\x7f]")
 
 def sanitize_record(record: dict[str, Any]) -> dict[str, Any]:
     """Strip control characters from all string values in a record."""
-    return {
-        k: _CONTROL_CHARS.sub("", v) if isinstance(v, str) else v
-        for k, v in record.items()
-    }
+    return {k: _CONTROL_CHARS.sub("", v) if isinstance(v, str) else v for k, v in record.items()}
 
 
 def sanitize_data(data: list[dict[str, Any]]) -> list[dict[str, Any]]:

@@ -23,15 +23,15 @@ from typing import Any
 logger = logging.getLogger(__name__)
 
 # Default TTL in seconds
-TTL_DAILY = 4 * 3600      # 4 hours — stock prices, trading data
-TTL_STATIC = 24 * 3600    # 24 hours — company info, broker data
+TTL_DAILY = 4 * 3600  # 4 hours — stock prices, trading data
+TTL_STATIC = 24 * 3600  # 24 hours — company info, broker data
 
 # Paths that change infrequently get longer TTL
 _STATIC_PREFIXES = (
     "/company/",
     "/brokerService/",
-    "/opendata/t187ap03",    # Company basic info
-    "/opendata/t187ap18",    # Broker basic info
+    "/opendata/t187ap03",  # Company basic info
+    "/opendata/t187ap18",  # Broker basic info
     "/holidaySchedule/",
 )
 

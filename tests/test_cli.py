@@ -237,7 +237,9 @@ class TestDryRun:
         assert preview["endpoint"] == "stock.stock-day-all"
 
     def test_fetch_dry_run_with_filters(self, runner):
-        result = runner.invoke(cli, ["fetch", "stock.stock-day-all", "--dry-run", "--fields", "Code,Name", "--code", "2330", "--limit", "5"])
+        result = runner.invoke(
+            cli, ["fetch", "stock.stock-day-all", "--dry-run", "--fields", "Code,Name", "--code", "2330", "--limit", "5"]
+        )
         assert result.exit_code == 0
         preview = json.loads(result.output)
         assert preview["filters"]["fields"] == ["Code", "Name"]
@@ -372,8 +374,22 @@ class TestT86WebEndpoint:
     """Test T86 三大法人買賣超日報 web API endpoint."""
 
     _T86_RAW = [
-        {"證券代號": "2330", "證券名稱": "台積電", "外陸資買賣超股數(不含外資自營商)": "5,000", "投信買賣超股數": "1,000", "自營商買賣超股數": "500", "三大法人買賣超股數": "6,500"},
-        {"證券代號": "2317", "證券名稱": "鴻海", "外陸資買賣超股數(不含外資自營商)": "-3,000", "投信買賣超股數": "200", "自營商買賣超股數": "-100", "三大法人買賣超股數": "-2,900"},
+        {
+            "證券代號": "2330",
+            "證券名稱": "台積電",
+            "外陸資買賣超股數(不含外資自營商)": "5,000",
+            "投信買賣超股數": "1,000",
+            "自營商買賣超股數": "500",
+            "三大法人買賣超股數": "6,500",
+        },
+        {
+            "證券代號": "2317",
+            "證券名稱": "鴻海",
+            "外陸資買賣超股數(不含外資自營商)": "-3,000",
+            "投信買賣超股數": "200",
+            "自營商買賣超股數": "-100",
+            "三大法人買賣超股數": "-2,900",
+        },
     ]
 
     def test_fetch_t86_json_with_aliases(self, runner):
@@ -439,6 +455,7 @@ class TestT86WebEndpoint:
 
     def test_resolve_t86_by_dotted_name(self):
         from twstock_cli.endpoints import resolve_endpoint
+
         ep = resolve_endpoint("stock.t86")
         assert ep is not None
         assert ep.base_url == "https://www.twse.com.tw/rwd/zh"
@@ -446,12 +463,14 @@ class TestT86WebEndpoint:
 
     def test_search_t86(self):
         from twstock_cli.endpoints import list_endpoints
+
         results = list_endpoints(search="t86")
         assert len(results) >= 1
         assert any(r["name"] == "stock.t86" for r in results)
 
     def test_search_institutional(self):
         from twstock_cli.endpoints import list_endpoints
+
         results = list_endpoints(search="法人")
         assert any(r["name"] == "stock.t86" for r in results)
 

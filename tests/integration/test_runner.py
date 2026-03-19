@@ -79,8 +79,7 @@ def test_integration(case_id: str, case: dict, request: pytest.FixtureRequest) -
 
     # -- 1. Exit code -------------------------------------------------------
     assert result.exit_code == expected["exit_code"], (
-        f"[{case_id}] exit_code: expected {expected['exit_code']}, "
-        f"got {result.exit_code}\nstdout: {result.output[:500]}"
+        f"[{case_id}] exit_code: expected {expected['exit_code']}, got {result.exit_code}\nstdout: {result.output[:500]}"
     )
 
     # -- 2. Error assertions (exit != 0) ------------------------------------
@@ -88,8 +87,7 @@ def test_integration(case_id: str, case: dict, request: pytest.FixtureRequest) -
         if expected.get("error_code"):
             envelope = json.loads(result.output)
             assert envelope["error"]["code"] == expected["error_code"], (
-                f"[{case_id}] error_code: expected {expected['error_code']}, "
-                f"got {envelope['error']['code']}"
+                f"[{case_id}] error_code: expected {expected['error_code']}, got {envelope['error']['code']}"
             )
             if expected.get("error_message_contains"):
                 assert expected["error_message_contains"] in envelope["error"]["message"]
@@ -98,9 +96,7 @@ def test_integration(case_id: str, case: dict, request: pytest.FixtureRequest) -
     # -- 3. Parse output ----------------------------------------------------
     # Skip parsing when no output-dependent assertions exist.
     needs_parse = any(
-        expected.get(k)
-        for k in ("ok", "min_records", "max_records", "required_fields",
-                   "absent_fields", "contains_keys", "field_types")
+        expected.get(k) for k in ("ok", "min_records", "max_records", "required_fields", "absent_fields", "contains_keys", "field_types")
     )
     fmt = expected.get("output_format", "envelope")
     records: list[dict] = _parse_output(result.output, fmt) if needs_parse else []
@@ -108,21 +104,17 @@ def test_integration(case_id: str, case: dict, request: pytest.FixtureRequest) -
     # -- 4. Envelope ok field -----------------------------------------------
     if fmt == "envelope" and "ok" in expected:
         envelope = json.loads(result.output)
-        assert envelope["ok"] == expected["ok"], (
-            f"[{case_id}] ok: expected {expected['ok']}, got {envelope['ok']}"
-        )
+        assert envelope["ok"] == expected["ok"], f"[{case_id}] ok: expected {expected['ok']}, got {envelope['ok']}"
 
     # -- 5. Record count ----------------------------------------------------
     allow_empty = expected.get("allow_empty", False)
     if expected.get("min_records") is not None and not allow_empty:
         assert len(records) >= expected["min_records"], (
-            f"[{case_id}] min_records: expected >= {expected['min_records']}, "
-            f"got {len(records)}"
+            f"[{case_id}] min_records: expected >= {expected['min_records']}, got {len(records)}"
         )
     if expected.get("max_records") is not None:
         assert len(records) <= expected["max_records"], (
-            f"[{case_id}] max_records: expected <= {expected['max_records']}, "
-            f"got {len(records)}"
+            f"[{case_id}] max_records: expected <= {expected['max_records']}, got {len(records)}"
         )
 
     # -- 6. Field presence / absence ----------------------------------------
@@ -154,14 +146,8 @@ def test_integration(case_id: str, case: dict, request: pytest.FixtureRequest) -
             if val is None:
                 continue
             if expected_type == "int":
-                assert isinstance(val, int), (
-                    f"[{case_id}] {field}: expected int, got {type(val).__name__} ({val!r})"
-                )
+                assert isinstance(val, int), f"[{case_id}] {field}: expected int, got {type(val).__name__} ({val!r})"
             elif expected_type == "float":
-                assert isinstance(val, (int, float)), (
-                    f"[{case_id}] {field}: expected float, got {type(val).__name__} ({val!r})"
-                )
+                assert isinstance(val, (int, float)), f"[{case_id}] {field}: expected float, got {type(val).__name__} ({val!r})"
             elif expected_type == "str":
-                assert isinstance(val, str), (
-                    f"[{case_id}] {field}: expected str, got {type(val).__name__} ({val!r})"
-                )
+                assert isinstance(val, str), f"[{case_id}] {field}: expected str, got {type(val).__name__} ({val!r})"

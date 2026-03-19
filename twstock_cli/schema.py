@@ -73,12 +73,14 @@ def analyze_schema(
         example = non_empty[0] if non_empty else ""
         inferred_type = _infer_type(values)
 
-        field_info.append({
-            "name": col,
-            "type": inferred_type,
-            "example": example,
-            "non_empty_pct": non_empty_pct,
-        })
+        field_info.append(
+            {
+                "name": col,
+                "type": inferred_type,
+                "example": example,
+                "non_empty_pct": non_empty_pct,
+            }
+        )
 
     return {
         "endpoint": endpoint_name,

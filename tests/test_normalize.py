@@ -43,13 +43,15 @@ class TestNormalizeRecord:
         assert result["Industry"] == "半導體業"
 
     def test_mixed_record(self):
-        result = normalize_record({
-            "Code": "2330",
-            "ClosingPrice": "595.00",
-            "TradeVolume": "36317450",
-            "Change": "+5.00",
-            "日期": "1150313",
-        })
+        result = normalize_record(
+            {
+                "Code": "2330",
+                "ClosingPrice": "595.00",
+                "TradeVolume": "36317450",
+                "Change": "+5.00",
+                "日期": "1150313",
+            }
+        )
         assert result["Code"] == "2330"
         assert result["ClosingPrice"] == 595.0
         assert result["TradeVolume"] == 36317450

@@ -17,17 +17,37 @@ _ROC_DATE_RE = re.compile(r"^(\d{2,3})(\d{2})(\d{2})$")
 _ROC_DATE_SLASH_RE = re.compile(r"^(\d{2,3})/(\d{2})/(\d{2})$")
 
 # Fields that are known dates (avoid false positives on stock codes like "2330")
-_DATE_FIELD_HINTS = frozenset({
-    "日期", "出表日期", "成立日期", "上市日期", "資料日期", "年月日",
-    "Date", "TradeDate", "date", "EstablishmentDate",
-    "股利年度", "資料年月",
-})
+_DATE_FIELD_HINTS = frozenset(
+    {
+        "日期",
+        "出表日期",
+        "成立日期",
+        "上市日期",
+        "資料日期",
+        "年月日",
+        "Date",
+        "TradeDate",
+        "date",
+        "EstablishmentDate",
+        "股利年度",
+        "資料年月",
+    }
+)
 
 # Fields that should never be converted (stock codes, IDs)
-_SKIP_FIELDS = frozenset({
-    "Code", "公司代號", "證券代號", "代號", "券商代號",
-    "Name", "公司名稱", "公司簡稱", "證券名稱",
-})
+_SKIP_FIELDS = frozenset(
+    {
+        "Code",
+        "公司代號",
+        "證券代號",
+        "代號",
+        "券商代號",
+        "Name",
+        "公司名稱",
+        "公司簡稱",
+        "證券名稱",
+    }
+)
 
 
 def _try_roc_to_iso(value: str) -> str | None:
