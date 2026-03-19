@@ -110,7 +110,12 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+          # Save generated formula, switch to latest main, restore, then push
+          cp Formula/twstock-cli.rb /tmp/twstock-cli-formula.rb
+          git fetch origin main
+          git checkout -B main origin/main
+          cp /tmp/twstock-cli-formula.rb Formula/twstock-cli.rb
           git add Formula/twstock-cli.rb
           git diff --cached --quiet && echo "No formula changes" && exit 0
           git commit -m "chore: update Homebrew Formula to v$VERSION"
-          git push origin HEAD:main
+          git push origin main
