@@ -4,13 +4,25 @@ Agent-friendly CLI for Taiwan Stock Exchange (TWSE) and Taipei Exchange (TPEX) â
 
 ## Install
 
+### uv (recommended)
+
 ```bash
-pip install twstock-cli
+uv tool install twstock-cli
+uv tool install 'twstock-cli[mcp]'            # with MCP server support
+uv tool install 'twstock-cli[mcp,analysis]'   # with everything
 ```
 
-With optional extras:
+### Homebrew
 
 ```bash
+brew tap DeepWaveLab/twstock_cli https://github.com/DeepWaveLab/twstock_cli
+brew install twstock-cli
+```
+
+### pip
+
+```bash
+pip install twstock-cli
 pip install 'twstock-cli[mcp]'            # MCP server support
 pip install 'twstock-cli[analysis]'       # pandas, openpyxl, matplotlib, plotly
 pip install 'twstock-cli[mcp,analysis]'   # everything
@@ -19,8 +31,8 @@ pip install 'twstock-cli[mcp,analysis]'   # everything
 ### From source
 
 ```bash
-git clone https://github.com/weirenlan/twstock-cli.git
-cd twstock-cli
+git clone https://github.com/DeepWaveLab/twstock_cli.git
+cd twstock_cli
 uv sync                                   # core only
 uv sync --extra mcp --extra analysis      # with all extras
 ```

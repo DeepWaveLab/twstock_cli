@@ -1,6 +1,6 @@
 [project]
 name = "twstock-cli"
-version = "0.1.1"
+version = "0.1.2"
 description = "Agent-friendly CLI for Taiwan Stock Exchange (TWSE) and Taipei Exchange (TPEX) — stock market data, one tool"
 readme = "README.md"
 license = "MIT"
@@ -37,8 +37,8 @@ dev = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/weirenlan/twstock-cli"
-Repository = "https://github.com/weirenlan/twstock-cli"
+Homepage = "https://github.com/DeepWaveLab/twstock_cli"
+Repository = "https://github.com/DeepWaveLab/twstock_cli"
 
 [project.scripts]
 twstock = "twstock_cli.cli:cli"
