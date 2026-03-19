@@ -1,6 +1,6 @@
 [project]
 name = "twstock-cli"
-version = "0.1.2"
+version = "0.1.3"
 description = "Agent-friendly CLI for Taiwan Stock Exchange (TWSE) and Taipei Exchange (TPEX) — stock market data, one tool"
 readme = "README.md"
 license = "MIT"

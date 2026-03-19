@@ -28,6 +28,19 @@ pip install 'twstock-cli[analysis]'       # pandas, openpyxl, matplotlib, plotly
 pip install 'twstock-cli[mcp,analysis]'   # everything
 ```
 
+## Update
+
+```bash
+# uv
+uv tool upgrade twstock-cli
+
+# Homebrew
+brew update && brew upgrade twstock-cli
+
+# pip
+pip install --upgrade twstock-cli
+```
+
 ### From source
 
 ```bash
